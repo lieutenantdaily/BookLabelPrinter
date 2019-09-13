@@ -1,9 +1,10 @@
 class BuybacksController < ApplicationController
+
+  # validates_length_of :search, minimum: 5, maximum: 45, allow_blank: true
+
   def index
     if params[:search]
       @buybacks = Buyback.search(params[:search]).order("created_at DESC")
-
-      
 
     else
     end

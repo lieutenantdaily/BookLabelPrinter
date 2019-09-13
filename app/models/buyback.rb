@@ -11,13 +11,15 @@ class Buyback < ApplicationRecord
             buyback_hash.condition = row[3]
             buyback_hash.source = row[4]
             buyback_hash.buyback_id = row[5]
+            buyback_hash.tracking_number = row[6]
+            buyback_hash.order_hash = row[7]
             buyback_hash.save
         end
     end
     
     
     def self.search(search)
-        where("order_id LIKE ?", "%#{search}%") 
+        where"order_id LIKE ? OR tracking_number LIKE ?", "%#{search}%", "%#{search}%" 
         # if search
         #     order = Buyback.find_by(order_id: search)
         #     if order

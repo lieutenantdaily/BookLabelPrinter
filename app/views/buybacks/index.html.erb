@@ -1,4 +1,4 @@
-<div class="well">
+<div class="well div-shadow no-radius">
     <div class="container">
         <% if notice %>
             <p class="alert alert-success message-format"><%= notice %></p>
@@ -11,35 +11,56 @@
 
         <%= form_for :buyback, url: buybacks_path do |f| %>
             <div class="form-group">
-                <%= f.label :file, "Upload CSV File" %>
-                <%= f.file_field :file, class: 'form-control-file', required: true %>
+                <%= f.label :file, "Upload Orders" %>
+                <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow', required: true %>
             </div>
-            <%= button_tag type: 'submit', class: "btn", id: "submit-button" do %>
-                Upload CSV
+            <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20", id: "submit-button" do %>
+                <i class="fas fa-upload"></i> Upload
             <% end %>
         <% end %>
+        <br>
     </div>
 </div>
-
+<br>
 <center>
     <%= form_tag(buybacks_path, :method => "get", id: "search-form") do %>
-        <%= text_field_tag :search, params[:search], placeholder: "Search Orders" %>
-        <%= submit_tag "Search" %>
+        <%= text_field_tag :search, params[:search], placeholder: "Search Orders", :minlength => 6, :required => 'required', class: 'input-shadow search-input div-shadow font-20' %>
+        
+
+        <%= button_tag type: 'submit', class: "btn btn-primary div-shadow font-20", id: "submit-button" do %>
+            Search <i class="fas fa-search"></i>
+        <% end %>
     <% end %>
+    <br>
     <br>
 </center>
 
 <% if @buybacks.present? %>
-<div id="content">
-     <%= render @buybacks %>
-</div>
 
-<div id="editor"></div>
+    <% @buybacks[0,1].each do |buyback|%>
+        <center>
+           <a class="font-20" href="https://buyback.textbookmaniac.com/admin/orders/<%= buyback.order_hash %>" target="_blank">Go to order</a>
+        </center>
+    <% end %>
+    <br>
+    <br>
 
-<center>
-    <button id="cmd">Print</button>
-</center>
+    <center>
+        <button id="cmd" class="btn btn-success div-shadow print-button"><i class="fas fa-print"></i> Print</button>
+    </center>
+    <br>
+
+    <div id="content">
+    
+        <%= render @buybacks %>
+    </div>
+
+    <div id="editor"></div>
+
+
 
 <% else %>
-  <p>There are no posts containing the term(s) <%= params[:search] %>.</p>
+    <center>
+        <p>There are no buybacks containing the term(s) <%= params[:search] %>.</p>
+    </center>
 <% end %>

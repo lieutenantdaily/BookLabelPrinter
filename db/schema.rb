@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_12_065639) do
+ActiveRecord::Schema.define(version: 2019_09_13_070020) do
 
   create_table "buybacks", force: :cascade do |t|
     t.string "order_id"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 2019_09_12_065639) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "buyback_id"
+    t.string "order_hash"
+    t.string "tracking_number"
     t.index ["buyback_id"], name: "index_buybacks_on_buyback_id", unique: true
   end
 

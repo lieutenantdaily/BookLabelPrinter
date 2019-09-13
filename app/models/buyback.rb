@@ -13,6 +13,8 @@ class Buyback < ApplicationRecord
             buyback_hash.buyback_id = row[5]
             buyback_hash.tracking_number = row[6]
             buyback_hash.order_hash = row[7]
+            buyback_hash.title = row[8]
+            buyback_hash.restricted = row[9]
             buyback_hash.save
         end
     end

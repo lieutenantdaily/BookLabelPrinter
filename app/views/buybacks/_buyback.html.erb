@@ -3,18 +3,13 @@
 <br>
 <div class="container well label-font div-shadow">
     <p>
-        00<%= buyback.order_id %>
+        <%= buyback.source %> | <%= buyback.title %>
+    </p> 
+    <p>
+        <h1><a href="http://metabase.textbookmaniac.com/dashboard/11?isbn=<%= buyback.isbn %>" target="_blank"><%= buyback.isbn %></a></h1>
     </p> 
     <p>
         <h1><b><%= buyback.price %></b></h1>
     </p> 
-    <p>
-        <%= buyback.condition %>
-    </p> 
-    <p>
-        <%= buyback.source %>
-    </p> 
-    <p>
-        <h1><%= buyback.isbn %></h1>
-    </p> 
+    <a href="https://buyback.textbookmaniac.com/admin/orders/<%= buyback.order_hash %>" target="_blank">00<%= buyback.order_id %></a>
 </div>

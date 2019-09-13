@@ -1,4 +1,18 @@
-.label-font {
+/* a:link {
+    text-decoration: none;
+    color: #444;
+  }
+
+  a:visited {
+    text-decoration: none;
+    color: #444;
+  } */
+
+  .color-black {
+      color: #000;
+  }
+
+ .label-font {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
 }

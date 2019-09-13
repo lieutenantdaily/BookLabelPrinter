@@ -39,15 +39,9 @@
 
     <% @buybacks[0,1].each do |buyback|%>
         <center>
-           <a class="font-20" href="https://buyback.textbookmaniac.com/admin/orders/<%= buyback.order_hash %>" target="_blank">Go to order</a>
+            <a class="font-20" href="https://buyback.textbookmaniac.com/admin/orders/<%= buyback.order_hash %>" target="_blank"><button id="cmd" class="btn btn-success div-shadow print-button"><i class="fas fa-print"></i> Print</button></a>
         </center>
     <% end %>
-    <br>
-    <br>
-
-    <center>
-        <button id="cmd" class="btn btn-success div-shadow print-button"><i class="fas fa-print"></i> Print</button>
-    </center>
     <br>
 
     <div id="content">

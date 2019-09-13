@@ -20,7 +20,7 @@ require("channels")
 //generate PDF Label **********************************************************
 $(document).on('turbolinks:load', function () {
 
-    var doc = new jsPDF('l', 'mm', [28.575 * 2.2, 88.9 * 2.2]);
+    var doc = new jsPDF('l', 'mm', [28.575 * 2.3, 88.9 * 2.3]);
     doc.setFont("arial");
     var specialElementHandlers = {
         '#editor': function (element, renderer) {

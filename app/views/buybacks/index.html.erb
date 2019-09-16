@@ -6,7 +6,10 @@
         <%= form_tag ({ :controller => 'buybacks', :action => 'destroy_them_all'}) do%>
             <%= submit_tag 'Reset Database', data: { confirm: "Are you sure you want to reset the Orders database?" }, class: "btn btn-danger div-shadow font-20 float-right" %>
         <% end %>
-        
+
+        <a href="http://metabase.textbookmaniac.com/public/question/ca1f5b58-d349-43ae-95eb-603a1429b3ec.csv" target="_blank" class="btn btn-primary div-shadow font-20 active">Download Orders</a>
+        <br>
+        <br>
         <%= form_for :buyback, url: buybacks_path do |f| %>
             <div class="form-group uploader">
                 <%= f.label :file, "Upload Orders" %>
@@ -45,7 +48,7 @@
 <br>
 <center>
     <%= form_tag(buybacks_path, :method => "get", id: "search-form") do %>
-        <%= text_field_tag :search, params[:search], placeholder: "Order or Tracking Number", :minlength => 6, :required => 'required', class: 'input-shadow search-input div-shadow font-20' %>
+        <%= text_field_tag :search, params[:search], placeholder: "Order or Tracking Number", :minlength => 6, onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'input-shadow search-input div-shadow font-20' %>
 
         <%= button_tag type: 'submit', class: "btn btn-primary div-shadow font-20", id: "submit-button" do %>
             Search <i class="fas fa-search"></i>

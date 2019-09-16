@@ -1,15 +1,17 @@
 <!--ADD_PAGE-->
 <br>
 <br>
-<div class="container well label-font div-shadow">
+<div class="container card card-body label-font div-shadow label">
     <p>
-        <%= buyback.source %> | <%= buyback.title %>
+        <h2><%= truncate(buyback.title, escape: false, :length => 60) %></h2>
     </p> 
     <p>
-        <h1><a href="http://metabase.textbookmaniac.com/dashboard/11?isbn=<%= buyback.isbn %>" target="_blank"><%= buyback.isbn %></a></h1>
+        <h1><a href="http://metabase.textbookmaniac.com/dashboard/11?isbn=<%= buyback.isbn %>" target="_blank"><%= buyback.isbn %></a> - - [ A ]  [ G ]  [ VG ]  [ LN ]  [ N ]</h1>
     </p> 
     <p>
-        <h1><b><%= buyback.price %></b></h1>
+        <h1><%= buyback.restricted %><%= buyback.source %> | <b><%= buyback.buyback_id %>-1A-<%= buyback.price %></b></h1>
     </p> 
-    <a href="https://buyback.textbookmaniac.com/admin/orders/<%= buyback.order_hash %>" target="_blank">00<%= buyback.order_id %></a>
+    <p class="no-bottom">
+    <h2><a href="https://buyback.textbookmaniac.com/admin/orders/<%= buyback.order_hash %>" target="_blank">00<%= buyback.order_id %></a> | <%= buyback.o_created_at[5,5] %> | <%= params[:initials] %></h2>
+    </p> 
 </div>

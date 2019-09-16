@@ -29,7 +29,7 @@ $(document).on('turbolinks:load', function () {
     };
 
     $('#cmd').click(function () {
-        doc.fromHTML($('#content').html(), 10, 0, {
+        doc.fromHTML($('#content').html(), 10, -10, {
             'width': 170,
                 'elementHandlers': specialElementHandlers
         });
@@ -37,6 +37,64 @@ $(document).on('turbolinks:load', function () {
         doc.save('labels.pdf');
 
     });
+
+});
+//******************************************************************************
+
+//Show/Hide New Post Widget **********************************************************
+$(document).on('turbolinks:load', function () {
+
+    // $("input").keypress(function(event) {
+    //     if (event.which == 13) {
+    //         event.preventDefault();
+    //         $("form_id_here").submit();
+    //     }
+    //   });
+
+    // var h = $(window).height();
+    // var w = $(window).width();
+
+
+    // $(window).on('resize', function () {
+
+    //     var h = $(window).height();
+    //     var w = $(window).width();
+
+
+    // });
+
+
+
+
+
+    $('#upload-show').click(function () {
+        $('#uploader').fadeIn(300);
+        $('#uploader').animate({
+            top: 0
+        }, {
+            duration: 300,
+            queue: false
+        });
+
+
+    });
+
+
+    $('#upload-hide').click(function () {
+        $('#uploader').fadeOut(300);
+        $('#uploader').animate({
+            top: '-400px'
+        }, {
+            duration: 300,
+            queue: false
+        });
+
+
+    });
+
+
+    
+
 
 });
 //******************************************************************************

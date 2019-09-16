@@ -1,35 +1,60 @@
-<div class="well div-shadow no-radius">
+<div id="uploader" class="card card-body div-shadow no-radius label upload-container">
     <div class="container">
-        <% if notice %>
-            <p class="alert alert-success message-format"><%= notice %></p>
-        <% end %>
-        <% if alert %>
-            <p class="alert alert-danger message-format"><%= alert %></p>
-        <% end %>
-        <h1>Book Label Printer</h1>
+        
+        <br>
 
-
+        <%= form_tag ({ :controller => 'buybacks', :action => 'destroy_them_all'}) do%>
+            <%= submit_tag 'Reset Database', data: { confirm: "Are you sure you want to reset the Orders database?" }, class: "btn btn-danger div-shadow font-20 float-right" %>
+        <% end %>
+        
         <%= form_for :buyback, url: buybacks_path do |f| %>
-            <div class="form-group">
+            <div class="form-group uploader">
                 <%= f.label :file, "Upload Orders" %>
-                <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow', required: true %>
+                <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader', required: true %>
             </div>
             <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20", id: "submit-button" do %>
                 <i class="fas fa-upload"></i> Upload
             <% end %>
         <% end %>
         <br>
+
+        <% @all_buybacks[0,1].each do |all_buyback|%>
+            <center>
+                Database last updated on <b><%= all_buyback.created_at.strftime("%m/%d/%Y") %></b> at <%= all_buyback.created_at.strftime("%I:%M %p") %>
+            </center>
+        <% end %>
+        <br>
+        <center>
+        <div class="btn btn-warning div-shadow" id="upload-hide">Close</div>
+        </center>
+
     </div>
 </div>
 <br>
+<% if notice %>
+    <p class="alert alert-success message-format"><%= notice %></p>
+<% end %>
+<% if alert %>
+    <p class="alert alert-danger message-format"><%= alert %></p>
+<% end %>
+<br>
+<center>
+    <h1>Book Label Printer</h1>
+</center>
+<br>
+<br>
 <center>
     <%= form_tag(buybacks_path, :method => "get", id: "search-form") do %>
-        <%= text_field_tag :search, params[:search], placeholder: "Search Orders", :minlength => 6, :required => 'required', class: 'input-shadow search-input div-shadow font-20' %>
-        
+        <%= text_field_tag :search, params[:search], placeholder: "Order or Tracking Number", :minlength => 6, :required => 'required', class: 'input-shadow search-input div-shadow font-20' %>
 
         <%= button_tag type: 'submit', class: "btn btn-primary div-shadow font-20", id: "submit-button" do %>
             Search <i class="fas fa-search"></i>
         <% end %>
+        <br>
+        <br>
+        <center>
+            <%= text_field_tag :initials, params[:initials], placeholder: "Initials", :minlength => 2, :maxlength => 2, onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'input-shadow init-input div-shadow font-20' %>
+        </center>    
     <% end %>
     <br>
     <br>
@@ -55,6 +80,8 @@
 
 <% else %>
     <center>
-        <p>There are no buybacks containing the term(s) <%= params[:search] %>.</p>
+        <p>There are no buybacks containing the term you entered.</p>
     </center>
 <% end %>
+<br>
+<br>

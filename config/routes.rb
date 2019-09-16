@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   root 'buybacks#index', as: 'home'
+  post "buybacks/destroy_them_all" 
 
 
   resources :orders

@@ -7,6 +7,18 @@
     text-decoration: none;
     color: #444;
   } */
+ p {
+   margin-bottom: 5px;
+ }
+
+ #uploader {
+   display: none;
+   top: -400px;
+ }
+
+#upload-show, #upload-hide {
+  cursor: pointer;
+}
 
   .color-black {
       color: #000;
@@ -26,6 +38,11 @@
 
 .font-20 {
     font-size: 20px;
+}
+
+.text-dark {
+  color: #000 !important;
+  font-weight: 600;
 }
 
 .no-radius{
@@ -68,3 +85,70 @@
       font-size: 20px;
   }
 
+  .init-input {
+    display: inline-block;
+    background: #fff;
+    color: #000;
+    cursor: text;
+    width: 13%;
+
+
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-weight: 400;
+    /* line-height: 1.42857143; */
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+
+    /* border: 1px solid transparent; */
+    border-radius: 4px;
+  }
+
+  .float-right {
+    float: right;
+  }
+
+  .label {
+    background: #f9f9f9
+  }
+
+  .no-bottom {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .uploader {
+    width: 300px;
+  }
+
+  .upload-container {
+    z-index: 1;
+  }
+
+  .nav-container {
+    z-index: 2;
+  }
+
+  .navbar-brand {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    background: #bdc3c7;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    overflow: hidden;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.50);
+    text-align: center;
+  }
+
+  .navbar-brand-inner {
+    display: inline-block;
+    width: 77%;
+    height: 200%;
+    background: url('/assets/logo.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+  }

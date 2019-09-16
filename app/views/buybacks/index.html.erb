@@ -4,7 +4,7 @@
         <br>
 
         <%= form_tag ({ :controller => 'buybacks', :action => 'destroy_them_all'}) do%>
-            <%= submit_tag 'Reset Database', data: { confirm: "Are you sure you want to reset the Orders database?" }, class: "btn btn-danger div-shadow font-20 float-right" %>
+            <%= submit_tag 'Reset', data: { confirm: "Are you sure you want to reset the Orders database?" }, class: "btn btn-danger div-shadow font-20 float-right" %>
         <% end %>
 
         <a href="http://metabase.textbookmaniac.com/public/question/ca1f5b58-d349-43ae-95eb-603a1429b3ec.csv" target="_blank" class="btn btn-primary div-shadow font-20 active">Download Orders</a>

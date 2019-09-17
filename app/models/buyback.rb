@@ -17,7 +17,16 @@ class Buyback < ApplicationRecord
             buyback_hash.restricted = row[9]
             buyback_hash.o_created_at = row[10]
             duplicate_check = Buyback.find_by(buyback_id: row[5])
-            buyback_hash.save if duplicate_check.blank?
+            if duplicate_check.blank?
+                buyback_hash.save 
+            else
+                if duplicate_check.price != row[9]
+                    duplicate_check.update(restricted: row[9])
+                end
+                if duplicate_check.price != row[1]
+                    duplicate_check.update(price: row[1])
+                end
+            end
         end
     end
 

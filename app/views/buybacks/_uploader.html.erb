@@ -6,8 +6,13 @@
         <%= form_tag ({ :controller => 'buybacks', :action => 'destroy_them_all'}) do%>
             <%= submit_tag 'Reset', data: { confirm: "Are you sure you want to reset the Orders database?" }, class: "btn btn-danger div-shadow font-20 float-right" %>
         <% end %>
-
-        <a href="http://metabase.textbookmaniac.com/public/question/ca1f5b58-d349-43ae-95eb-603a1429b3ec.csv" target="_blank" class="btn btn-primary div-shadow font-20 active">Download Orders</a>
+        
+        <a href="http://metabase.textbookmaniac.com/public/question/ca1f5b58-d349-43ae-95eb-603a1429b3ec.csv" target="_blank" class="btn btn-primary div-shadow font-20">Download Daily Orders</a>
+        <br>Use this for daily uploads
+        <br>
+        <br>
+        <a href="http://metabase.textbookmaniac.com/public/question/d2c89682-c144-42dd-92b1-032c292212e4.csv" target="_blank" class="btn btn-dark div-shadow font-20">Download All Orders (45 Days)</a>
+        <br>Use this to update Restricted (takes a while)
         <br>
         <br>
         <%= form_for :buyback, url: buybacks_path do |f| %>

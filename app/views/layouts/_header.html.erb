@@ -8,12 +8,18 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav">
-                <a href="https://buyback.textbookmaniac.com/admin" target="_blank" class="nav-item nav-link active">Admin</a>
-                <a href="http://metabase.textbookmaniac.com/" target="_blank" class="nav-item nav-link active">Metabase</a>
-                <a href="http://camelcamelcamel.com/" target="_blank" class="nav-item nav-link active">Camel</a>
+                <%= link_to "Labels", home_path, class: 'nav-item nav-link active' %>
+                <%= link_to "Quick Links", links_path, class: 'nav-item nav-link active' %>
+                <a href="https://buyback.textbookmaniac.com/admin" target="_blank" class="nav-item nav-link">Processing Admin</a>
+                <a href="http://admin.textbookmaniac.com" target="_blank" class="nav-item nav-link">Wholesale Admin</a>
+                <a href="http://metabase.textbookmaniac.com/" target="_blank" class="nav-item nav-link">Metabase</a>
+                <a href="http://camelcamelcamel.com/" target="_blank" class="nav-item nav-link">Camel</a>
             </div>
             <div class="navbar-nav ml-auto">
-                <div id="upload-show" class="nav-item btn btn-warning text-dark div-shadow">Upload Orders</div>
+                <% if controller_name == "buybacks" %>
+                    <div id="upload-show" class="nav-item btn btn-warning text-dark div-shadow">Upload Orders</div>
+                <% end %>
+                
             </div>
         </div>
     </nav>

@@ -152,3 +152,20 @@
     background-size: contain;
 
   }
+
+  .link-card {
+    text-align: center;
+    flex-direction: row;
+    display: block;
+  }
+
+  .link-center {
+    display: inline-block;
+  }
+
+  .link-button {
+    /* width: 150px; */
+    margin: 10px;
+    font-weight: 500;
+  }
+

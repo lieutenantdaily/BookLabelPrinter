@@ -1,38 +1,4 @@
-<div id="uploader" class="card card-body div-shadow no-radius label upload-container">
-    <div class="container">
-        
-        <br>
-
-        <%= form_tag ({ :controller => 'buybacks', :action => 'destroy_them_all'}) do%>
-            <%= submit_tag 'Reset', data: { confirm: "Are you sure you want to reset the Orders database?" }, class: "btn btn-danger div-shadow font-20 float-right" %>
-        <% end %>
-
-        <a href="http://metabase.textbookmaniac.com/public/question/ca1f5b58-d349-43ae-95eb-603a1429b3ec.csv" target="_blank" class="btn btn-primary div-shadow font-20 active">Download Orders</a>
-        <br>
-        <br>
-        <%= form_for :buyback, url: buybacks_path do |f| %>
-            <div class="form-group uploader">
-                <%= f.label :file, "Upload Orders" %>
-                <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader', required: true %>
-            </div>
-            <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20", id: "submit-button" do %>
-                <i class="fas fa-upload"></i> Upload
-            <% end %>
-        <% end %>
-        <br>
-
-        <% @all_buybacks[0,1].each do |all_buyback|%>
-            <center>
-                Database last updated on <b><%= all_buyback.created_at.strftime("%m/%d/%Y") %></b> at <%= all_buyback.created_at.strftime("%I:%M %p") %>
-            </center>
-        <% end %>
-        <br>
-        <center>
-        <div class="btn btn-warning div-shadow" id="upload-hide">Close</div>
-        </center>
-
-    </div>
-</div>
+<%= render 'buybacks/uploader' %>
 <br>
 <% if notice %>
     <p class="alert alert-success message-format"><%= notice %></p>
@@ -42,7 +8,7 @@
 <% end %>
 <br>
 <center>
-    <h1>Book Label Printer</h1>
+    <h1><% content_for :title, "Book Label Printer" %>Book Label Printer</h1>
 </center>
 <br>
 <br>

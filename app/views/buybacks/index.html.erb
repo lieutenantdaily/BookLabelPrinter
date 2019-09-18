@@ -21,6 +21,7 @@
         <% end %>
         <br>
         <br>
+        
         <center>
             <%= text_field_tag :initials, params[:initials], placeholder: "Initials", :minlength => 2, :maxlength => 2, onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'input-shadow init-input div-shadow font-20' %>
         </center>    

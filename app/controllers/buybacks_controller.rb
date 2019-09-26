@@ -7,6 +7,14 @@ class BuybacksController < ApplicationController
     if params[:search]
       @buybacks = Buyback.search(params[:search]).order("buyback_id DESC")
 
+      b = @buybacks
+
+      b[0,1].each do |bb|
+        @order_id = bb.order_id
+      end
+
+      @boxcount = Buyback.search(@order_id).group(:tracking_number).count
+
     else
 
     end

@@ -37,10 +37,26 @@
         </center>
     <% end %>
     <br>
+    <% @buybacks[0,1].each do |buyback|%>
+        <center>
+            Order Number: <a href="/?search=<%= @order_id %>&initials=<%= params[:initials] %>" target="_self"><b><%= @order_id %></b></a> | Total Boxes in Order: <b><%= @boxcount.count %></b>
+            <% if @order_id != params[:search] %>
+                 | Box Number: <b><%= buyback.tracking_number %></b>
+                <br>
+                <br>
+                Total Items in Box: <b><%= @buybacks.count %></b>
+            <% else %>
+                <br>
+                <br>
+                Total Items in Order: <b><%= @buybacks.count %></b>
+            <% end %>
+        </center>
+    <% end %>
 
     <div id="content">
     
         <%= render @buybacks %>
+
     </div>
 
     <div id="editor"></div>

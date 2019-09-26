@@ -7,23 +7,21 @@
             <%= submit_tag 'Reset', data: { confirm: "Are you sure you want to reset the Orders database?" }, class: "btn btn-danger div-shadow font-20 float-right" %>
         <% end %>
         
-        <a href="http://metabase.textbookmaniac.com/public/question/ca1f5b58-d349-43ae-95eb-603a1429b3ec.csv" target="_blank" class="btn btn-primary div-shadow font-20">Download Daily Orders</a>
-        <br>Use this for daily uploads
+        <a href="https://source.valorebooks.com/shipments/index" target="_blank" class="btn btn-primary div-shadow font-20">Download Valore Orders</a>
         <br>
         <br>
-        <a href="http://metabase.textbookmaniac.com/public/question/d2c89682-c144-42dd-92b1-032c292212e4.csv" target="_blank" class="btn btn-dark div-shadow font-20">Download All Orders (45 Days)</a>
-        <br>Use this to update Restricted (takes a while)
-        <br>
-        <br>
+        
         <%= form_for :buyback, url: buybacks_path do |f| %>
             <div class="form-group uploader">
-                <%= f.label :file, "Upload Orders" %>
+                <%= f.label :file, "Upload Orders From: " %>
+                <%= f.select :destination, raw("<option>Amazon</option><option>Nebraska</option><option>Other</option>"), :required => 'required', class: '' %>
                 <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader', required: true %>
             </div>
             <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20", id: "submit-button" do %>
                 <i class="fas fa-upload"></i> Upload
             <% end %>
         <% end %>
+
         <br>
 
         <% @all_buybacks[0,1].each do |all_buyback|%>

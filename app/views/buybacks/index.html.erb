@@ -8,13 +8,13 @@
 <% end %>
 <br>
 <center>
-    <h1><% content_for :title, "Book Label Printer" %>Book Label Printer</h1>
+    <h1><% content_for :title, "Book Label Printer" %>Valore Label Printer</h1>
 </center>
 <br>
 <br>
 <center>
     <%= form_tag(buybacks_path, :method => "get", id: "search-form") do %>
-        <%= text_field_tag :search, params[:search], placeholder: "Order or Tracking Number", :minlength => 6, onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'input-shadow search-input div-shadow font-20' %>
+        <%= text_field_tag :search, params[:search], placeholder: "Order or Box Number", :minlength => 6, onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'input-shadow search-input div-shadow font-20' %>
 
         <%= button_tag type: 'submit', class: "btn btn-primary div-shadow font-20", id: "submit-button" do %>
             Search <i class="fas fa-search"></i>
@@ -33,7 +33,7 @@
 
     <% @buybacks[0,1].each do |buyback|%>
         <center>
-            <a class="font-20" href="https://buyback.textbookmaniac.com/admin/orders/<%= buyback.order_hash %>" target="_blank"><button id="cmd" class="btn btn-success div-shadow print-button"><i class="fas fa-print"></i> Print</button></a>
+            <button id="cmd" class="btn btn-success div-shadow print-button font-20"><i class="fas fa-print"></i> Print</button>
         </center>
     <% end %>
     <br>

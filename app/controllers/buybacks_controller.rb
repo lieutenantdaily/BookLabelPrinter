@@ -13,6 +13,10 @@ class BuybacksController < ApplicationController
 
   end
 
+  def import
+    Buyback.import(params[:buyback][:file], params[:buyback][:destination])
+  end
+
 
   def destroy_them_all
     Buyback.delete_all
@@ -20,12 +24,17 @@ class BuybacksController < ApplicationController
   end 
 
   def new
-    @buyback = Buyback.new
+    @buyback = Buyback.new#(buyback_params)
   end
 
   def create
-    Buyback.import(params[:buyback][:file])
+    Buyback.import(params[:buyback][:file], params[:buyback][:destination])
     flash[:notice] = "Buybacks uploaded successfully"
-    redirect_to home_path #=> or where you want
+    redirect_to home_path 
   end
+
+  # def buyback_params
+  #   params.require(:buyback).permit(:file, :destination)
+  # end
+
 end

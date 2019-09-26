@@ -12,6 +12,6 @@
         <h1><%= buyback.restricted %><%= buyback.source %> | <b><%= buyback.buyback_id %>-1A-<%= buyback.price %></b></h1>
     </p> 
     <p class="no-bottom">
-    <h2><a href="https://buyback.textbookmaniac.com/admin/orders/<%= buyback.order_hash %>" target="_blank">00<%= buyback.order_id %></a> | <%= buyback.o_created_at[5,5] %> | <%= params[:initials] %></h2>
+    <h2><a href="https://source.valorebooks.com/refunds/index/<%= buyback.order_id %>" target="_blank"><%= buyback.order_id %></a> | <%= buyback.o_created_at[0,5] %> | <%= params[:initials] %></h2>
     </p> 
 </div>

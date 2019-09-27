@@ -6,6 +6,7 @@ class BuybacksController < ApplicationController
     @all_buybacks = Buyback.all.order("created_at DESC")
     if params[:search]
       @buybacks = Buyback.search(params[:search]).order("buyback_id DESC")
+      
 
       b = @buybacks
 
@@ -14,6 +15,7 @@ class BuybacksController < ApplicationController
       end
 
       @boxcount = Buyback.search(@order_id).group(:tracking_number).count
+      
 
     else
 
@@ -35,8 +37,29 @@ class BuybacksController < ApplicationController
     @buyback = Buyback.new#(buyback_params)
   end
 
+  def update
+    @buyback = Buyback.find(params[:id])
+
+    b = @buyback
+
+
+    @order_id = b.order_id
+    @tracking_number = b.tracking_number
+    @buyback_id = b.buyback_id
+    
+  
+
+    url = "/?search=" + @tracking_number + "#" + @buyback_id
+    
+    if @buyback.update_attributes(buyback_params)
+      flash[:success] = "Task updated!"
+      redirect_to url
+    end
+    
+  end
+
   def create
-    Buyback.import(params[:buyback][:file], params[:buyback][:destination])
+    Buyback.import(params[:buyback][:file], params[:buyback][:destination], params[:buyback][:initials])
     flash[:notice] = "Buybacks uploaded successfully"
     redirect_to home_path 
   end
@@ -44,5 +67,9 @@ class BuybacksController < ApplicationController
   # def buyback_params
   #   params.require(:buyback).permit(:file, :destination)
   # end
+
+  private def buyback_params
+    params.require(:buyback).permit(:file, :destination, :notes, :status, :initials) 
+ end
 
 end

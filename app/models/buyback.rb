@@ -1,17 +1,20 @@
 class Buyback < ApplicationRecord
     # Bulk upload 
-    def self.import(file, destination)
+    def self.import(file, destination, initials)
         require 'csv'
         # filename = File.expand_path(CSV.to_s)
         name = file.original_filename.gsub("valorebooks-shipment-details-","")[0,6]
         d = destination.gsub("Nebraska", "NEB")
         d = d.gsub("Amazon", "AMZ")
         d = d.gsub("Other", "OTH")
+        i = initials
         # Buyback.delete_all
         CSV.foreach(file.path, headers: true) do |row|
             buyback_hash = Buyback.new
             buyback_hash.order_id = name
             buyback_hash.source = "VAL-" + d
+            buyback_hash.status = "Review"
+            buyback_hash.updated_by = i
             buyback_hash.o_created_at = row[0]
             buyback_hash.buyback_id = row[1]
             buyback_hash.isbn = row[2]

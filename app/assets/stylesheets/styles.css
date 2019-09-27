@@ -169,5 +169,11 @@
     font-weight: 500;
   } 
   
+  .label-save {
+    width: 160px;
+  }
 
+  .notes {
+    height: 100px !important;
+  }
 

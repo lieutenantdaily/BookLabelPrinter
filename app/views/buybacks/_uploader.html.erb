@@ -13,10 +13,11 @@
         
         <%= form_for :buyback, url: buybacks_path do |f| %>
             <div class="form-group uploader">
-                <%= f.label :file, "Upload Orders From: " %>
+                <%= f.label :file, "Upload Orders For: " %>
                 <%= f.select :destination, raw("<option>Amazon</option><option>Nebraska</option><option>Other</option>"), :required => 'required', class: '' %>
                 <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader', required: true %>
             </div>
+            <%= f.text_field :initials, placeholder: "Initials", :minlength => 2, :maxlength => 2, onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'input-shadow init-input div-shadow font-20' %>
             <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20", id: "submit-button" do %>
                 <i class="fas fa-upload"></i> Upload
             <% end %>

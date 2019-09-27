@@ -1,17 +1,37 @@
 <!--ADD_PAGE-->
 <br>
 <br>
-<div class="container card card-body label-font div-shadow label">
-    <p>
-        <h2><%= truncate(buyback.title, escape: false, :length => 42) %></h2>
-    </p> 
-    <p>
-        <h1><a href="http://metabase.textbookmaniac.com/dashboard/11?isbn=<%= buyback.isbn %>" target="_blank"><%= buyback.isbn %></a> - - [ A ]  [ G ]  [ VG ]  [ LN ]  [ N ]</h1>
-    </p> 
-    <p>
-        <h1><%= buyback.restricted %><%= buyback.source %> | <b><%= buyback.buyback_id %>-1A-<%= buyback.price %></b></h1>
-    </p> 
-    <p class="no-bottom">
-    <h2><a href="https://source.valorebooks.com/refunds/index/<%= buyback.order_id %>" target="_blank"><%= buyback.order_id %></a> | <%= buyback.o_created_at[0,5] %> | <%= params[:initials] %></h2>
-    </p> 
-</div>
+<%= form_for :buyback, url: buyback_path(buyback), method: :patch do |f| %>
+    <div id='<%= buyback.buyback_id %>' class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow'>
+        <div id="label" class="container card card-body label-font div-shadow label">
+            <p>
+                <h2><%= truncate(buyback.title, escape: false, :length => 42) %></h2>
+            </p> 
+            <p>
+                <h1><a href="http://metabase.textbookmaniac.com/dashboard/11?isbn=<%= buyback.isbn %>" target="_blank"><%= buyback.isbn %></a> - - [ A ]  [ G ]  [ VG ]  [ LN ]  [ N ]</h1>
+            </p> 
+            <p>
+                <h1><%= buyback.restricted %><%= buyback.source %> | <b><%= buyback.buyback_id %>-1A-<%= buyback.price %></b></h1>
+            </p> 
+            <p class="no-bottom">
+            <h2><a href="https://source.valorebooks.com/refunds/index/<%= buyback.order_id %>" target="_blank"><%= buyback.order_id %></a> | <%= buyback.o_created_at[0,5] %> | <%= buyback.updated_by %></h2>
+            </p> 
+        </div>
+        
+        <div class='d-flex align-items-end flex-column label-save ml-4 label-edit'>
+            <div class='w-100 align-content-stretch label-edit'>
+                <%= f.label :status, "Status: " %>
+                <%= f.select(:status, [ 'Review', 'Keep', 'Reject' ], { :selected => buyback.status }, { :class => 'w-100' }) %>
+                <hr>
+                <%= f.label :notes, "Notes: " %>
+                <%= f.text_area(:notes, { :class => 'form-control div-shadow notes', :value => buyback.notes }) %>
+            </div>
+            
+            <div class='mt-auto w-100 label-edit'>
+                <%= button_tag type: 'submit', class: "btn btn-success div-shadow font-20 w-100" do %>
+                    <i class="fas fa-save fa-fw btn-text-dark-large"></i>
+                <% end %>
+            </div>
+        </div>
+    </div>
+<% end %>

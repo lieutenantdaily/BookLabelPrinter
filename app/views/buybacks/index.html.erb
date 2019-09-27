@@ -19,11 +19,7 @@
         <%= button_tag type: 'submit', class: "btn btn-primary div-shadow font-20", id: "submit-button" do %>
             Search <i class="fas fa-search"></i>
         <% end %>
-        <br>
-        <br>
-        <center>
-            <%= text_field_tag :initials, params[:initials], placeholder: "Initials", :minlength => 2, :maxlength => 2, onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'input-shadow init-input div-shadow font-20' %>
-        </center>    
+  
     <% end %>
     <br>
     <br>
@@ -54,9 +50,7 @@
     <% end %>
 
     <div id="content">
-    
         <%= render @buybacks %>
-
     </div>
 
     <div id="editor"></div>

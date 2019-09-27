@@ -19,10 +19,9 @@ require("channels")
 
 //generate PDF Label **********************************************************
 $(document).on('turbolinks:load', function () {
-
     
-
     $('#cmd').click(function () {
+        $('.label-edit').detach();
         var doc = new jsPDF('l', 'mm', [28.575 * 2.3, 88.9 * 2.3]);
         doc.setFont("arial");
         var specialElementHandlers = {
@@ -37,6 +36,20 @@ $(document).on('turbolinks:load', function () {
         });
         doc.autoPrint();
         doc.save('labels.pdf');
+        location.reload();
+
+        // var doc = new jsPDF('l', 'mm', [28.575 * 2.3, 88.9 * 2.3]);
+        // doc.setFont("arial");
+        // var specialElementHandlers = {
+        //     '#editor': function (element, renderer) {
+        //         return true;
+        //     }
+        // };
+
+        // doc.addHTML($('#label')[0], function () {
+        //     doc.autoPrint();
+        //     doc.save('labels.pdf');
+        // });
 
     });
 

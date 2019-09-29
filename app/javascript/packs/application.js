@@ -16,10 +16,9 @@ require("channels")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-
-//generate PDF Label **********************************************************
+//*****************************************************************************
 $(document).on('turbolinks:load', function () {
-    
+//generate PDF Label **********************************************************    
     $('#cmd').click(function () {
         $('.label-edit').detach();
         var doc = new jsPDF('l', 'mm', [28.575 * 2.3, 88.9 * 2.3]);
@@ -53,11 +52,9 @@ $(document).on('turbolinks:load', function () {
 
     });
 
-});
-//******************************************************************************
 
-//Show/Hide New Post Widget **********************************************************
-$(document).on('turbolinks:load', function () {
+//generate PDF Label **********************************************************
+
 
     // $("input").keypress(function(event) {
     //     if (event.which == 13) {
@@ -108,7 +105,64 @@ $(document).on('turbolinks:load', function () {
     });
 
 
+//conditional formatting of labels *********************************************
+
+    var status_text = $(".status :selected(Review)")
+    var label_container = $(".label-container");
+    var green = "#28a745";
+    var blue = "#007bff";
+    var yellow = "#ffc107";
+    var red = "#dc3545";
+
+
+    $("#items-left").each(function() {
+        if ($(this).text() == "0") {
+            $(this).parent().removeClass("bg-warning");
+            $(this).parent().removeClass("text-dark");
+            $(this).parent().css("background", green);
+            $(this).css({"color": "white", "font-weight": "bold"});
+            $(this).parent().css({"color": "white", "font-weight": "bold"});
+        }
+    });
+
     
+
+    $(".status").each(function() {
+        if ($(this).val() == "Keep") {
+            $(this).parent().parent().parent().css("background", green);
+            $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+        }
+        if ($(this).val() == "Reject-Red") {
+            $(this).parent().parent().parent().css("background", red);
+            $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+        }
+        if ($(this).val() == "Reject-Blue") {
+            $(this).parent().parent().parent().css("background", blue);
+            $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+        }
+        if ($(this).val() == "Reject-Yellow") {
+            $(this).parent().parent().parent().css("background", yellow);
+            $(this).siblings('.label-edit-label').css({"color": "black", "font-weight": "bold"});
+        }
+    });
+    $(".status").change(function() {
+        if ($(this).val() == "Keep") {
+            $(this).parent().parent().parent().css("background", green);
+            $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+        }
+        if ($(this).val() == "Reject-Red") {
+            $(this).parent().parent().parent().css("background", red);
+            $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+        }
+        if ($(this).val() == "Reject-Blue") {
+            $(this).parent().parent().parent().css("background", blue);
+            $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+        }
+        if ($(this).val() == "Reject-Yellow") {
+            $(this).parent().parent().parent().css("background", yellow);
+            $(this).siblings('.label-edit-label').css({"color": "black", "font-weight": "bold"});
+        }
+    });
 
 
 });

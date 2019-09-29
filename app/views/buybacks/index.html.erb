@@ -8,7 +8,7 @@
 <% end %>
 <br>
 <center>
-    <h1><% content_for :title, "Book Label Printer" %>Valore Label Printer</h1>
+    <h1><% content_for :title, "Book Label Printer" %>Valore Order Processing</h1>
 </center>
 <br>
 <br>
@@ -29,24 +29,42 @@
 
     <% @buybacks[0,1].each do |buyback|%>
         <center>
-            <button id="cmd" class="btn btn-success div-shadow print-button font-20"><i class="fas fa-print"></i> Print</button>
+            <button id="cmd" class="btn btn-success div-shadow print-button font-20"><i class="fas fa-print"></i> Print Labels</button>
         </center>
     <% end %>
     <br>
     <% @buybacks[0,1].each do |buyback|%>
         <center>
-            Order Number: <a href="/?search=<%= @order_id %>&initials=<%= params[:initials] %>" target="_self"><b><%= @order_id %></b></a> | Total Boxes in Order: <b><%= @boxcount.count %></b>
-            <% if @order_id != params[:search] %>
-                 | Box Number: <b><%= buyback.tracking_number %></b>
-                <br>
-                <br>
-                Total Items in Box: <b><%= @buybacks.count %></b>
-            <% else %>
-                <br>
-                <br>
-                Total Items in Order: <b><%= @buybacks.count %></b>
-            <% end %>
+            <div class='container card card-body flex-row div-shadow mt-4 bg-light'>
+                <div class='card card-body m-3 text-dark div-shadow'>
+                    Order Number: <a href="/buybacks?search=<%= @order_id %>" target="_self"><b><%= @order_id %></b></a>
+                </div>
+                <div class='card card-body m-3 text-dark div-shadow'>
+                    Total Boxes in Order: <b><%= @boxcount.count %></b>
+                </div>
+                <% if @order_id != params[:search] %>
+                    <div class='card card-body m-3 text-dark div-shadow'>
+                        Box Number: <b><%= buyback.tracking_number %></b>
+                    </div>
+                    <div class='card card-body m-3 text-dark div-shadow'>
+                        Total Items in Box: <b><%= @buybacks.count %></b>
+                    </div>
+                <% else %>
+                    <div class='card card-body m-3 text-dark div-shadow'>
+                        Total Items in Order: <b><%= @buybacks.count %></b>
+                    </div>
+                <% end %>
+                <div class='card card-body m-3 text-dark bg-warning div-shadow'>
+                    Items to Review: <span id='items-left'><b><%= @buybacks.where(status: "Review").count %></b></span>
+                </div>
+            </div>
         </center>
+        <% if @order_id == params[:search] %>
+            <div class='container card card-body mt-0 pb-0 no-shadow no-border d-flex flex-row align-items-center'>
+                <a href="/buybacks.csv?search=<%= @order_id %>" target="_self" class='btn btn-primary div-shadow ml-3'><b>Download Valore File</b></a>
+                <a href="/buybacks.csv?search=<%= @order_id %>" target="_self" class='btn btn-secondary div-shadow ml-3'><b>Returns</b></a>
+            </div>
+        <% end %>
     <% end %>
 
     <div id="content">

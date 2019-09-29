@@ -6,6 +6,8 @@ class BuybacksController < ApplicationController
     @all_buybacks = Buyback.all.order("created_at DESC")
     if params[:search]
       @buybacks = Buyback.search(params[:search]).order("buyback_id DESC")
+      @buybacks_keep = Buyback.search(params[:search]).where(status: "Keep").order("buyback_id DESC")
+      
       
 
       b = @buybacks
@@ -16,6 +18,10 @@ class BuybacksController < ApplicationController
 
       @boxcount = Buyback.search(@order_id).group(:tracking_number).count
       
+      respond_to do |format|
+        format.html
+        format.csv { send_data @buybacks_keep.to_csv, filename: "valore-#{@order_id}-#{Date.today}.csv" }
+      end
 
     else
 
@@ -49,7 +55,7 @@ class BuybacksController < ApplicationController
     
   
 
-    url = "/?search=" + @tracking_number + "#" + @buyback_id
+    url = "/buybacks?search=" + @tracking_number + "#" + @buyback_id
     
     if @buyback.update_attributes(buyback_params)
       flash[:success] = "Task updated!"
@@ -68,6 +74,7 @@ class BuybacksController < ApplicationController
   #   params.require(:buyback).permit(:file, :destination)
   # end
 
+  
   private def buyback_params
     params.require(:buyback).permit(:file, :destination, :notes, :status, :initials) 
  end

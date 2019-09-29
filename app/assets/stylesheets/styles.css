@@ -36,6 +36,10 @@
     font-size: 20px;
 }
 
+.no-shadow {
+  box-shadow: unset;
+}
+
 .font-20 {
     font-size: 20px;
 }

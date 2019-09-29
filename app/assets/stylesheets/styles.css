@@ -60,6 +60,11 @@
     /* box-shadow: 0 0px 2px rgba(0, 0, 0, .45); */
   }
 
+  .text-shadow {
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.50);
+    /* box-shadow: 0 0px 2px rgba(0, 0, 0, .45); */
+  }
+
   .search-input {
     display: inline-block;
     background: #fff;
@@ -177,7 +182,40 @@
     width: 160px;
   }
 
+  .label-image-container {
+    width: 160px;
+    /* overflow: hidden; */
+  }
+
   .notes {
     height: 100px !important;
   }
 
+  .label-image {
+    /* background-image: url("https://pictures.abebooks.com/isbn/9780131383173-us.jpg"); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 150px;
+  }
+
+  .label-check {
+    display: flex;
+    height: 125px;
+    font-size: 80px;
+  }
+
+  .complete {
+    display: none;
+  }
+
+  .reject {
+    display: none;
+  }
+
+  .warn {
+    display: none;
+  }
+
+  .icon-wrap {
+    padding-top: 20px;
+  }

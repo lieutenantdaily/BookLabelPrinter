@@ -5,8 +5,8 @@ class BuybacksController < ApplicationController
   def index
     @all_buybacks = Buyback.all.order("created_at DESC")
     if params[:search]
-      @buybacks = Buyback.search(params[:search]).order("buyback_id DESC")
-      @buybacks_keep = Buyback.search(params[:search]).where(status: "Keep").order("buyback_id DESC")
+      @buybacks = Buyback.search(params[:search]).order("isbn ASC")
+      @buybacks_keep = Buyback.search(params[:search]).where(status: "Keep").order("isbn ASC")
       
       
 
@@ -69,11 +69,6 @@ class BuybacksController < ApplicationController
     flash[:notice] = "Buybacks uploaded successfully"
     redirect_to home_path 
   end
-
-  # def buyback_params
-  #   params.require(:buyback).permit(:file, :destination)
-  # end
-
   
   private def buyback_params
     params.require(:buyback).permit(:file, :destination, :notes, :status, :initials) 

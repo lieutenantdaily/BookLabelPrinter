@@ -37,7 +37,7 @@ class Buyback < ApplicationRecord
     
     def self.search(search)
         # where"order_id LIKE ? OR tracking_number LIKE ?", "%#{search}%", "%#{search}%" 
-        where(order_id: search).or(where(tracking_number: search))
+        where(order_id: search).or(where(tracking_number: search)).or(where(buyback_id: search))
         # if search
         #     order = Buyback.find_by(order_id: search)
         #     if order

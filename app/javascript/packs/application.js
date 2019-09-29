@@ -113,6 +113,7 @@ $(document).on('turbolinks:load', function () {
     var blue = "#007bff";
     var yellow = "#ffc107";
     var red = "#dc3545";
+    var purple = "#563d7c";
 
 
     $("#items-left").each(function() {
@@ -128,39 +129,77 @@ $(document).on('turbolinks:load', function () {
     
 
     $(".status").each(function() {
-        if ($(this).val() == "Keep") {
+        if ($(this).val() == "Keep-Acceptable" || $(this).val() == "Keep-Good" || $(this).val() == "Keep-Very Good" || $(this).val() == "Keep-Like New" || $(this).val() == "Keep-New") {
             $(this).parent().parent().parent().css("background", green);
             $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+            $(this).parent().parent().parent().children('.label-image-container').children('.complete').fadeIn(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.complete').children('.icon-wrap').css({"color": "white"});
         }
         if ($(this).val() == "Reject-Red") {
             $(this).parent().parent().parent().css("background", red);
             $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+            $(this).parent().parent().parent().children('.label-image-container').children('.reject').fadeIn(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.reject').children('.icon-wrap').css({"color": "white"});
         }
         if ($(this).val() == "Reject-Blue") {
             $(this).parent().parent().parent().css("background", blue);
             $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+            $(this).parent().parent().parent().children('.label-image-container').children('.reject').fadeIn(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.reject').children('.icon-wrap').css({"color": "white"});
         }
         if ($(this).val() == "Reject-Yellow") {
             $(this).parent().parent().parent().css("background", yellow);
             $(this).siblings('.label-edit-label').css({"color": "black", "font-weight": "bold"});
+            $(this).parent().parent().parent().children('.label-image-container').children('.reject').fadeIn(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.reject').children('.icon-wrap').css({"color": "black"});
+        }
+        if ($(this).val() == "Missing") {
+            $(this).parent().parent().parent().css("background", purple);
+            $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+            $(this).parent().parent().parent().children('.label-image-container').children('.warn').fadeIn(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.warn').children('.icon-wrap').css({"color": "white"});
         }
     });
     $(".status").change(function() {
-        if ($(this).val() == "Keep") {
+        if ($(this).val() == "Keep-Acceptable" || $(this).val() == "Keep-Good" || $(this).val() == "Keep-Very Good" || $(this).val() == "Keep-Like New" || $(this).val() == "Keep-New") {
             $(this).parent().parent().parent().css("background", green);
             $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+            $(this).parent().parent().parent().children('.label-image-container').children('.reject').fadeOut(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.warn').fadeOut(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.complete').fadeIn(500);
+            $(this).parent().parent().parent().children('.label-image-container').children('.complete').children('.icon-wrap').css({"color": "white"});
         }
         if ($(this).val() == "Reject-Red") {
             $(this).parent().parent().parent().css("background", red);
             $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+            $(this).parent().parent().parent().children('.label-image-container').children('.complete').fadeOut(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.warn').fadeOut(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.reject').fadeIn(500);
+            $(this).parent().parent().parent().children('.label-image-container').children('.reject').children('.icon-wrap').css({"color": "white"});
         }
         if ($(this).val() == "Reject-Blue") {
             $(this).parent().parent().parent().css("background", blue);
             $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+            $(this).parent().parent().parent().children('.label-image-container').children('.complete').fadeOut(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.warn').fadeOut(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.reject').fadeIn(500);
+            $(this).parent().parent().parent().children('.label-image-container').children('.reject').children('.icon-wrap').css({"color": "white"});
         }
         if ($(this).val() == "Reject-Yellow") {
             $(this).parent().parent().parent().css("background", yellow);
             $(this).siblings('.label-edit-label').css({"color": "black", "font-weight": "bold"});
+            $(this).parent().parent().parent().children('.label-image-container').children('.complete').fadeOut(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.warn').fadeOut(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.reject').fadeIn(500);
+            $(this).parent().parent().parent().children('.label-image-container').children('.reject').children('.icon-wrap').css({"color": "black"});
+        }
+        if ($(this).val() == "Missing") {
+            $(this).parent().parent().parent().css("background", purple);
+            $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+            $(this).parent().parent().parent().children('.label-image-container').children('.complete').fadeOut(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.reject').fadeOut(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.warn').fadeIn(500);
+            $(this).parent().parent().parent().children('.label-image-container').children('.warn').children('.icon-wrap').css({"color": "white"});
         }
     });
 

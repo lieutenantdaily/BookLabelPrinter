@@ -3,28 +3,53 @@
 <br>
 <%= form_for :buyback, url: buyback_path(buyback), method: :patch do |f| %>
     <div id='<%= buyback.buyback_id %>' class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
+        <div class='d-flex align-items-end flex-column card card-body label-image-container mr-3 label-edit p-0 no-border no-shadow'>
+            <div class='card w-100 m-0 label-edit label-image div-shadow p-0' style='background-image: url("https://pictures.abebooks.com/isbn/<%= buyback.isbn %>-us.jpg");'>
+
+            </div>
+            <div class='w-100 m-0 label-edit label-check p-0 align-items-center complete'>
+                <div class='w-100 text-center icon-wrap'>
+                    <i class="fas fa-check-circle text-shadow"></i>
+                </div>
+            </div>
+            <div class='w-100 m-0 label-edit label-check p-0 align-items-center warn'>
+                <div class='w-100 text-center icon-wrap'>
+                    <i class="fas fa-exclamation-circle text-shadow"></i>
+                </div>
+            </div>
+            <div class='w-100 m-0 label-edit label-check p-0 align-items-center reject'>
+                <div class='w-100 text-center icon-wrap'>
+                    <i class="fas fa-ban text-shadow"></i>
+                </div>
+            </div>
+        </div>
+
         <div id="label" class="container card card-body label-font div-shadow label">
             <p>
                 <h2><b><%= truncate(buyback.title, escape: false, :length => 42) %></b></h2>
             </p> 
             <p>
-                <h1><a href="http://metabase.textbookmaniac.com/dashboard/11?isbn=<%= buyback.isbn %>" target="_blank"><%= buyback.isbn %></a> - - [ A ]  [ G ]  [ VG ]  [ LN ]  [ N ]</h1>
+                <h1><a href="http://metabase.textbookmaniac.com/dashboard/11?isbn=<%= buyback.isbn %>" target="_blank"><%= buyback.isbn %></a>  <%= buyback.status.gsub("Keep-", "| ").gsub("Reject-", "| ").gsub("Missing", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Review", " [ A ] [ G ] [ VG ] [ LN ] [ N ]") %></h1>
             </p> 
             <p>
                 <h1><%= buyback.restricted %><%= buyback.source %> | <b><%= buyback.buyback_id %>-1A-<%= buyback.price.gsub(".", "-") %></b></h1>
             </p> 
             <p class="no-bottom">
-            <h2><a href="https://source.valorebooks.com/refunds/index/<%= buyback.order_id %>" target="_blank"><%= buyback.order_id %></a> | <%= buyback.o_created_at[0,5] %> | <%= buyback.updated_by %></h2>
+            <h2><a href="https://source.valorebooks.com/refunds/index/<%= buyback.order_id %>" target="_blank"><%= buyback.order_id %></a> | <%= buyback.o_created_at[0,5] %> | <%= buyback.updated_by %>
+            <% if buyback.notes.present? %>
+             | <%= buyback.notes %>
+            <% end %>
+            </h2>
             </p> 
         </div>
         
         <div class='d-flex align-items-end flex-column label-save ml-4 label-edit'>
             <div class='w-100 align-content-stretch label-edit'>
                 <%= f.label :status, "Status: ", class: 'label-edit-label' %>
-                <%= f.select(:status, [ 'Review', 'Keep', 'Reject-Red', 'Reject-Blue', 'Reject-Yellow' ], { :selected => buyback.status }, { :class => 'w-100 status' }) %>
+                <%= f.select(:status, [ 'Review', 'Keep-Acceptable', 'Keep-Good', 'Keep-Very Good', 'Keep-Like New', 'Keep-New', 'Reject-Red', 'Reject-Blue', 'Reject-Yellow', 'Missing' ], { :selected => buyback.status }, { :class => 'w-100 status' }) %>
                 <hr>
                 <%= f.label :notes, "Notes: ", class: 'label-edit-label' %>
-                <%= f.text_area(:notes, { :class => 'form-control div-shadow notes', :value => buyback.notes }) %>
+                <%= f.text_area(:notes, { :class => 'form-control div-shadow notes', :value => buyback.notes, :onkeyup => 'this.value = this.value.toUpperCase();' }) %>
             </div>
             
             <div class='mt-auto w-100 label-edit'>

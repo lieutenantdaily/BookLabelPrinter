@@ -66,10 +66,17 @@
             </div>
         </center>
         <% if @order_id == params[:search] %>
-            <div class='container card card-body mt-0 pb-0 no-shadow no-border d-flex flex-row align-items-center'>
-                <a href="/buybacks.csv?search=<%= @order_id %>" target="_self" class='btn btn-primary div-shadow ml-3'><b>Download Valore File</b></a>
-                <a href="/buybacks.csv2?search=<%= @order_id %>" target="_self" class='btn btn-secondary div-shadow ml-3'><b>Download Returns</b></a>
-                <a href="/buybacks.csv3?search=<%= @order_id %>" target="_self" class='btn btn-light div-shadow ml-3'><b>Download All</b></a>
+            <div class='container card card-body mt-0 mb-0 pb-0 no-shadow no-border d-flex flex-row justify-content-center'>
+                <div class='btn btn-secondary div-shadow m-3 mb-0 font-20'>Total: <b>$<%= number_with_delimiter(@sum_total, :delimiter => ',') %></b></div>
+                <div class='btn btn-success div-shadow m-3 mb-0 font-20'>Keep: <b>$<%= number_with_delimiter(@sum_keep, :delimiter => ',') %></b></div>
+                <div class='btn btn-danger div-shadow m-3 mb-0 font-20'>Rejected: <b>$<%= number_with_delimiter(@sum_reject, :delimiter => ',') %></b></div>
+                <div class='btn btn-dark purple div-shadow m-3 mb-0 font-20'>Missing: <b>$<%= number_with_delimiter(@sum_missing, :delimiter => ',') %></b></div>
+            </div>
+            <hr class='container'>
+            <div class='container card card-body mt-0 pb-0 pt-0 no-shadow no-border d-flex flex-row justify-content-center'>
+                <a href="/buybacks.csv?search=<%= @order_id %>" target="_self" class='btn btn-primary div-shadow m-3'><b>Download Valore File</b></a>
+                <a href="/buybacks.csv2?search=<%= @order_id %>" target="_self" class='btn btn-secondary div-shadow m-3'><b>Download Returns</b></a>
+                <a href="/buybacks.csv3?search=<%= @order_id %>" target="_self" class='btn btn-light div-shadow m-3'><b>Download All</b></a>
             </div>
         <% end %>
     <% end %>
@@ -89,4 +96,4 @@
 <% end %>
 <br>
 
-<%= $format_params %>
+

@@ -61,8 +61,8 @@ class Buyback < ApplicationRecord
     def self.to_csv2(options = {})
         require 'csv'
         CSV.generate(options) do |csv|
-            columns = %w(o_created_at buyback_id isbn title price tracking_number status notes)
-            csv << ['ORDER DATE', 'ITEM ID', 'ISBN', 'TITLE', 'PRICE', 'BOX ID', 'STATUS', 'NOTES']
+            columns = %w(o_created_at buyback_id isbn title author price tracking_number status notes)
+            csv << ['ORDER DATE', 'ITEM ID', 'ISBN', 'TITLE', 'AUTHOR', 'PRICE', 'BOX ID', 'STATUS', 'NOTES']
             all.each do |product|
                 csv << product.attributes.values_at(*columns)
             end
@@ -72,8 +72,8 @@ class Buyback < ApplicationRecord
     def self.to_csv3(options = {})
         require 'csv'
         CSV.generate(options) do |csv|
-            columns = %w(o_created_at buyback_id isbn title price tracking_number status notes)
-            csv << ['ORDER DATE', 'ITEM ID', 'ISBN', 'TITLE', 'PRICE', 'BOX ID', 'STATUS', 'NOTES']
+            columns = %w(o_created_at buyback_id isbn title author price tracking_number status notes)
+            csv << ['ORDER DATE', 'ITEM ID', 'ISBN', 'TITLE', 'AUTHOR', 'PRICE', 'BOX ID', 'STATUS', 'NOTES']
             all.each do |product|
                 csv << product.attributes.values_at(*columns)
             end

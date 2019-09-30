@@ -44,19 +44,23 @@
                 </div>
                 <% if @order_id != params[:search] %>
                     <div class='card card-body m-3 text-dark div-shadow'>
-                        Box Number: <b><%= buyback.tracking_number %></b>
+                        Box Number: <a href="/buybacks?search=<%= @box_id %>" target="_self"><b><%= buyback.tracking_number %></b></a>
                     </div>
                     <div class='card card-body m-3 text-dark div-shadow'>
-                        Total Items in Box: <b><%= @buybacks.count %></b>
+                        Total Items in Box: <b><%= @filtered_by_box.count %></b>
+                    </div>
+                    <div class='card card-body m-3 text-dark bg-warning div-shadow'>
+                        Items to Review: <span id='items-left'><b><%= @filtered_by_box_reviewed.count %></b></span>
                     </div>
                 <% else %>
                     <div class='card card-body m-3 text-dark div-shadow'>
                         Total Items in Order: <b><%= @buybacks.count %></b>
                     </div>
+                    <div class='card card-body m-3 text-dark bg-warning div-shadow'>
+                        Items to Review: <span id='items-left'><b><%= @buybacks.where(status: "Review").count %></b></span>
+                    </div>
                 <% end %>
-                <div class='card card-body m-3 text-dark bg-warning div-shadow'>
-                    Items to Review: <span id='items-left'><b><%= @buybacks.where(status: "Review").count %></b></span>
-                </div>
+                
             </div>
         </center>
         <% if @order_id == params[:search] %>
@@ -82,4 +86,3 @@
 <% end %>
 <br>
 <br>
-<span id='hidden-search-div'><%= @search %></span>

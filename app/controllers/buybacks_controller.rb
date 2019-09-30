@@ -6,7 +6,8 @@ class BuybacksController < ApplicationController
     @all_buybacks = Buyback.all.order("created_at DESC")
     if params[:search]
       @buybacks = Buyback.search(params[:search]).order("isbn ASC")
-      @buybacks_keep = Buyback.search(params[:search]).where(status: "Keep").order("isbn ASC")
+      @buybacks_keep = Buyback.search(params[:search]).where(status: ["Keep-Acceptable", "Keep-Good", "Keep-Very Good", "Keep-Like New", "Keep-New"]).order("isbn ASC")
+      $search_params = params[:search]
       
       
 
@@ -14,9 +15,12 @@ class BuybacksController < ApplicationController
 
       b[0,1].each do |bb|
         @order_id = bb.order_id
+        @box_id = bb.tracking_number
       end
 
       @boxcount = Buyback.search(@order_id).group(:tracking_number).count
+      @filtered_by_box = Buyback.search(@box_id)
+      @filtered_by_box_reviewed = @filtered_by_box.where(status: "Review")
       
       respond_to do |format|
         format.html
@@ -55,7 +59,7 @@ class BuybacksController < ApplicationController
     
   
 
-    url = "/buybacks?search=" + @tracking_number + "#" + @buyback_id
+    url = "/buybacks?search=" + $search_params + "#" + @buyback_id
     
     if @buyback.update_attributes(buyback_params)
       flash[:success] = "Task updated!"

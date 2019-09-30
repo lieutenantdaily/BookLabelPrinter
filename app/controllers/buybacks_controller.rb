@@ -23,27 +23,29 @@ class BuybacksController < ApplicationController
       @filtered_by_box = Buyback.search(@box_id)
       @filtered_by_box_reviewed = @filtered_by_box.where(status: "Review")
 
+      if @buybacks.present?
+        if $search_params == @order_id
+          sum_total_sql = "SELECT SUM(CAST( REPLACE(price, '$', '') AS FLOAT)) AS 'total' FROM buybacks WHERE order_id = " + @order_id
+          sum_total_array = ActiveRecord::Base.connection.execute(sum_total_sql)
+          @sum_total = sum_total_array.to_s.gsub('[{"total"=>', '').gsub('}]', '')
+          @sum_total = @sum_total.to_f.round(2)
 
-      sum_total_sql = "SELECT SUM(CAST( REPLACE(price, '$', '') AS FLOAT)) AS 'total' FROM buybacks WHERE order_id = " + @order_id
-      sum_total_array = ActiveRecord::Base.connection.execute(sum_total_sql)
-      @sum_total = sum_total_array.to_s.gsub('[{"total"=>', '').gsub('}]', '')
-      @sum_total = @sum_total.to_f.round(2)
+          sum_reject_sql = "SELECT SUM(CAST( REPLACE(price, '$', '') AS FLOAT)) AS 'total' FROM buybacks WHERE status IN ('Reject-Red', 'Reject-Yellow', 'Reject-Blue') AND order_id = " + @order_id
+          sum_reject_array = ActiveRecord::Base.connection.execute(sum_reject_sql)
+          @sum_reject = sum_reject_array.to_s.gsub('[{"total"=>', '').gsub('}]', '')
+          @sum_reject = @sum_reject.to_f.round(2)
 
-      sum_reject_sql = "SELECT SUM(CAST( REPLACE(price, '$', '') AS FLOAT)) AS 'total' FROM buybacks WHERE status IN ('Reject-Red', 'Reject-Yellow', 'Reject-Blue') AND order_id = " + @order_id
-      sum_reject_array = ActiveRecord::Base.connection.execute(sum_reject_sql)
-      @sum_reject = sum_reject_array.to_s.gsub('[{"total"=>', '').gsub('}]', '')
-      @sum_reject = @sum_reject.to_f.round(2)
+          sum_keep_sql = "SELECT SUM(CAST( REPLACE(price, '$', '') AS FLOAT)) AS 'total' FROM buybacks WHERE status IN ('Keep-Acceptable', 'Keep-Good', 'Keep-Very Good', 'Keep-Like New', 'Keep-New') AND order_id = " + @order_id
+          sum_keep_array = ActiveRecord::Base.connection.execute(sum_keep_sql)
+          @sum_keep = sum_keep_array.to_s.gsub('[{"total"=>', '').gsub('}]', '')
+          @sum_keep = @sum_keep.to_f.round(2)
 
-      sum_keep_sql = "SELECT SUM(CAST( REPLACE(price, '$', '') AS FLOAT)) AS 'total' FROM buybacks WHERE status IN ('Keep-Acceptable', 'Keep-Good', 'Keep-Very Good', 'Keep-Like New', 'Keep-New') AND order_id = " + @order_id
-      sum_keep_array = ActiveRecord::Base.connection.execute(sum_keep_sql)
-      @sum_keep = sum_keep_array.to_s.gsub('[{"total"=>', '').gsub('}]', '')
-      @sum_keep = @sum_keep.to_f.round(2)
-
-      sum_missing_sql = "SELECT SUM(CAST( REPLACE(price, '$', '') AS FLOAT)) AS 'total' FROM buybacks WHERE status IN ('Missing') AND order_id = " + @order_id
-      sum_missing_array = ActiveRecord::Base.connection.execute(sum_missing_sql)
-      @sum_missing = sum_missing_array.to_s.gsub('[{"total"=>', '').gsub('}]', '')
-      @sum_missing = @sum_missing.to_f.round(2)
-      
+          sum_missing_sql = "SELECT SUM(CAST( REPLACE(price, '$', '') AS FLOAT)) AS 'total' FROM buybacks WHERE status IN ('Missing') AND order_id = " + @order_id
+          sum_missing_array = ActiveRecord::Base.connection.execute(sum_missing_sql)
+          @sum_missing = sum_missing_array.to_s.gsub('[{"total"=>', '').gsub('}]', '')
+          @sum_missing = @sum_missing.to_f.round(2)
+        end
+      end
       
 
       # @sum_keep = @sum_total.where(status: ["Keep-Acceptable", "Keep-Good", "Keep-Very Good", "Keep-Like New", "Keep-New"])

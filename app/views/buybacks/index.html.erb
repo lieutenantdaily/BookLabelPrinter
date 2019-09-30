@@ -13,16 +13,18 @@
 <br>
 <br>
 <center>
-    <%= form_tag(buybacks_path, :method => "get", id: "search-form") do %>
-        <%= text_field_tag :search, params[:search], placeholder: "Order or Box Number", :minlength => 6, onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'input-shadow search-input div-shadow font-20' %>
+    <%= form_tag(buybacks_path, :method => "get", id: "search-form", class: 'w-50 m-10 inline-block input-shadow div-shadow border-none') do %>
+        <div class="d-flex flex-row appearance-none h-auto text-gray-700 input-shadow overflow-hidden border-none">
+            
+            <%= text_field_tag :search, params[:search], placeholder: "Order, Box or Item Number", onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'inline-block appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20', id: "search-field" %>
 
-        <%= button_tag type: 'submit', class: "btn btn-primary div-shadow font-20", id: "submit-button" do %>
-            Search <i class="fas fa-search"></i>
-        <% end %>
-  
+            <%= button_tag type: 'submit', class: "appearance-none min-w-s max-w-s border-none bg-primary text-white", id: "submit-button-search" do %>
+                <i class="fas fa-search m-0 p-3 max-w-s min-w-s text-center border-none font-20"></i>
+            <% end %>
+        </div>
     <% end %>
     <br>
-    <br>
+    <br>    
 </center>
 
 <% if @buybacks.present? %>
@@ -66,7 +68,8 @@
         <% if @order_id == params[:search] %>
             <div class='container card card-body mt-0 pb-0 no-shadow no-border d-flex flex-row align-items-center'>
                 <a href="/buybacks.csv?search=<%= @order_id %>" target="_self" class='btn btn-primary div-shadow ml-3'><b>Download Valore File</b></a>
-                <a href="/buybacks.csv?search=<%= @order_id %>" target="_self" class='btn btn-secondary div-shadow ml-3'><b>Returns</b></a>
+                <a href="/buybacks.csv2?search=<%= @order_id %>" target="_self" class='btn btn-secondary div-shadow ml-3'><b>Download Returns</b></a>
+                <a href="/buybacks.csv3?search=<%= @order_id %>" target="_self" class='btn btn-light div-shadow ml-3'><b>Download All</b></a>
             </div>
         <% end %>
     <% end %>
@@ -85,4 +88,5 @@
     </center>
 <% end %>
 <br>
-<br>
+
+<%= $format_params %>

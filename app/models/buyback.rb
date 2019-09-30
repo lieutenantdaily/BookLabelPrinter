@@ -19,8 +19,9 @@ class Buyback < ApplicationRecord
             buyback_hash.buyback_id = row[1]
             buyback_hash.isbn = row[2]
             buyback_hash.title = row[3]
+            buyback_hash.title = buyback_hash.title.titleize if buyback_hash.title == buyback_hash.title.upcase
             buyback_hash.price = row[5]
-            buyback_hash.price = buyback_hash.price
+            # buyback_hash.price = buyback_hash.price
             buyback_hash.tracking_number = row[6]
          
             
@@ -77,6 +78,19 @@ class Buyback < ApplicationRecord
                 csv << product.attributes.values_at(*columns)
             end
         end
+    end
+
+    def titleize(str)
+        str.capitalize!  # capitalize the first word in case it is part of the no words array
+        words_no_cap = ["and", "or", "the", "over", "to", "the", "a", "but"]
+        phrase = str.split(" ").map {|word| 
+            if words_no_cap.include?(word) 
+                word
+            else
+                word.capitalize
+            end
+        }.join(" ") # I replaced the "end" in "end.join(" ") with "}" because it wasn't working in Ruby 2.1.1
+      phrase  # returns the phrase with all the excluded words
     end
 
 

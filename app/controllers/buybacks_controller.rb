@@ -7,6 +7,7 @@ class BuybacksController < ApplicationController
     if params[:search]
       @buybacks = Buyback.search(params[:search]).order("isbn ASC")
       @buybacks_keep = Buyback.search(params[:search]).where(status: ["Keep-Acceptable", "Keep-Good", "Keep-Very Good", "Keep-Like New", "Keep-New"]).order("isbn ASC")
+      @buybacks_reject = Buyback.search(params[:search]).where(status: ["Reject-Red", "Reject-Yellow", "Reject-Blue"]).order("isbn ASC")
       $search_params = params[:search]
       
       
@@ -24,7 +25,9 @@ class BuybacksController < ApplicationController
       
       respond_to do |format|
         format.html
-        format.csv { send_data @buybacks_keep.to_csv, filename: "valore-#{@order_id}-#{Date.today}.csv" }
+          format.csv { send_data @buybacks_keep.to_csv, filename: "valore-keep-#{@order_id}-#{Date.today}.csv" }
+          format.csv2  { send_data @buybacks_reject.to_csv2, filename: "valore-returns-#{@order_id}-#{Date.today}.csv" }
+          format.csv3  { send_data @buybacks.to_csv3, filename: "valore-all-#{@order_id}-#{Date.today}.csv" }
       end
 
     else

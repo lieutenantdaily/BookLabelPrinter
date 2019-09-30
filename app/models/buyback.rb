@@ -19,7 +19,7 @@ class Buyback < ApplicationRecord
             buyback_hash.buyback_id = row[1]
             buyback_hash.isbn = row[2]
             buyback_hash.title = row[3]
-            buyback_hash.price = row[5].gsub("$", "")
+            buyback_hash.price = row[5]
             buyback_hash.price = buyback_hash.price
             buyback_hash.tracking_number = row[6]
          
@@ -56,6 +56,32 @@ class Buyback < ApplicationRecord
             end
         end
     end
+
+    def self.to_csv2(options = {})
+        require 'csv'
+        CSV.generate(options) do |csv|
+            columns = %w(o_created_at buyback_id isbn title price tracking_number status notes)
+            csv << ['ORDER DATE', 'ITEM ID', 'ISBN', 'TITLE', 'PRICE', 'BOX ID', 'STATUS', 'NOTES']
+            all.each do |product|
+                csv << product.attributes.values_at(*columns)
+            end
+        end
+    end
+
+    def self.to_csv3(options = {})
+        require 'csv'
+        CSV.generate(options) do |csv|
+            columns = %w(o_created_at buyback_id isbn title price tracking_number status notes)
+            csv << ['ORDER DATE', 'ITEM ID', 'ISBN', 'TITLE', 'PRICE', 'BOX ID', 'STATUS', 'NOTES']
+            all.each do |product|
+                csv << product.attributes.values_at(*columns)
+            end
+        end
+    end
+
+
+
+    
 
 
 end

@@ -30,7 +30,7 @@
 
             <div class='card p-3 pl-4 div-shadow bg-muted text-dark'> 
                 <p>
-                    <h1><a href="http://metabase.textbookmaniac.com/dashboard/11?isbn=<%= buyback.isbn %>" target="_blank"><%= buyback.isbn %></a>  <%= buyback.status.gsub("Keep-", "| ").gsub("Reject-", "| ").gsub("Missing", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Review", " [ A ] [ G ] [ VG ] [ LN ] [ N ]") %></h1>
+                    <h1><a href="http://metabase.textbookmaniac.com/dashboard/11?isbn=<%= buyback.isbn %>" target="_blank"><%= buyback.isbn %></a>  <%= buyback.status.gsub("Keep-", "| ").gsub("Reject-Red", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Reject-Blue", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Reject-Yellow", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Missing", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Review", " [ A ] [ G ] [ VG ] [ LN ] [ N ]") %></h1>
                 </p> 
                 <p>
                     <h1><%= buyback.restricted %><%= buyback.source %> | <b><%= buyback.buyback_id %>-1A-<%= buyback.price.gsub(".", "-").gsub("$", "") %></b></h1>
@@ -53,7 +53,6 @@
                 <%= f.label :notes, "Notes: ", class: 'label-edit-label' %>
                 <%= f.text_area(:notes, { :class => 'form-control div-shadow notes', :value => buyback.notes, :onkeyup => 'this.value = this.value.toUpperCase();' }) %>
             </div>
-            
             <div class='mt-auto w-100 label-edit'>
                 <%= button_tag type: 'submit', class: "btn btn-info div-shadow font-20 w-100" do %>
                     <i class="fas fa-save fa-fw btn-text-dark-large"></i>

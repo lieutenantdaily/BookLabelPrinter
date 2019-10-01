@@ -19,7 +19,10 @@ require("channels")
 //*****************************************************************************
 $(document).on('turbolinks:load', function () {
 //generate PDF Label **********************************************************    
-    $('#cmd').click(function () {
+    var url = $(location).attr('href');
+    var url_repl = url.replace("&script=PRINT-VX", "")
+
+    function print_labels() {
         $('.label-edit').detach();
         var doc = new jsPDF('l', 'mm', [28.575 * 2.3, 88.9 * 2.3]);
         doc.setFont("arial");
@@ -35,7 +38,7 @@ $(document).on('turbolinks:load', function () {
         });
         doc.autoPrint();
         doc.save('labels.pdf');
-        location.reload();
+        location.replace(url_repl);
 
         // var doc = new jsPDF('l', 'mm', [28.575 * 2.3, 88.9 * 2.3]);
         // doc.setFont("arial");
@@ -49,7 +52,15 @@ $(document).on('turbolinks:load', function () {
         //     doc.autoPrint();
         //     doc.save('labels.pdf');
         // });
+    }
 
+    if ((/PRINT-VX/.test(url))) {
+        print_labels();
+    }
+
+
+    $('#cmd, #print').click(function () {
+        print_labels();
     });
 
 

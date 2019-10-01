@@ -7,7 +7,7 @@ class BuybacksController < ApplicationController
     if params[:search]
       @buybacks = Buyback.search(params[:search]).order("isbn ASC")
       @buybacks_keep = Buyback.search(params[:search]).where(status: ["Keep-Acceptable", "Keep-Good", "Keep-Very Good", "Keep-Like New", "Keep-New"]).order("isbn ASC")
-      @buybacks_reject = Buyback.search(params[:search]).where(status: ["Reject-Red", "Reject-Yellow", "Reject-Blue"]).order("isbn ASC")
+      @buybacks_reject = Buyback.search(params[:search]).where(status: ["Reject-Red", "Reject-Yellow", "Reject-Blue", "Missing"]).order("isbn ASC")
       $search_params = params[:search]
       
       
@@ -88,10 +88,12 @@ class BuybacksController < ApplicationController
     @tracking_number = b.tracking_number
     @buyback_id = b.buyback_id
     
-  
+    if $search_params == @buyback_id
+      url = "/buybacks?search=" + $search_params + "&script=PRINT-VX#" + @buyback_id
+    else
+      url = "/buybacks?search=" + $search_params + "#" + @buyback_id
+    end
 
-    url = "/buybacks?search=" + $search_params + "#" + @buyback_id
-    
     if @buyback.update_attributes(buyback_params)
       flash[:success] = "Task updated!"
       redirect_to url

@@ -94,7 +94,7 @@ class BuybacksController < ApplicationController
     @isbn = b.isbn
     @status = b.status
 
-    @filtered_buybacks = Buyback.filtered_search(@order_id).where(isbn: [@isbn]).where.not(buyback_id: [@buyback_id])
+    @filtered_buybacks = Buyback.filtered_search(@order_id).where(isbn: [@isbn]).where.not(buyback_id: [@buyback_id]).where.not(status: ["Reject-Red"])
     
     if $search_params == @buyback_id
       url = "/buybacks?search=" + $search_params + "&script=PRINT-VX#" + @buyback_id

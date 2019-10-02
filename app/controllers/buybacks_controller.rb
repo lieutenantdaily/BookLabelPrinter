@@ -96,13 +96,19 @@ class BuybacksController < ApplicationController
 
     @filtered_buybacks = Buyback.filtered_search(@order_id).where(isbn: [@isbn]).where.not(buyback_id: [@buyback_id]).where.not(status: ["Reject-Red"])
     
-    if $search_params == @buyback_id
-      url = "/buybacks?search=" + $search_params + "&script=PRINT-VX#" + @buyback_id
-    else
-      url = "/buybacks?search=" + $search_params + "#" + @buyback_id
-    end
+    
 
     if @buyback.update_attributes(buyback_params)
+      if $search_params == @buyback_id
+        if buyback_params[:status] == "Keep-Acceptable" || buyback_params[:status] == "Keep-Good" || buyback_params[:status] == "Keep-Very Good" || buyback_params[:status] == "Keep-Like New" || buyback_params[:status] == "Keep-New"
+          url = "/buybacks?search=" + $search_params + "&script=PRINT-VX#" + @buyback_id
+        else
+          url = "/buybacks?search=" + $search_params + "#" + @buyback_id
+        end
+      else
+        url = "/buybacks?search=" + $search_params + "#" + @buyback_id
+      end
+      
       if @status == "Reject-Yellow" || @status == "Reject-Blue"
       else
         if buyback_params[:status] == "Reject-Yellow" || buyback_params[:status] == "Reject-Blue"

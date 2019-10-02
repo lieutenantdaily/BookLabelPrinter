@@ -47,6 +47,17 @@ class Buyback < ApplicationRecord
         # end
     end
 
+    def self.filtered_search(filtered_search)
+        # where"order_id LIKE ? OR tracking_number LIKE ?", "%#{search}%", "%#{search}%" 
+        where(order_id: filtered_search)
+        # if search
+        #     order = Buyback.find_by(order_id: search)
+        #     if order
+        #         self.where(order_id: order)
+        #     end
+        # end
+    end
+
     def self.to_csv(options = {})
         require 'csv'
         CSV.generate(options) do |csv|

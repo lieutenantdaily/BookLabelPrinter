@@ -22,6 +22,11 @@
                     <i class="fas fa-ban text-shadow"></i>
                 </div>
             </div>
+            <div class='w-100 m-0 label-edit label-check p-0 align-items-center keep'>
+                <div class='w-100 text-center icon-wrap'>
+                    <i class="fas fa-money-bill-alt text-shadow"></i>
+                </div>
+            </div>
         </div>
 
         <div id="label" class="container card p-0 label-font no-shadow label">
@@ -30,7 +35,7 @@
 
             <div class='card p-3 pl-4 div-shadow bg-muted text-dark'> 
                 <p>
-                    <h1><a href="http://metabase.textbookmaniac.com/dashboard/11?isbn=<%= buyback.isbn %>" target="_blank" ><%= buyback.isbn %></a>  <%= buyback.status.gsub("Keep-", "| ").gsub("Reject-Red", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Reject-Blue", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Reject-Yellow", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Missing", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Review", " [ A ] [ G ] [ VG ] [ LN ] [ N ]") %></h1>
+                    <h1><a href="http://metabase.textbookmaniac.com/dashboard/11?isbn=<%= buyback.isbn %>" target="_blank" ><%= buyback.isbn %></a>  <%= buyback.status.gsub("Review-Keep", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Keep-", "| ").gsub("Reject-Red", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Reject-Blue", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Reject-Yellow", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Missing", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Review", " [ A ] [ G ] [ VG ] [ LN ] [ N ]") %></h1>
                 </p> 
                 <p>
                     <h1><%= buyback.restricted %><%= buyback.source %> | <b><%= buyback.buyback_id %>-1A-<%= buyback.price.gsub(".", "-").gsub("$", "") %></b></h1>
@@ -49,6 +54,7 @@
             <div class='w-100 align-content-stretch label-edit'>
                 <%= f.label :status, "Status: ", class: 'label-edit-label' %>
                 <%= f.select(:status, [ 'Review', 'Keep-Acceptable', 'Keep-Good', 'Keep-Very Good', 'Keep-Like New', 'Keep-New', 'Reject-Red', 'Reject-Blue', 'Reject-Yellow', 'Missing' ], { :selected => buyback.status }, { :class => 'w-100 status' }) %>
+                <div class='hidden-status d-none'><%= buyback.status %></div>
                 <hr>
                 <%= f.label :notes, "Notes: ", class: 'label-edit-label' %>
                 <%= f.text_area(:notes, { :class => 'form-control div-shadow notes', :value => buyback.notes, :onkeyup => 'this.value = this.value.toUpperCase();' }) %>

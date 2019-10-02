@@ -17,7 +17,12 @@ class BuybacksController < ApplicationController
       b[0,1].each do |bb|
         @order_id = bb.order_id
         @box_id = bb.tracking_number
+        @isbn = bb.isbn
       end
+
+      @filtered_buybacks = Buyback.filtered_search(@order_id).where(isbn: [@isbn])
+
+      
 
       @boxcount = Buyback.search(@order_id).group(:tracking_number).count
       @filtered_by_box = Buyback.search(@box_id)
@@ -83,10 +88,13 @@ class BuybacksController < ApplicationController
 
     b = @buyback
 
-
     @order_id = b.order_id
     @tracking_number = b.tracking_number
     @buyback_id = b.buyback_id
+    @isbn = b.isbn
+    @status = b.status
+
+    @filtered_buybacks = Buyback.filtered_search(@order_id).where(isbn: [@isbn]).where.not(buyback_id: [@buyback_id])
     
     if $search_params == @buyback_id
       url = "/buybacks?search=" + $search_params + "&script=PRINT-VX#" + @buyback_id
@@ -95,6 +103,20 @@ class BuybacksController < ApplicationController
     end
 
     if @buyback.update_attributes(buyback_params)
+      if @status == "Reject-Yellow" || @status == "Reject-Blue"
+      else
+        if buyback_params[:status] == "Reject-Yellow" || buyback_params[:status] == "Reject-Blue"
+          @filtered_buybacks.update_all(:status => buyback_params[:status])
+        end
+      end
+
+      if @status == "Review-Keep" || @status == "Review-Keep"
+      else
+        if buyback_params[:status] == "Keep-Acceptable" || buyback_params[:status] == "Keep-Good" || buyback_params[:status] == "Keep-Very Good" || buyback_params[:status] == "Keep-Like New" || buyback_params[:status] == "Keep-New"
+          @filtered_buybacks.update_all(:status => "Review-Keep")
+        end
+      end
+
       flash[:success] = "Task updated!"
       redirect_to url
     end
@@ -109,6 +131,7 @@ class BuybacksController < ApplicationController
   
   private def buyback_params
     params.require(:buyback).permit(:file, :destination, :notes, :status, :initials) 
- end
+  end
+
 
 end

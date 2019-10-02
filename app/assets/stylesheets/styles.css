@@ -217,6 +217,10 @@
     display: none;
   }
 
+  .keep {
+    display: none;
+  }
+
   .icon-wrap {
     padding-top: 20px;
   }

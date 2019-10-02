@@ -125,6 +125,7 @@ $(document).on('turbolinks:load', function () {
     var yellow = "#ffc107";
     var red = "#dc3545";
     var purple = "#563d7c";
+    var pink = "#702459";
 
 
     $("#items-left").each(function() {
@@ -137,7 +138,14 @@ $(document).on('turbolinks:load', function () {
         }
     });
 
-    
+    $(".hidden-status").each(function() {
+        if ($(this).text() == "Review-Keep") {
+            $(this).parent().parent().parent().css("background", pink);
+            $(this).siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+            $(this).parent().parent().parent().children('.label-image-container').children('.keep').fadeIn(0);
+            $(this).parent().parent().parent().children('.label-image-container').children('.keep').children('.icon-wrap').css({"color": "white"});
+        }
+    });
 
     $(".status").each(function() {
         if ($(this).val() == "Keep-Acceptable" || $(this).val() == "Keep-Good" || $(this).val() == "Keep-Very Good" || $(this).val() == "Keep-Like New" || $(this).val() == "Keep-New") {
@@ -178,6 +186,7 @@ $(document).on('turbolinks:load', function () {
             $(this).parent().parent().parent().children('.label-image-container').children('.reject').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.warn').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.complete').fadeIn(500);
+            $(this).parent().parent().parent().children('.label-image-container').children('.keep').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.complete').children('.icon-wrap').css({"color": "white"});
         }
         if ($(this).val() == "Reject-Red") {
@@ -186,6 +195,7 @@ $(document).on('turbolinks:load', function () {
             $(this).parent().parent().parent().children('.label-image-container').children('.complete').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.warn').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.reject').fadeIn(500);
+            $(this).parent().parent().parent().children('.label-image-container').children('.keep').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.reject').children('.icon-wrap').css({"color": "white"});
         }
         if ($(this).val() == "Reject-Blue") {
@@ -194,6 +204,7 @@ $(document).on('turbolinks:load', function () {
             $(this).parent().parent().parent().children('.label-image-container').children('.complete').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.warn').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.reject').fadeIn(500);
+            $(this).parent().parent().parent().children('.label-image-container').children('.keep').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.reject').children('.icon-wrap').css({"color": "white"});
         }
         if ($(this).val() == "Reject-Yellow") {
@@ -202,6 +213,7 @@ $(document).on('turbolinks:load', function () {
             $(this).parent().parent().parent().children('.label-image-container').children('.complete').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.warn').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.reject').fadeIn(500);
+            $(this).parent().parent().parent().children('.label-image-container').children('.keep').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.reject').children('.icon-wrap').css({"color": "black"});
         }
         if ($(this).val() == "Missing") {
@@ -210,6 +222,7 @@ $(document).on('turbolinks:load', function () {
             $(this).parent().parent().parent().children('.label-image-container').children('.complete').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.reject').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.warn').fadeIn(500);
+            $(this).parent().parent().parent().children('.label-image-container').children('.keep').fadeOut(0);
             $(this).parent().parent().parent().children('.label-image-container').children('.warn').children('.icon-wrap').css({"color": "white"});
         }
     });

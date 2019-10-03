@@ -102,41 +102,41 @@ $('#review').click(function () {
 
 
 if ((/filter=keep/.test(url_o))) {
+    $("#cmd").fadeOut(0);
+    $("#print-check").fadeIn(0);
     $(".status").each(function() {
         if ($(this).val() == "Keep-Acceptable" || $(this).val() == "Keep-Good" || $(this).val() == "Keep-Very Good" || $(this).val() == "Keep-Like New" || $(this).val() == "Keep-New") {
         } else {
-            $("#cmd").fadeOut(0);
-            $("#print-check").fadeIn(0);
             $(this).parent().parent().parent().parent().detach();
         }
     });
 }
 if ((/filter=reject/.test(url_o))) {
+    $("#cmd").fadeOut(0);
+    $("#print-check").fadeIn(0);
     $(".status").each(function() {
         if ($(this).val() == "Reject-Red" || $(this).val() == "Reject-Blue" || $(this).val() == "Reject-Yellow") {
         } else {
-            $("#cmd").fadeOut(0);
-            $("#print-check").fadeIn(0);
             $(this).parent().parent().parent().parent().detach();
         }
     });
 }
 if ((/filter=missing/.test(url_o))) {
+    $("#cmd").fadeOut(0);
+    $("#print-check").fadeIn(0);
     $(".status").each(function() {
         if ($(this).val() == "Missing") {
         } else {
-            $("#cmd").fadeOut(0);
-            $("#print-check").fadeIn(0);
             $(this).parent().parent().parent().parent().detach();
         }
     });
 }
 if ((/filter=review/.test(url_o))) {
+    $("#cmd").fadeOut(0);
+    $("#print-check").fadeIn(0);
     $(".status").each(function() {
         if ($(this).val() == "Review") {
         } else {
-            $("#cmd").fadeOut(0);
-            $("#print-check").fadeIn(0);
             $(this).parent().parent().parent().parent().detach();
         }
     });

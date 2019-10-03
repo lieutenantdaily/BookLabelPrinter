@@ -62,7 +62,7 @@
                     <div class='card card-body m-3 text-dark div-shadow'>
                         Total Items in Order: <b><%= @buybacks.count %></b>
                     </div>
-                    <div class='card card-body m-3 text-dark bg-warning div-shadow'>
+                    <div id="review" class='card card-body m-3 text-dark bg-warning div-shadow cursor-pointer'>
                         Items to Review: <span id='items-left'><b><%= @buybacks.where(status: ["Review", "Review-Keep"]).count %></b></span>
                     </div>
                 <% end %>

@@ -21,13 +21,17 @@ $(document).on('turbolinks:load', function () {
 //generate PDF Label **********************************************************    
     var url = $(location).attr('href');
     var url_o = url;
+
     url = url.replace("filter=keep&search", "search");
     url = url.replace("filter=reject&search", "search");
     url = url.replace("filter=missing&search", "search");
+    url = url.replace("filter=review&search", "search");
+
     var url_repl = url.replace("&script=PRINT-VX", "");
     var url_filter_keep = url.replace("search", "filter=keep&search");
     var url_filter_reject = url.replace("search", "filter=reject&search");
     var url_filter_missing = url.replace("search", "filter=missing&search");
+    var url_filter_review = url.replace("search", "filter=review&search");
 
     function print_labels() {
         $('.label-edit').detach();
@@ -90,6 +94,9 @@ $('#missing').click(function () {
     location.replace(url_filter_missing);
 });
 
+$('#review').click(function () {
+    location.replace(url_filter_review);
+});
 
 
 
@@ -117,6 +124,16 @@ if ((/filter=reject/.test(url_o))) {
 if ((/filter=missing/.test(url_o))) {
     $(".status").each(function() {
         if ($(this).val() == "Missing") {
+        } else {
+            $("#cmd").fadeOut(0);
+            $("#print-check").fadeIn(0);
+            $(this).parent().parent().parent().parent().detach();
+        }
+    });
+}
+if ((/filter=review/.test(url_o))) {
+    $(".status").each(function() {
+        if ($(this).val() == "Review") {
         } else {
             $("#cmd").fadeOut(0);
             $("#print-check").fadeIn(0);

@@ -1,5 +1,5 @@
 class BuybacksController < ApplicationController
-  http_basic_authenticate_with :name => "infinitybooks", :password => "wareagle"
+  
   # validates_length_of :search, minimum: 5, maximum: 45, allow_blank: true
 
   def index

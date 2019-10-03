@@ -1,7 +1,7 @@
 <!--ADD_PAGE-->
-<br>
-<br>
-<%= form_for :buyback, url: buyback_path(buyback), method: :patch do |f| %>
+<%= form_for :buyback, url: buyback_path(buyback), method: :patch do |f| %>    
+    <br>
+    <br>
     <div id='<%= buyback.buyback_id %>' class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
         <div class='d-flex align-items-end flex-column card card-body label-image-container mr-4 label-edit p-0 no-border no-shadow'>
             <div class='card w-100 m-0 label-edit label-image div-shadow p-0' style='background-image: url("https://pictures.abebooks.com/isbn/<%= buyback.isbn %>-us.jpg");'>
@@ -30,7 +30,7 @@
         </div>
 
         <div id="label" class="container card p-0 label-font no-shadow label">
-         
+        
             <h2 class='card p-3 pl-4 mb-4 div-shadow bg-dark text-light'><b><%= truncate(buyback.title, escape: false, :length => 42) %></b></h2>
 
             <div class='card p-3 pl-4 div-shadow bg-muted text-dark'> 

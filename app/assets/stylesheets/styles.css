@@ -240,3 +240,7 @@
   .purple {
     background-color: #563d7c;
   }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }

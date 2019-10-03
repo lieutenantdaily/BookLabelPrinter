@@ -20,7 +20,14 @@ require("channels")
 $(document).on('turbolinks:load', function () {
 //generate PDF Label **********************************************************    
     var url = $(location).attr('href');
-    var url_repl = url.replace("&script=PRINT-VX", "")
+    var url_o = url;
+    url = url.replace("filter=keep&search", "search");
+    url = url.replace("filter=reject&search", "search");
+    url = url.replace("filter=missing&search", "search");
+    var url_repl = url.replace("&script=PRINT-VX", "");
+    var url_filter_keep = url.replace("search", "filter=keep&search");
+    var url_filter_reject = url.replace("search", "filter=reject&search");
+    var url_filter_missing = url.replace("search", "filter=missing&search");
 
     function print_labels() {
         $('.label-edit').detach();
@@ -62,6 +69,61 @@ $(document).on('turbolinks:load', function () {
     $('#cmd, #print').click(function () {
         print_labels();
     });
+
+
+
+// filter *********************************************************************
+
+$('#all').click(function () {
+    location.replace(url);
+});
+
+$('#keep').click(function () {
+    location.replace(url_filter_keep);
+});
+
+$('#reject').click(function () {
+    location.replace(url_filter_reject);
+});
+
+$('#missing').click(function () {
+    location.replace(url_filter_missing);
+});
+
+
+
+
+
+if ((/filter=keep/.test(url_o))) {
+    $(".status").each(function() {
+        if ($(this).val() == "Keep-Acceptable" || $(this).val() == "Keep-Good" || $(this).val() == "Keep-Very Good" || $(this).val() == "Keep-Like New" || $(this).val() == "Keep-New") {
+        } else {
+            $("#cmd").fadeOut(0);
+            $("#print-check").fadeIn(0);
+            $(this).parent().parent().parent().parent().detach();
+        }
+    });
+}
+if ((/filter=reject/.test(url_o))) {
+    $(".status").each(function() {
+        if ($(this).val() == "Reject-Red" || $(this).val() == "Reject-Blue" || $(this).val() == "Reject-Yellow") {
+        } else {
+            $("#cmd").fadeOut(0);
+            $("#print-check").fadeIn(0);
+            $(this).parent().parent().parent().parent().detach();
+        }
+    });
+}
+if ((/filter=missing/.test(url_o))) {
+    $(".status").each(function() {
+        if ($(this).val() == "Missing") {
+        } else {
+            $("#cmd").fadeOut(0);
+            $("#print-check").fadeIn(0);
+            $(this).parent().parent().parent().parent().detach();
+        }
+    });
+}
 
 
 //generate PDF Label **********************************************************

@@ -38,10 +38,10 @@
                     <h1><a href="http://metabase.textbookmaniac.com/dashboard/11?isbn=<%= buyback.isbn %>" target="_blank" ><%= buyback.isbn %></a>  <%= buyback.status.gsub("Review-Keep", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Keep-", "| ").gsub("Reject-Red", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Reject-Blue", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Reject-Yellow", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Missing", " [ A ] [ G ] [ VG ] [ LN ] [ N ]").gsub("Review", " [ A ] [ G ] [ VG ] [ LN ] [ N ]") %></h1>
                 </p> 
                 <p>
-                    <h1><%= buyback.restricted %><%= buyback.source %> | <b><a href="/buybacks?search=<%= buyback.buyback_id %>" target="_blank" ><%= buyback.buyback_id %></a>-1A-<%= buyback.price.gsub(".", "-").gsub("$", "") %></b></h1>
+                    <h1><%= buyback.restricted %><%= buyback.source %> | <b><a href="/buybacks?search=<%= buyback.buyback_id %>" target="_self" ><%= buyback.buyback_id %></a>-1A-<%= buyback.price.gsub(".", "-").gsub("$", "") %></b></h1>
                 </p> 
                 <p class="no-bottom">
-                <h2><a href="/buybacks?search=<%= buyback.order_id %>" target="_blank"><%= buyback.order_id %></a> | <%= buyback.o_created_at[0,5] %> | <%= buyback.updated_by %>
+                <h2><a href="/buybacks?search=<%= buyback.order_id %>" target="_self"><%= buyback.order_id %></a> | <%= buyback.o_created_at[0,5] %> | <%= buyback.updated_by %>
                 <% if buyback.notes.present? %>
                 | <%= buyback.notes %>
                 <% end %>

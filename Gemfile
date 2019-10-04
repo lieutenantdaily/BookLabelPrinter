@@ -30,6 +30,7 @@ gem 'prawn-table'
 # gem 'responders'
 gem 'jquery-rails'
 gem 'jwt'
+gem "rails-erd"
 
 
 # Use Active Storage variant

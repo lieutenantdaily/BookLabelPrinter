@@ -37,11 +37,13 @@ class Offer < ApplicationRecord
                 offer_hash.rank = row[2]
                 offer_hash.min_qty = 1
                 offer_hash.minimum = 5.02
-                duplicate_check = Offer.find_by(isbn: row[0])
+                offer_hash.save 
 
-                if duplicate_check.blank?
-                    offer_hash.save 
-                end
+                # duplicate_check = Offer.find_by(isbn: row[0])
+
+                # if duplicate_check.blank?
+                #     offer_hash.save 
+                # end
 
             end
         end

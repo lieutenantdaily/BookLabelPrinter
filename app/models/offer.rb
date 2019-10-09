@@ -138,7 +138,7 @@ class Offer < ApplicationRecord
     def self.to_csv(options = {})
         require 'csv'
         CSV.generate(options) do |csv|
-            columns = %w(isbn quantity bid tbm_amount suggested_bid rank)
+            columns = %w(isbn quantity bid)
             csv << ['isbn', 'quantity', 'bid']
             all.each do |product|
                 csv << product.attributes.values_at(*columns)

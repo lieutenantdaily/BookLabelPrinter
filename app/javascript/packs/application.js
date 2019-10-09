@@ -181,6 +181,18 @@ if ((/filter=review/.test(url_o))) {
 
     });
 
+    $('#offers-upload-show').click(function () {
+        $('#uploader').fadeIn(300);
+        $('#uploader').animate({
+            top: 0
+        }, {
+            duration: 300,
+            queue: false
+        });
+
+
+    });
+
 
     $('#upload-hide').click(function () {
         $('#uploader').fadeOut(300);

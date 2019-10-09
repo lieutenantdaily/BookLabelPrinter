@@ -1,0 +1,35 @@
+<div id="uploader" class="card card-body div-shadow no-radius label upload-container">
+    <div class="container">
+        
+        <br>
+
+        <%= form_tag ({ :controller => 'offers', :action => 'destroy_them_all'}) do%>
+            <%= submit_tag 'Reset', data: { confirm: "Are you sure you want to reset the database?" }, class: "btn btn-danger div-shadow font-20 float-right" %>
+        <% end %>
+        
+        <%= form_tag ({ :controller => 'offers', :action => 'import_url'}) do%>
+            <%= submit_tag 'Import TBM Offers', data: { confirm: "Are you sure? This will reset the current database?!" }, class: "btn btn-secondary div-shadow font-20" %>
+        <% end %>
+        <br>
+        <br>
+        
+        <%= form_for :offer, url: offers_path do |f| %>
+            <div class="form-group uploader">
+                <%= f.label :file, "Upload Orders For: " %>
+                <%= f.select :destination, raw("<option>Valore Prices</option><option>TBM Prices</option>"), :required => 'required', class: '' %>
+                <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader', required: true %>
+            </div>
+            <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20", id: "submit-button" do %>
+                <i class="fas fa-upload"></i> Upload
+            <% end %>
+        <% end %>
+
+        <br>
+
+        <br>
+        <center>
+        <div class="btn btn-warning div-shadow" id="upload-hide">Close</div>
+        </center>
+
+    </div>
+</div>

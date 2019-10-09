@@ -1,0 +1,13 @@
+<tr>
+    <td><%= offer.isbn %></td>
+    <td class="text-center"><%= offer.quantity.to_i %></td>
+    <td class="text-right">$<%= number_with_precision(offer.bid.to_f, precision: 2)  %></td>
+    <td class="text-right">$<%= number_with_precision(offer.tbm_amount.to_f, precision: 2) %></td>
+    <td class="text-right">$<%= number_with_precision(offer.suggested_bid.to_f, precision: 2) %></td>
+    <% if (offer.suggested_bid.to_f - offer.tbm_amount.to_f) >= 0 %>
+        <td class="text-right">$<%= number_with_precision((offer.suggested_bid.to_f - offer.tbm_amount.to_f), precision: 2) %></td>
+    <% else %>
+        <td class="text-right" style="color: red">(<%= number_with_precision((offer.suggested_bid.to_f - offer.tbm_amount.to_f), precision: 2).to_s.gsub("-", "$") %>)</td>
+    <% end %>
+    <td class="text-right"><%= number_with_delimiter(offer.rank.to_i, :delimiter => ',') %></td>
+</tr>

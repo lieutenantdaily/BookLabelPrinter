@@ -16,7 +16,7 @@
    top: -400px;
  }
 
-#upload-show, #upload-hide {
+#upload-show, #upload-hide, #offers-upload-show  {
   cursor: pointer;
 }
 

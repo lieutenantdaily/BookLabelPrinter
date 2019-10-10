@@ -30,7 +30,7 @@
 <% if @buybacks.present? %>
 
     <% @buybacks[0,1].each do |buyback|%>
-        <% if $search_params == buyback.buyback_id %>
+        <% if session[:passed_variable] == buyback.buyback_id %>
             <div id="print-check" style="margin-bottom: -35px; display:none">1</div>
         <% else %>
             <center>

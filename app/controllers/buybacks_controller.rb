@@ -8,7 +8,9 @@ class BuybacksController < ApplicationController
       @buybacks = Buyback.search(params[:search]).order("isbn ASC")
       @buybacks_keep = Buyback.search(params[:search]).where(status: ["Keep-Acceptable", "Keep-Good", "Keep-Very Good", "Keep-Like New", "Keep-New"]).order("isbn ASC")
       @buybacks_reject = Buyback.search(params[:search]).where(status: ["Reject-Red", "Reject-Yellow", "Reject-Blue", "Missing"]).order("isbn ASC")
-      $search_params = params[:search]
+      @search_params = params[:search]
+      session[:passed_variable] = @search_params
+
       
       
 
@@ -30,7 +32,7 @@ class BuybacksController < ApplicationController
       @filtered_by_box_reject_no_notes = @filtered_by_box.where(status: ["Reject-Blue", "Reject-Yellow"]).where(notes: "")
 
       if @buybacks.present?
-        if $search_params == @order_id
+        if session[:passed_variable] == @order_id
           sum_total_sql = "SELECT SUM(CAST( REPLACE(price, '$', '') AS FLOAT)) AS 'total' FROM buybacks WHERE order_id = " + @order_id
           sum_total_array = ActiveRecord::Base.connection.execute(sum_total_sql)
           @sum_total = sum_total_array.to_s.gsub('[{"total"=>', '').gsub('}]', '')
@@ -100,14 +102,14 @@ class BuybacksController < ApplicationController
     
 
     if @buyback.update_attributes(buyback_params)
-      if $search_params == @buyback_id
+      if session[:passed_variable] == @buyback_id
         if buyback_params[:status] == "Keep-Acceptable" || buyback_params[:status] == "Keep-Good" || buyback_params[:status] == "Keep-Very Good" || buyback_params[:status] == "Keep-Like New" || buyback_params[:status] == "Keep-New"
-          url = "/buybacks?search=" + $search_params + "&script=PRINT-VX#" + @buyback_id
+          url = "/buybacks?search=" + session[:passed_variable] + "&script=PRINT-VX#" + @buyback_id
         else
-          url = "/buybacks?search=" + $search_params + "#" + @buyback_id
+          url = "/buybacks?search=" + session[:passed_variable] + "#" + @buyback_id
         end
       else
-        url = "/buybacks?search=" + $search_params + "#" + @buyback_id
+        url = "/buybacks?search=" + session[:passed_variable] + "#" + @buyback_id
       end
       
       if @status == "Reject-Yellow" || @status == "Reject-Blue"

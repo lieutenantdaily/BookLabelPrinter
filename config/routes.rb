@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   post "offers/destroy_them_all" 
   post "offers/import_url" 
+  post "offers/import_url_neb" 
 
 
   resources :orders

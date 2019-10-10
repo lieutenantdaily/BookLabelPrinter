@@ -19,14 +19,14 @@
 <% if @offers.present? %>
     <br>
     <br>
-    <% if @offers_with_qty.present? %>
+    <% if @offers_with_suggested.present? %>
         <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
             <div class="container card p-0 label-font no-shadow label">
 
                 <center>
                     <h2><b>Step 5</b></h2>
                     <p>Upload the following file to Valore:<p>
-                    <% if @offers_with_qty.present? %>
+                    <% if @offers_with_suggested.present? %>
                         &nbsp;&nbsp;&nbsp;<a href="/offers.csv" target="_blank" class="btn btn-success div-shadow font-20">Valore Final File</a>
                     <% end %>
                 </center> 
@@ -85,7 +85,7 @@
 
                 <center>
                     <h2><b>Step 4</b></h2>
-                    <p>Upload the <b>source-active-want-list</b> file that was just exported from Valore. This can take up to an hour.<p>
+                    <p>Upload the <b>source-active-want-list</b> file that was just exported from Valore. This will take about 5 minutes.<p>
                     <br>
                     <%= form_for :offer, url: offers_path do |f| %>
                         <div class="form-group uploader">
@@ -113,10 +113,14 @@
 
             <center>
                 <h2><b>Step 1</b></h2>
-                <p>Import the current prices from TBM.<p>
+                <p>Import the current prices from TBM. If this fails, just reload this page and try again.<p>
                 <br>
                 <%= form_tag ({ :controller => 'offers', :action => 'import_url'}) do%>
-                    <%= submit_tag 'Import TBM Offers', data: { confirm: "This will take about 15 minutes to complete." }, class: "btn btn-secondary div-shadow font-20" %>
+                    <%= submit_tag 'Import TBM Offers for Amazon', data: { confirm: "This will take about a minute to complete." }, class: "btn btn-warning div-shadow font-20" %>
+                <% end %>
+                <br>
+                <%= form_tag ({ :controller => 'offers', :action => 'import_url_neb'}) do%>
+                    <%= submit_tag 'Import TBM Offers for Nebraska', data: { confirm: "This will take about a minute to complete." }, class: "btn btn-danger div-shadow font-20" %>
                 <% end %>
             </center> 
 

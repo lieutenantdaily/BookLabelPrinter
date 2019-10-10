@@ -2,20 +2,29 @@ class OffersController < ApplicationController
     def index
         @offers = Offer.all.order("created_at DESC")  
         @offers_with_qty = Offer.where.not(quantity: nil)
+        @offers_with_suggested = Offer.where.not(suggested_bid: nil)
+        @offers_with_qty_and_bid = @offers_with_qty.where.not(bid: nil)
 
         respond_to do |format|
           format.html
-            format.csv { send_data @offers_with_qty.to_csv, filename: "valore-final-#{@order_id}-#{Date.today}.csv" }
+            format.csv { send_data @offers_with_qty_and_bid.to_csv, filename: "valore-final-#{@order_id}-#{Date.today}.csv" }
             format.csv2  { send_data @offers.to_csv2, filename: "valore-check-#{@order_id}-#{Date.today}.csv" }
         end
     end
     
     def import
         Offer.import(params[:offer][:file], params[:offer][:destination])
+        redirect_to offers_path, notice: "Valore Import Complete"
     end
 
     def import_url
       Offer.import_url
+      redirect_to offers_path, notice: "TBM Import Complete"
+    end
+
+    def import_url_neb
+      Offer.import_url_neb
+      redirect_to offers_path, notice: "TBM Import Complete"
     end
     
     
@@ -40,7 +49,7 @@ class OffersController < ApplicationController
     
       def create
         Offer.import(params[:offer][:file], params[:offer][:destination])
-        flash[:notice] = "Buybacks uploaded successfully"
+        # flash[:notice] = "Buybacks uploaded successfully"
         redirect_to offers_path
       end
       

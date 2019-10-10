@@ -1,5 +1,5 @@
 <tr>
-    <td><%= offer.isbn %></td>
+    <td><a href="http://metabase.textbookmaniac.com/dashboard/11?isbn=<%= offer.isbn %>" target="_blank"><%= offer.isbn %></a></td>
     <td class="text-center"><%= offer.quantity.to_i %></td>
     <td class="text-right">$<%= number_with_precision(offer.bid.to_f, precision: 2)  %></td>
     <td class="text-right">$<%= number_with_precision(offer.tbm_amount.to_f, precision: 2) %></td>

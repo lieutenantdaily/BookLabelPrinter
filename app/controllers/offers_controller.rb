@@ -19,12 +19,12 @@ class OffersController < ApplicationController
 
     def import_url
       Offer.import_url
-      redirect_to offers_path, notice: "TBM Import Complete"
+      redirect_to offers_path, notice: "TBM Amazon Import Complete"
     end
 
     def import_url_neb
       Offer.import_url_neb
-      redirect_to offers_path, notice: "TBM Import Complete"
+      redirect_to offers_path, notice: "TBM Nebraska Import Complete"
     end
     
     

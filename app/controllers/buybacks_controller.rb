@@ -27,6 +27,7 @@ class BuybacksController < ApplicationController
       @boxcount = Buyback.search(@order_id).group(:tracking_number).count
       @filtered_by_box = Buyback.search(@box_id)
       @filtered_by_box_reviewed = @filtered_by_box.where(status: ["Review", "Review-Keep"])
+      @filtered_by_box_reject_no_notes = @filtered_by_box.where(status: ["Reject-Blue", "Reject-Yellow"]).where(notes: "")
 
       if @buybacks.present?
         if $search_params == @order_id

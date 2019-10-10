@@ -56,14 +56,14 @@
                         Total Items in Box: <b><%= @filtered_by_box.count %></b>
                     </div>
                     <div class='card card-body m-3 text-dark bg-warning div-shadow'>
-                        Items to Review: <span id='items-left'><b><%= @filtered_by_box_reviewed.count %></b></span>
+                        Items to Review: <span id='items-left'><b><%= @filtered_by_box_reviewed.count + @filtered_by_box_reject_no_notes.count %></b></span>
                     </div>
                 <% else %>
                     <div class='card card-body m-3 text-dark div-shadow'>
                         Total Items in Order: <b><%= @buybacks.count %></b>
                     </div>
                     <div id="review" class='card card-body m-3 text-dark bg-warning div-shadow cursor-pointer'>
-                        Items to Review: <span id='items-left'><b><%= @buybacks.where(status: ["Review", "Review-Keep"]).count %></b></span>
+                        Items to Review: <span id='items-left'><b><%= @buybacks.where(status: ["Review", "Review-Keep"]).count + @buybacks.where(status: ["Reject-Blue", "Reject-Yellow"]).where(notes: "").count %></b></span>
                     </div>
                 <% end %>
                 

@@ -112,15 +112,11 @@ class BuybacksController < ApplicationController
         url = "/buybacks?search=" + session[:passed_variable] + "#" + @buyback_id
       end
       
-      if @status == "Reject-Yellow" || @status == "Reject-Blue"
-      else
+      if @status == "Review"
         if buyback_params[:status] == "Reject-Yellow" || buyback_params[:status] == "Reject-Blue"
           @filtered_buybacks.update_all(:status => buyback_params[:status])
         end
-      end
 
-      if @status == "Review-Keep" || @status == "Review-Keep"
-      else
         if buyback_params[:status] == "Keep-Acceptable" || buyback_params[:status] == "Keep-Good" || buyback_params[:status] == "Keep-Very Good" || buyback_params[:status] == "Keep-Like New" || buyback_params[:status] == "Keep-New"
           @filtered_buybacks.update_all(:status => "Review-Keep")
         end

@@ -60,7 +60,7 @@
                 <%= f.text_area(:notes, { :class => 'form-control div-shadow notes', :value => buyback.notes, :onkeyup => 'this.value = this.value.toUpperCase();' }) %>
             </div>
             
-            <% if $search_params == buyback.buyback_id %>
+            <% if params[:search] == buyback.buyback_id %>
                 <div class='mt-auto w-100 label-edit'>
                     <%= button_tag type: 'submit', class: "btn btn-info div-shadow font-20 w-100 print-check-button" do %>
                         <i class="fas fa-save fa-fw btn-text-dark-large"></i> <span class="print-check"><i class="fas fa-plus fa-xs"></i> <i class="fas fa-print fa-fw btn-text-dark-large"></i></span>

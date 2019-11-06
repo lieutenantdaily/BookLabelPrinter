@@ -23,6 +23,7 @@ class Buyback < ApplicationRecord
             buyback_hash.price = row[5]
             # buyback_hash.price = buyback_hash.price
             buyback_hash.tracking_number = row[6]
+            buyback_hash.notes = ""
          
             
             duplicate_check = Buyback.find_by(buyback_id: row[1])

@@ -9,6 +9,7 @@ class OffersController < ApplicationController
           format.html
             format.csv { send_data @offers_with_qty_and_bid.to_csv, filename: "valore-final-#{@order_id}-#{Date.today}.csv" }
             format.csv2  { send_data @offers.to_csv2, filename: "valore-check-#{@order_id}-#{Date.today}.csv" }
+            format.csv3 { send_data @offers_with_qty_and_bid.to_csv3, filename: "amz-check-#{@order_id}-#{Date.today}.csv" }
         end
     end
     

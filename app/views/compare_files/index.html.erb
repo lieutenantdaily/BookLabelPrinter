@@ -1,0 +1,94 @@
+<br>
+<% if notice %>
+    <p class="alert alert-success message-format"><%= notice %></p>
+<% end %>
+<% if alert %>
+    <p class="alert alert-danger message-format"><%= alert %></p>
+<% end %>
+<br>
+<center>
+    <%= image_tag  "http://admin.textbookmaniac.com/packs/media/images/nebraska-logo-efc3b5ba2327737c28baf9268ffbd2dd.png" %>
+    <h2><% content_for :title, "Nebraska File Generator" %>File Generator</h2>
+</center>
+<% @compare_files[0,1].each do |compare_file|%>
+    <center>
+        Database last updated on <b><%= compare_file.created_at.strftime("%m/%d/%Y") %></b> at <%= compare_file.created_at.strftime("%I:%M %p") %>
+    </center>
+<% end %>
+
+<% if @compare_files.present? %>
+    <br>
+    <br>
+    <% if @compare_files_with_diff.present? %>
+        <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
+            <div class="container card p-0 label-font no-shadow label">
+
+                <center>
+                    <h2><b>Step 3</b></h2>
+                    <p>Download the comparison file.<p>
+                    <% if @compare_files_with_diff.present? %>
+                        &nbsp;&nbsp;&nbsp;<a href="/compare_files.csv" target="_blank" class="btn btn-success div-shadow font-20">Compare File</a>
+                    <% end %>
+                </center> 
+
+            </div>
+        </div>
+        <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
+            <div id="label" class="container card p-0 label-font no-shadow label">
+                <table style="width:100%">
+                <tr>
+                    <th class="text-left">ISBN</th>
+                    <th class="text-right">Inventory Price</th>
+                    <th class="text-right">Sold Price</th>
+                    <th class="text-right">Wholesale Price</th>
+                    <th class="text-right">Difference</th>
+                </tr>
+                    <%= render @compare_files_with_diff[0,200] %>
+                </table>
+            </div>
+        </div>
+    <% else %>
+        <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
+            <div class="container card p-0 label-font no-shadow label">
+
+                <center>
+                    <h2><b>Step 2</b></h2>
+                    <p>Upload the current <b>SellerEngine Inventory File</b>. This will take about 5 minutes.<p>
+                    <br>
+                    <%= form_for :compare_file, url: compare_files_path do |f| %>
+                        <div class="form-group uploader">
+                            <span class='d-none'>
+                                <%= f.select :destination, raw("<option>SellerEngine</option><option>TBM Prices</option>"), :required => 'required', class: '' %>
+                            </span>
+                            <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader', required: true %>
+                        </div>
+                        <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20", id: "submit-button" do %>
+                            <i class="fas fa-upload"></i> Upload
+                        <% end %>
+                    <% end %>
+                </center> 
+
+            </div>
+        </div>
+        <br>
+        <br>
+    <% end %>
+<% else %>
+    <br>
+    <br>
+    <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
+        <div class="container card p-0 label-font no-shadow label">
+
+            <center>
+                <h2><b>Step 1</b></h2>
+                <p>Import the current Nebraska prices. If this fails, just reload this page and try again.<p>
+                <br>
+                <%= form_tag ({ :controller => 'compare_files', :action => 'import_url'}) do%>
+                    <%= submit_tag 'Import Current Nebraska Prices', data: { confirm: "This will take about a minute to complete." }, class: "btn btn-danger div-shadow font-20" %>
+                <% end %>
+            </center> 
+
+        </div>
+    </div>
+    
+<% end %>

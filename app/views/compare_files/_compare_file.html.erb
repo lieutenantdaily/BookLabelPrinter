@@ -1,0 +1,11 @@
+<tr>
+    <td class="text-left"><%= compare_file.isbn %></td>
+    <td class="text-right">$<%= number_with_precision(compare_file.inventory_price.to_f, precision: 2)  %></td>
+    <td class="text-right">$<%= number_with_precision(compare_file.sold_price.to_f, precision: 2) %></td>
+    <td class="text-right">$<%= number_with_precision(compare_file.wholesale_price.to_f, precision: 2) %></td>
+    <% if (compare_file.difference.to_f) >= 0 %>
+        <td class="text-right">$<%= number_with_precision((compare_file.difference.to_f), precision: 2) %></td>
+    <% else %>
+        <td class="text-right" style="color: red">(<%= number_with_precision((compare_file.difference.to_f), precision: 2).to_s.gsub("-", "$") %>)</td>
+    <% end %>
+</tr>

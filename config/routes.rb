@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   post "compare_files/destroy_them_all" 
   post "compare_files/import_url" 
-  post "compare_files/import_url_neb" 
+  post "compare_files/import_url_tex" 
 
 
   resources :orders

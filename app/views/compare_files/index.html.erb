@@ -7,8 +7,7 @@
 <% end %>
 <br>
 <center>
-    <%= image_tag  "http://admin.textbookmaniac.com/packs/media/images/nebraska-logo-efc3b5ba2327737c28baf9268ffbd2dd.png" %>
-    <h2><% content_for :title, "Nebraska File Generator" %>File Generator</h2>
+    <h1><% content_for :title, "Wholesale File Generator" %>Wholesale File Generator</h1>
 </center>
 <% @compare_files[0,1].each do |compare_file|%>
     <center>
@@ -20,6 +19,12 @@
     <br>
     <br>
     <% if @compare_files_with_diff.present? %>
+        <center>
+            <p>
+            <h3 class="btn btn-success div-shadow font-20" style="margin-top: -20px;">&nbsp<i class="fas fa-info-circle"> &nbsp</i><%= number_with_precision(@counter2.to_f, precision: 0, :delimiter => ',') %> matched ISBNs!</h3>
+            </p>
+        </center>
+        <br>
         <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
             <div class="container card p-0 label-font no-shadow label">
 
@@ -27,7 +32,7 @@
                     <h2><b>Step 3</b></h2>
                     <p>Download the comparison file.<p>
                     <% if @compare_files_with_diff.present? %>
-                        &nbsp;&nbsp;&nbsp;<a href="/compare_files.csv" target="_blank" class="btn btn-success div-shadow font-20">Compare File</a>
+                        &nbsp;&nbsp;&nbsp;<a href="/compare_files.csv" target="_blank" class="btn btn-primary div-shadow font-20">Compare File</a>
                     <% end %>
                 </center> 
 
@@ -48,6 +53,12 @@
             </div>
         </div>
     <% else %>
+        <center>
+            <p>
+            <h3 class="btn btn-info div-shadow font-20" style="margin-top: -20px;">&nbsp<i class="fas fa-info-circle"> &nbsp</i><%= number_with_precision(@counter.to_f, precision: 0, :delimiter => ',') %> ISBNs imported!</h3>
+            </p>
+        </center>
+        <br>
         <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
             <div class="container card p-0 label-font no-shadow label">
 
@@ -57,9 +68,12 @@
                     <br>
                     <%= form_for :compare_file, url: compare_files_path do |f| %>
                         <div class="form-group uploader">
-                            <span class='d-none'>
-                                <%= f.select :destination, raw("<option>SellerEngine</option><option>TBM Prices</option>"), :required => 'required', class: '' %>
+                            <p>Where is this file coming from?<p>
+                            <span class=''>
+                                <%= f.select :destination, raw("<option>SellerEngine</option><option>Fillz</option>"), :required => 'required', class: '' %>
                             </span>
+                            <br>
+                            <br>
                             <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader', required: true %>
                         </div>
                         <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20", id: "submit-button" do %>
@@ -85,6 +99,10 @@
                 <br>
                 <%= form_tag ({ :controller => 'compare_files', :action => 'import_url'}) do%>
                     <%= submit_tag 'Import Current Nebraska Prices', data: { confirm: "This will take about a minute to complete." }, class: "btn btn-danger div-shadow font-20" %>
+                <% end %>
+                <br>
+                <%= form_tag ({ :controller => 'compare_files', :action => 'import_url_tex'}) do%>
+                    <%= submit_tag 'Import Current Texas Prices', data: { confirm: "This will take about a minute to complete." }, class: "btn btn-warning div-shadow font-20" %>
                 <% end %>
             </center> 
 

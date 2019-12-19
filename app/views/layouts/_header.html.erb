@@ -8,10 +8,17 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav">
-                <%= link_to "Processing", home_path, class: 'nav-item nav-link active' %>
-                <%= link_to "Valore File", offers_path, class: 'nav-item nav-link active' %>
-                <%= link_to "Nebraska File", compare_files_path, class: 'nav-item nav-link active' %>
+                <%= link_to "Valore Processing", home_path, class: 'nav-item nav-link active' %>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle nav-item nav-link active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> 
+                    <span class="nav-label">File Generator</span></a>
+                    <ul class="dropdown-menu bg-dark">
+                        <center><%= link_to "Valore", offers_path, class: 'nav-item nav-link active' %></center>
+                        <center><%= link_to "Wholesale", compare_files_path, class: 'nav-item nav-link active' %></center>
+                    </ul>
+                </li>
                 <%= link_to "Quick Links", links_path, class: 'nav-item nav-link active' %>
+                
                 <a href="https://buyback.textbookmaniac.com/admin" target="_blank" class="nav-item nav-link">Old Admin</a>
                 <a href="http://admin.textbookmaniac.com" target="_blank" class="nav-item nav-link">New Admin</a>
                 <a href="http://metabase.textbookmaniac.com/" target="_blank" class="nav-item nav-link">Metabase</a>

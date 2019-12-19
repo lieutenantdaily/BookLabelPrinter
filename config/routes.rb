@@ -11,11 +11,16 @@ Rails.application.routes.draw do
   post "compare_files/import_url" 
   post "compare_files/import_url_tex" 
 
+  post "prices/destroy_them_all" 
+  post "prices/import_url" 
+  post "prices/import_url_rat" 
+
 
   resources :orders
   resources :buybacks
   resources :offers
   resources :compare_files
+  resources :prices
   
   get 'links' => 'pages#links', as: 'links'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

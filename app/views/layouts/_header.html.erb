@@ -17,6 +17,7 @@
                         <center><%= link_to "Wholesale", compare_files_path, class: 'nav-item nav-link active' %></center>
                     </ul>
                 </li>
+                <%= link_to "Price Compare", prices_path, class: 'nav-item nav-link active' %>
                 <%= link_to "Quick Links", links_path, class: 'nav-item nav-link active' %>
                 
                 <a href="https://buyback.textbookmaniac.com/admin" target="_blank" class="nav-item nav-link">Old Admin</a>
@@ -37,6 +38,12 @@
 
                 <% if controller_name == "compare_files" %>
                     <%= form_tag ({ :controller => 'compare_files', :action => 'destroy_them_all'}) do%>
+                        <%= submit_tag 'Start New File', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-warning text-dark div-shadow" %>
+                    <% end %>
+                <% end %>
+
+                <% if controller_name == "prices" %>
+                    <%= form_tag ({ :controller => 'prices', :action => 'destroy_them_all'}) do%>
                         <%= submit_tag 'Start New File', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-warning text-dark div-shadow" %>
                     <% end %>
                 <% end %>

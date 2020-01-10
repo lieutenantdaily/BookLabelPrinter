@@ -95,14 +95,10 @@
 
             <center>
                 <h2><b>Step 1</b></h2>
-                <p>Import the current Nebraska prices. If this fails, just reload this page and try again.<p>
+                <p>Import the current TBM prices. If this fails, just reload this page and try again.<p>
                 <br>
                 <%= form_tag ({ :controller => 'prices', :action => 'import_url'}) do%>
-                    <%= submit_tag 'Import Current Nebraska Prices', data: { confirm: "This will take about a minute to complete." }, class: "btn btn-danger div-shadow font-20" %>
-                <% end %>
-                <br>
-                <%= form_tag ({ :controller => 'prices', :action => 'import_url_rat'}) do%>
-                    <%= submit_tag 'Import Current Texas Prices', data: { confirm: "This will take about a minute to complete." }, class: "btn btn-warning div-shadow font-20" %>
+                    <%= submit_tag 'Import Current TBM Prices', data: { confirm: "This will take a few minutes to complete." }, class: "btn btn-danger div-shadow font-20" %>
                 <% end %>
             </center> 
 

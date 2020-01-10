@@ -10,7 +10,9 @@ class Price < ApplicationRecord
             CSV.foreach(csv_path, headers: true) do |row|
                 price_hash = Price.new
                 price_hash.isbn = row[0]
-                price_hash.wholesale_price = row[1]
+                price_hash.amount = row[1]
+                price_hash.source = row[2]
+                price_hash.rank = row[3]
                 # ip = compare_file_hash.inventory_price.to_f
                 # compare_file_hash.sold_price = (ip * 0.85) - 5
                 duplicate_check = Price.find_by(isbn: row[0])

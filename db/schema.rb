@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_19_230031) do
+ActiveRecord::Schema.define(version: 2020_02_07_222641) do
 
   create_table "buybacks", force: :cascade do |t|
     t.string "order_id"
@@ -63,6 +63,12 @@ ActiveRecord::Schema.define(version: 2019_12_19_230031) do
     t.string "source"
     t.string "rank"
     t.string "difference"
+    t.string "buy_qty"
+    t.string "title"
+    t.string "vendor_qty"
+    t.string "qty_difference"
+    t.string "final_qty"
+    t.string "total"
   end
 
 end

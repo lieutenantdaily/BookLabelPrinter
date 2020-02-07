@@ -2,11 +2,11 @@ class PricesController < ApplicationController
     
     def index
         @prices = Price.all.order("created_at DESC") 
-        @prices_with_diff = Price.where.not(difference: nil).order("CAST(difference AS Decimal) DESC") 
+        @prices_with_diff = Price.where("final_qty > ?", 0).order("CAST(rank AS Decimal) DESC") 
     
         respond_to do |format|
             format.html
-              format.csv { send_data @prices_with_diff.to_csv, filename: "nebraska-compare-#{Date.today}.csv" }
+              format.csv { send_data @prices_with_diff.to_csv, filename: "bid-#{Date.today}.csv" }
         end
         @counter = Price.all.count
         @counter2 = @prices_with_diff.all.count

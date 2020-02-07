@@ -1,11 +1,7 @@
 <tr>
     <td class="text-left"><%= price.isbn %></td>
-    <td class="text-right">$<%= number_with_precision(price.inventory_price.to_f, precision: 2)  %></td>
-    <td class="text-right">$<%= number_with_precision(price.sold_price.to_f, precision: 2) %></td>
-    <td class="text-right">$<%= number_with_precision(price.wholesale_price.to_f, precision: 2) %></td>
-    <% if (price.difference.to_f) >= 0 %>
-        <td class="text-right">$<%= number_with_precision((price.difference.to_f), precision: 2) %></td>
-    <% else %>
-        <td class="text-right" style="color: red">(<%= number_with_precision((price.difference.to_f), precision: 2).to_s.gsub("-", "$") %>)</td>
-    <% end %>
+    <td class="text-left"><%= number_with_delimiter(price.rank.to_i, :delimiter => ',') %></td>
+    <td class="text-right">$<%= number_with_precision(price.amount.to_f, precision: 2)  %></td>
+    <td class="text-right"><%= price.final_qty %></td>
+    <td class="text-right">$<%= number_with_precision(price.total.to_f, precision: 2)  %></td>
 </tr>

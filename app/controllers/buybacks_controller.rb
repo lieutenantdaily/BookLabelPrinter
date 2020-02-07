@@ -10,6 +10,8 @@ class BuybacksController < ApplicationController
       @buybacks_reject = Buyback.search(params[:search]).where(status: ["Reject-Red", "Reject-Yellow", "Reject-Blue", "Missing"]).order("isbn ASC")
       @search_params = params[:search]
       session[:passed_variable] = @search_params
+      @breakeven = 0.85
+      
 
       
       

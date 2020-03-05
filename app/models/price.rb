@@ -63,11 +63,12 @@ class Price < ApplicationRecord
                 
                 price_hash.buy_qty = qty.to_s
                 
-                duplicate_check = Price.find_by(isbn: row[0])
+                price_hash.save 
+                # duplicate_check = Price.find_by(isbn: row[0])
 
-                if duplicate_check.blank?
-                    price_hash.save 
-                end
+                # if duplicate_check.blank?
+                #     price_hash.save 
+                # end
 
             end
         end

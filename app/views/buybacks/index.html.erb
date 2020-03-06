@@ -106,9 +106,9 @@
 
     <div class='container card card-body flex-row div-shadow mt-4 bg-light'>
 
-       <% @all_orders[0,4].sort.reverse.each do |a|%>
+       <% @all_orders[0,4].each do |a|%>
                     <div class='card card-body m-3 text-dark div-shadow'>
-                        <center><a href="/buybacks?search=<%= a %>" target="_self"><b><%= a %></b></a></center>
+                        <center><a href="/buybacks?search=<%= a.order_id %>" target="_self"><b><%= a.order_id %></b></a></center>
                     </div>
                     
         <% end %>

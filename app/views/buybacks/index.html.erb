@@ -96,7 +96,25 @@
 <% else %>
     <center>
         <p>There are no buybacks containing the term you entered.</p>
+        <br>
+        <br>
     </center>
+
+     <center>
+        <h2>Recent Orders</h2>
+    </center>
+
+    <div class='container card card-body flex-row div-shadow mt-4 bg-light'>
+
+       <% @all_orders[0,4].sort.reverse.each do |a|%>
+                    <div class='card card-body m-3 text-dark div-shadow'>
+                        <center><a href="/buybacks?search=<%= a %>" target="_self"><b><%= a %></b></a></center>
+                    </div>
+                    
+        <% end %>
+
+    </div>
+
 <% end %>
 <br>
 

@@ -4,6 +4,12 @@ class BuybacksController < ApplicationController
 
   def index
     @all_buybacks = Buyback.all.order("created_at DESC")
+
+    @all_orders = Buyback.all.distinct.pluck(:order_id)
+    # @all_orders = Buyback.select("DISTINCT ON (order_id) created_at, order_id").order('created_at DESC')
+
+
+
     if params[:search]
       @buybacks = Buyback.search(params[:search]).order("isbn ASC")
       @buybacks_keep = Buyback.search(params[:search]).where(status: ["Keep-Acceptable", "Keep-Good", "Keep-Very Good", "Keep-Like New", "Keep-New"]).order("isbn ASC")

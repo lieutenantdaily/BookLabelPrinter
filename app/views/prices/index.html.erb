@@ -74,6 +74,17 @@
                             </span>
                             <br>
                             <br>
+                            <div id='other-message' class='card card-body m-1 text-dark div-shadow text-left font-weight-normal'>
+                                For "other," upload a CSV file with the following order:
+                                <br>
+                                <br>
+                                Line 1: ISBN
+                                <br>
+                                Line 2: Quantity
+                                <br>
+                                Line 3: Title (optional)
+                            </div>
+                            <br>
                             <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader', required: true %>
                         </div>
                         <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20", id: "submit-button" do %>

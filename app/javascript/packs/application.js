@@ -167,7 +167,7 @@ if ((/filter=review/.test(url_o))) {
 
 
 
-
+    
 
     $('#upload-show').click(function () {
         $('#uploader').fadeIn(300);
@@ -222,6 +222,8 @@ if ((/filter=review/.test(url_o))) {
     var icons = $(".print-check").detach();
 
     print_check = $("#print-check").text()
+
+ 
 
 
     $("#items-left").each(function() {
@@ -365,5 +367,20 @@ if ((/filter=review/.test(url_o))) {
     });
 
 
+//Price Compare *************************************************************
+
+    //$('#other-message').fadeOut(0);
+
+    // $(".destination").change(function() {
+    //     if ($(this).val() == "Other") {
+    //         $(this).fadeIn(300);            
+    //     }
+    //     if ($(this).val() == "Textbook Recycling") {
+    //         $(this).fadeOut(300);            
+    //     }
+
+    // });
+
 });
 //******************************************************************************
+

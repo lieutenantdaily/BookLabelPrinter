@@ -369,17 +369,17 @@ if ((/filter=review/.test(url_o))) {
 
 //Price Compare *************************************************************
 
-    //$('#other-message').fadeOut(0);
+    $('#other-message').fadeOut(0);
 
-    // $(".destination").change(function() {
-    //     if ($(this).val() == "Other") {
-    //         $(this).fadeIn(300);            
-    //     }
-    //     if ($(this).val() == "Textbook Recycling") {
-    //         $(this).fadeOut(300);            
-    //     }
+    $("#price_destination").change(function() {
+        if ($(this).val() == "Other") {
+            $('#other-message').fadeIn(300);            
+        }
+        if ($(this).val() == "Textbook Recycling") {
+            $('#other-message').fadeOut(300);            
+        }
 
-    // });
+    });
 
 });
 //******************************************************************************

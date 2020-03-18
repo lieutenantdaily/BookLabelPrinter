@@ -110,7 +110,7 @@ class Price < ApplicationRecord
 
         if d == "Other"
             ActiveRecord::Base.transaction do
-                CSV.foreach(file.path, headers: true, col_sep: "\t", liberal_parsing: true, encoding: "macRoman:UTF-8") do |row|
+                CSV.foreach(file.path, headers: true) do |row|
                     duplicate_check = Price.find_by(isbn: row[0])
                     
                     if duplicate_check.blank?

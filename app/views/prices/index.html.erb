@@ -18,13 +18,22 @@
 <% if @prices.present? %>
     <br>
     <br>
+
     <% if @prices_with_diff.present? %>
         <center>
             <p>
-            <h3 class="btn btn-success div-shadow font-20" style="margin-top: -20px;">&nbsp<i class="fas fa-info-circle"> &nbsp</i><%= number_with_precision(@counter2.to_f, precision: 0, :delimiter => ',') %> matched ISBNs!</h3>
+            <h3 class="btn btn-success div-shadow font-20" style="margin-top: -20px;">&nbsp<i class="fas fa-info-circle"> &nbsp</i><%= number_with_precision(@counter2.to_f, precision: 0, :delimiter => ',') %> matched ISBNs</h3>
             </p>
         </center>
         <br>
+        <% if @prices_with_no_source.present? %>
+            <center>
+                <p>
+                <h3 class="btn btn-danger div-shadow font-20" style="margin-top: -20px;">&nbsp<i class="fas fa-info-circle"> &nbsp</i><%= number_with_precision(@counter3.to_f, precision: 0, :delimiter => ',') %> unmatched ISBNs</h3>
+                </p>
+            </center>
+            <br>
+        <% end %>
         <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
             <div class="container card p-0 label-font no-shadow label">
 
@@ -53,12 +62,27 @@
             </div>
         </div>
     <% else %>
-        <center>
-            <p>
-            <h3 class="btn btn-info div-shadow font-20" style="margin-top: -20px;">&nbsp<i class="fas fa-info-circle"> &nbsp</i><%= number_with_precision(@counter.to_f, precision: 0, :delimiter => ',') %> ISBNs imported!</h3>
-            </p>
-        </center>
+        <% if @prices_with_no_source.present? %>
+            <center>
+                <p>
+                <h3 class="btn btn-danger div-shadow font-20" style="margin-top: -20px;">&nbsp<i class="fas fa-info-circle"> &nbsp</i><b>No Matches Found!</b><br><%= number_with_precision(@counter3.to_f, precision: 0, :delimiter => ',') %> unmatched ISBNs</h3>
+                </p>
+            </center>
+            <br>
+            <div class="container card p-0 label-font no-shadow label">
+                <center>
+                    <p>Upload another file, or reset the database and try agian.<p>
+                </center>
+            </div>
+            <br>
+        <% else %>
+            <center>
+                <p>
+                <h3 class="btn btn-info div-shadow font-20" style="margin-top: -20px;">&nbsp<i class="fas fa-info-circle"> &nbsp</i><%= number_with_precision(@counter.to_f, precision: 0, :delimiter => ',') %> ISBNs imported!</h3>
+                </p>
+            </center>
         <br>
+        <% end %>
         <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
             <div class="container card p-0 label-font no-shadow label">
 

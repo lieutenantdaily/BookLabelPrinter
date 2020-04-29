@@ -79,6 +79,7 @@ class Price < ApplicationRecord
     def self.import(file, destination)
         require 'csv'
         d = destination.to_s
+        Price.where("source = ?", "none").destroy_all
         if d == "Textbook Recycling"
             ActiveRecord::Base.transaction do
                 CSV.foreach(file.path, headers: true) do |row|
@@ -114,7 +115,10 @@ class Price < ApplicationRecord
                     duplicate_check = Price.find_by(isbn: row[0])
                     
                     if duplicate_check.blank?
-                        
+                        price_hash = Price.new
+                        price_hash.isbn = row[0]
+                        price_hash.source = "none"
+                        price_hash.save
                     else
                         title = row[2]
                         vendor_qty = row[1]

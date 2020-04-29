@@ -3,6 +3,7 @@ class PricesController < ApplicationController
     def index
         @prices = Price.all.order("created_at DESC") 
         @prices_with_diff = Price.where("final_qty > ?", 0).order("CAST(rank AS Decimal) DESC") 
+        @prices_with_no_source = Price.where("source = ?", "none")
     
         respond_to do |format|
             format.html
@@ -10,11 +11,12 @@ class PricesController < ApplicationController
         end
         @counter = Price.all.count
         @counter2 = @prices_with_diff.all.count
+        @counter3 = @prices_with_no_source.all.count
     end
 
     def import_url
         Price.import_url
-        redirect_to prices_path, notice: "Nebraska Import Complete"
+        redirect_to prices_path, notice: "Import Complete"
     end
 
     def import_url_rat

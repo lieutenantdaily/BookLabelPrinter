@@ -33,6 +33,21 @@
                 </p>
             </center>
             <br>
+            <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
+                <h2><b>Sample Data:</b></h2>
+                <div id="label" class="container card p-0 label-font no-shadow label">
+                    <table style="width:100%">
+                    <tr>
+                        <th class="text-left">ISBN</th>
+                        <th class="text-left">Rank</th>
+                        <th class="text-right">Price</th>
+                        <th class="text-right">Quantity</th>
+                        <th class="text-right">Total</th>
+                    </tr>
+                        <%= render @prices_with_no_source[0,3] %>
+                    </table>
+                </div>
+            </div>
         <% end %>
         <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
             <div class="container card p-0 label-font no-shadow label">
@@ -69,9 +84,28 @@
                 </p>
             </center>
             <br>
+            <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
+                <h2><b>Sample Data:</b></h2>
+                <div id="label" class="container card p-0 label-font no-shadow label">
+                    <table style="width:100%">
+                    <tr>
+                        <th class="text-left">ISBN</th>
+                        <th class="text-left">Rank</th>
+                        <th class="text-right">Price</th>
+                        <th class="text-right">Quantity</th>
+                        <th class="text-right">Total</th>
+                    </tr>
+                        <%= render @prices_with_no_source[0,3] %>
+                    </table>
+                </div>
+            </div>
             <div class="container card p-0 label-font no-shadow label">
                 <center>
-                    <p>Upload another file, or reset the database and try agian.<p>
+                    <p>Upload another file, or 
+                        <%= form_tag ({ :controller => 'prices', :action => 'destroy_them_all'}) do%>
+                            <%= submit_tag 'Start Over', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-danger div-shadow" %>
+                        <% end %>
+                        <p>
                 </center>
             </div>
             <br>

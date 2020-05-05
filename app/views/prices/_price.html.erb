@@ -1,5 +1,5 @@
 <tr>
-    <td class="text-left"><%= price.isbn %></td>
+    <td class="text-left"><%= price.isbn.truncate(50, omission: '...') %></td>
     <td class="text-left"><%= number_with_delimiter(price.rank.to_i, :delimiter => ',') %></td>
     <td class="text-right">$<%= number_with_precision(price.amount.to_f, precision: 2)  %></td>
     <td class="text-right"><%= price.final_qty %></td>

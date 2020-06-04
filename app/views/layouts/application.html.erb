@@ -22,7 +22,37 @@
   </head>
 
   <body>
+
     <%= render 'layouts/header' %>
+
+    <div class="flex-row">
+      <% if notice %>
+        <p class="alert-success navbar-text float-left position-absolute pl-3 w-100" style="z-index: -1">
+            <span class="btn pt-1 pb-1 no-shadow"><%= notice %></span>
+        </p>
+      <% end %>
+      <% if alert %>
+        <p class="alert-danger navbar-text float-left position-absolute pl-3 w-100" style="z-index: -1">
+            <span class="btn pt-1 pb-1 no-shadow"><%= alert %></span>
+        </p>
+      <% end %>
+
+      <p class="navbar-text float-right mr-3">
+        <% if user_signed_in? %>
+            <span class="btn pt-1 pb-1 no-shadow">Logged in as <strong><%= current_user.first_name %> <%= current_user.last_name %></strong></span>
+            <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link btn btn-secondary div-shadow pt-1 pb-1' %> 
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link btn btn-danger div-shadow ml-2 pt-1 pb-1'  %>
+        <% else %>
+            <%= link_to "Request an Account", new_user_registration_path, :class => 'navbar-link btn btn-success div-shadow pt-1 pb-1'  %> 
+            <%= link_to "Login", new_user_session_path, :class => 'navbar-link btn btn-primary div-shadow ml-2 pt-1 pb-1'  %>
+        <% end %>          
+      </p>
+      <br>
+      
+    </div>
+    <br>
+
     <%= yield %>
+
   </body>
 </html>

@@ -1,120 +1,121 @@
-<%= render 'buybacks/uploader' %>
-<br>
-<% if notice %>
-    <p class="alert alert-success message-format"><%= notice %></p>
-<% end %>
-<% if alert %>
-    <p class="alert alert-danger message-format"><%= alert %></p>
-<% end %>
-<br>
-<center>
-    <h1><% content_for :title, "Valore Order Processing" %>Valore Order Processing</h1>
-</center>
-<br>
-<br>
-<center>
-    <%= form_tag(buybacks_path, :method => "get", id: "search-form", class: 'w-50 m-10 inline-block input-shadow div-shadow border-none') do %>
-        <div class="d-flex flex-row appearance-none h-auto text-gray-700 input-shadow overflow-hidden border-none">
-            
-            <%= text_field_tag :search, params[:search], placeholder: "Order, Box or Item Number", onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'inline-block appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20', id: "search-field" %>
 
-            <%= button_tag type: 'submit', class: "appearance-none min-w-s max-w-s border-none bg-primary text-white", id: "submit-button-search" do %>
-                <i class="fas fa-search m-0 p-3 max-w-s min-w-s text-center border-none font-20"></i>
-            <% end %>
-        </div>
-    <% end %>
-    <br>
-    <br>    
-</center>
+<% if current_user.nil? %>
+    <%= render 'layouts/unauthorized' %>      
+<% else %>
+    <% if current_user.active && (current_user.power_user || current_user.admin) %>
+        <%= render 'buybacks/uploader' %>
+        <br>
 
-<% if @buybacks.present? %>
-
-    <% @buybacks[0,1].each do |buyback|%>
-        <% if session[:passed_variable] == buyback.buyback_id %>
-            <div id="print-check" style="margin-bottom: -35px; display:none">1</div>
-        <% else %>
-            <center>
-                <button id="cmd" class="btn btn-success div-shadow print-button font-20"><i class="fas fa-print"></i> Print Labels</button>
-            </center>
-        <% end %>
-    <% end %>
-    <br>
-    <% @buybacks[0,1].each do |buyback|%>
         <center>
-            <div class='container card card-body flex-row div-shadow mt-4 bg-light'>
-                <div class='card card-body m-3 text-dark div-shadow'>
-                    Order Number: <a href="/buybacks?search=<%= @order_id %>" target="_self"><b><%= @order_id %></b></a>
+            <h1><% content_for :title, "Valore Order Processing" %>Valore Order Processing</h1>
+        </center>
+        <br>
+        <br>
+        <center>
+            <%= form_tag(buybacks_path, :method => "get", id: "search-form", class: 'w-50 m-10 inline-block input-shadow div-shadow border-none') do %>
+                <div class="d-flex flex-row appearance-none h-auto text-gray-700 input-shadow overflow-hidden border-none">
+                    
+                    <%= text_field_tag :search, params[:search], placeholder: "Order, Box or Item Number", onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'inline-block appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20', id: "search-field" %>
+
+                    <%= button_tag type: 'submit', class: "appearance-none min-w-s max-w-s border-none bg-primary text-white", id: "submit-button-search" do %>
+                        <i class="fas fa-search m-0 p-3 max-w-s min-w-s text-center border-none font-20"></i>
+                    <% end %>
                 </div>
-                <div class='card card-body m-3 text-dark div-shadow'>
-                    Total Boxes in Order: <b><%= @boxcount.count %></b>
-                </div>
-                <% if @order_id != params[:search] %>
-                    <div class='card card-body m-3 text-dark div-shadow'>
-                        Box Number: <a href="/buybacks?search=<%= @box_id %>" target="_self"><b><%= buyback.tracking_number %></b></a>
-                    </div>
-                    <div class='card card-body m-3 text-dark div-shadow'>
-                        Total Items in Box: <b><%= @filtered_by_box.count %></b>
-                    </div>
-                    <div class='card card-body m-3 text-dark bg-warning div-shadow'>
-                        Items to Review: <span id='items-left'><b><%= @filtered_by_box_reviewed.count + @filtered_by_box_reject_no_notes.count %></b></span>
-                    </div>
+            <% end %>
+            <br>
+            <br>    
+        </center>
+
+        <% if @buybacks.present? %>
+
+            <% @buybacks[0,1].each do |buyback|%>
+                <% if session[:passed_variable] == buyback.buyback_id %>
+                    <div id="print-check" style="margin-bottom: -35px; display:none">1</div>
                 <% else %>
-                    <div class='card card-body m-3 text-dark div-shadow'>
-                        Total Items in Order: <b><%= @buybacks.count %></b>
+                    <center>
+                        <button id="cmd" class="btn btn-success div-shadow print-button font-20"><i class="fas fa-print"></i> Print Labels</button>
+                    </center>
+                <% end %>
+            <% end %>
+            <br>
+            <% @buybacks[0,1].each do |buyback|%>
+                <center>
+                    <div class='container card card-body flex-row div-shadow mt-4 bg-light'>
+                        <div class='card card-body m-3 text-dark div-shadow'>
+                            Order Number: <a href="/buybacks?search=<%= @order_id %>" target="_self"><b><%= @order_id %></b></a>
+                        </div>
+                        <div class='card card-body m-3 text-dark div-shadow'>
+                            Total Boxes in Order: <b><%= @boxcount.count %></b>
+                        </div>
+                        <% if @order_id != params[:search] %>
+                            <div class='card card-body m-3 text-dark div-shadow'>
+                                Box Number: <a href="/buybacks?search=<%= @box_id %>" target="_self"><b><%= buyback.tracking_number %></b></a>
+                            </div>
+                            <div class='card card-body m-3 text-dark div-shadow'>
+                                Total Items in Box: <b><%= @filtered_by_box.count %></b>
+                            </div>
+                            <div class='card card-body m-3 text-dark bg-warning div-shadow'>
+                                Items to Review: <span id='items-left'><b><%= @filtered_by_box_reviewed.count + @filtered_by_box_reject_no_notes.count %></b></span>
+                            </div>
+                        <% else %>
+                            <div class='card card-body m-3 text-dark div-shadow'>
+                                Total Items in Order: <b><%= @buybacks.count %></b>
+                            </div>
+                            <div id="review" class='card card-body m-3 text-dark bg-warning div-shadow cursor-pointer'>
+                                Items to Review: <span id='items-left'><b><%= @buybacks.where(status: ["Review", "Review-Keep"]).count + @buybacks.where(status: ["Reject-Blue", "Reject-Yellow"]).where(notes: "").count %></b></span>
+                            </div>
+                        <% end %>
+                        
                     </div>
-                    <div id="review" class='card card-body m-3 text-dark bg-warning div-shadow cursor-pointer'>
-                        Items to Review: <span id='items-left'><b><%= @buybacks.where(status: ["Review", "Review-Keep"]).count + @buybacks.where(status: ["Reject-Blue", "Reject-Yellow"]).where(notes: "").count %></b></span>
+                </center>
+                <% if @order_id == params[:search] %>
+                    <div class='container card card-body mt-0 mb-0 pb-0 no-shadow no-border d-flex flex-row justify-content-center'>
+                        <div id="all" class='btn btn-secondary div-shadow m-3 mb-0 font-20 cursor-pointer'>Total: <b>$<%= number_with_delimiter(@sum_total, :delimiter => ',') %></b></div>
+                        <div id="keep" class='btn btn-success div-shadow m-3 mb-0 font-20 cursor-pointer'>Keep: <b>$<%= number_with_delimiter(@sum_keep, :delimiter => ',') %></b></div>
+                        <div id="reject" class='btn btn-danger div-shadow m-3 mb-0 font-20 cursor-pointer'>Rejected: <b>$<%= number_with_delimiter(@sum_reject, :delimiter => ',') %></b></div>
+                        <div id="missing" class='btn btn-dark purple div-shadow m-3 mb-0 font-20 cursor-pointer'>Missing: <b>$<%= number_with_delimiter(@sum_missing, :delimiter => ',') %></b></div>
+                    </div>
+                    <hr class='container'>
+                    <div class='container card card-body mt-0 pb-0 pt-0 no-shadow no-border d-flex flex-row justify-content-center'>
+                        <a href="/buybacks.csv?search=<%= @order_id %>" target="_self" class='btn btn-primary div-shadow m-3'><b>Download Valore File</b></a>
+                        <a href="/buybacks.csv2?search=<%= @order_id %>" target="_self" class='btn btn-secondary div-shadow m-3'><b>Download Returns</b></a>
+                        <a href="/buybacks.csv3?search=<%= @order_id %>" target="_self" class='btn btn-light div-shadow m-3'><b>Download All</b></a>
                     </div>
                 <% end %>
-                
+            <% end %>
+
+            <div id="content">
+                <%= render @buybacks %>
             </div>
-        </center>
-        <% if @order_id == params[:search] %>
-            <div class='container card card-body mt-0 mb-0 pb-0 no-shadow no-border d-flex flex-row justify-content-center'>
-                <div id="all" class='btn btn-secondary div-shadow m-3 mb-0 font-20 cursor-pointer'>Total: <b>$<%= number_with_delimiter(@sum_total, :delimiter => ',') %></b></div>
-                <div id="keep" class='btn btn-success div-shadow m-3 mb-0 font-20 cursor-pointer'>Keep: <b>$<%= number_with_delimiter(@sum_keep, :delimiter => ',') %></b></div>
-                <div id="reject" class='btn btn-danger div-shadow m-3 mb-0 font-20 cursor-pointer'>Rejected: <b>$<%= number_with_delimiter(@sum_reject, :delimiter => ',') %></b></div>
-                <div id="missing" class='btn btn-dark purple div-shadow m-3 mb-0 font-20 cursor-pointer'>Missing: <b>$<%= number_with_delimiter(@sum_missing, :delimiter => ',') %></b></div>
+
+            <div id="editor"></div>
+
+
+
+        <% else %>
+            <center>
+                <p>There are no buybacks containing the term you entered.</p>
+                <br>
+                <br>
+            </center>
+
+            <center>
+                <h2>Recent Orders</h2>
+            </center>
+
+            <div class='container card card-body flex-row div-shadow mt-4 bg-light'>
+
+            <% @all_orders[0,4].each do |a|%>
+                    <div class='card card-body m-3 text-dark div-shadow'>
+                        <center>Order ID: <a href="/buybacks?search=<%= a.order_id %>" target="_self"><b><%= a.order_id %></b></a></center>
+                        <center>Date: <b><%= a.created_at.strftime("%m/%d/%Y") %></b></center>
+                    </div>      
+                <% end %>
+
             </div>
-            <hr class='container'>
-            <div class='container card card-body mt-0 pb-0 pt-0 no-shadow no-border d-flex flex-row justify-content-center'>
-                <a href="/buybacks.csv?search=<%= @order_id %>" target="_self" class='btn btn-primary div-shadow m-3'><b>Download Valore File</b></a>
-                <a href="/buybacks.csv2?search=<%= @order_id %>" target="_self" class='btn btn-secondary div-shadow m-3'><b>Download Returns</b></a>
-                <a href="/buybacks.csv3?search=<%= @order_id %>" target="_self" class='btn btn-light div-shadow m-3'><b>Download All</b></a>
-            </div>
+
         <% end %>
+        <br>
     <% end %>
-
-    <div id="content">
-        <%= render @buybacks %>
-    </div>
-
-    <div id="editor"></div>
-
-
-
-<% else %>
-    <center>
-        <p>There are no buybacks containing the term you entered.</p>
-        <br>
-        <br>
-    </center>
-
-     <center>
-        <h2>Recent Orders</h2>
-    </center>
-
-    <div class='container card card-body flex-row div-shadow mt-4 bg-light'>
-
-       <% @all_orders[0,4].each do |a|%>
-            <div class='card card-body m-3 text-dark div-shadow'>
-                <center>Order ID: <a href="/buybacks?search=<%= a.order_id %>" target="_self"><b><%= a.order_id %></b></a></center>
-                <center>Date: <b><%= a.created_at.strftime("%m/%d/%Y") %></b></center>
-            </div>      
-        <% end %>
-
-    </div>
-
 <% end %>
-<br>
 

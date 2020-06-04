@@ -1,0 +1,25 @@
+<br>
+<center>
+    <h1><% content_for :title, "Forgot your password?" %>Forgot your password?</h1>
+</center>
+<br>
+<center>
+  <div class="container card card-body mt-3 mb-5 div-shadow label-container text-center">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <h3><%= f.label :email %></h3>
+        <%= f.text_field :email, :required => true, autofocus: true, autocomplete: "email", class: 'inline-block appearance-none p-3 h-100 w-50 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1' %>
+      </div>
+      <br>
+
+      <div class="actions">
+          <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20 mt-3", id: "submit-button" do %>
+              <i class="fas fa-info-circle"></i> Send me reset password instructions
+          <% end %>
+      </div>
+    <% end %>
+  </div>
+</center>
+

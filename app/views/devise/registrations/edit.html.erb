@@ -1,0 +1,66 @@
+<br>
+<center>
+    <h1><% content_for :title, "User Account" %><%= current_user.first_name %> <%= current_user.last_name %>'s Account</h1>
+</center>
+<br>
+
+<center>
+  <div class="container card card-body mt-3 mb-5 div-shadow label-container text-center">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <h3><%= f.label :first_name %></h3>
+        <%= f.text_field :first_name, :required => true, autofocus: true, autocomplete: "given-name", class: 'inline-block appearance-none p-3 h-100 w-50 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1' %>
+      </div>
+      <br>
+      <div class="field">
+        <h3><%= f.label :last_name %></h3>
+        <%= f.text_field :last_name, :required => true, autofocus: true, autocomplete: "family-name", class: 'inline-block appearance-none p-3 h-100 w-50 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1' %>
+      </div>
+      <br>
+      <div class="field">
+        <h3><%= f.label :email %></h3>
+        <%= f.email_field :email, :required => true, autofocus: true, autocomplete: "email", class: 'inline-block appearance-none p-3 h-100 w-50 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1' %>
+      </div>
+      <br>
+      
+
+      <div class="field">
+        <h3>New <%= f.label :password %></h3>
+        <%= f.password_field :password, autocomplete: "new-password", class: 'inline-block appearance-none p-3 h-100 w-50 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1' %>
+        <br>
+        <i>leave blank if you don't want to change it</i>
+        <br>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %>
+      </div>
+      <br>
+
+      <div class="field">
+        <h3>New <%= f.label :password_confirmation %></h3>
+        <%= f.password_field :password_confirmation, class: 'inline-block appearance-none p-3 h-100 w-50 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1 mb-1' %>
+      </div>
+
+      <br>
+
+      <div class="container card card-body mt-3 mb-5 div-shadow label-container text-center w-50 bg-warning">
+      <div class="field">
+        <h3><%= f.label :current_password %></h3>
+        <%= f.password_field :current_password, class: 'inline-block appearance-none p-3 h-100 w-75 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1 mb-1' %>
+        <br>
+        <i>we need your current password to confirm your changes</i>      
+      </div>
+      </div>
+
+      <div class="actions">
+          <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20 mt-3", id: "submit-button" do %>
+              <i class="fas fa-sign-in-alt"></i> Submit
+          <% end %>
+      </div>
+    <% end %>
+
+</div>
+
+

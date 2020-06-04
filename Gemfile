@@ -31,6 +31,8 @@ gem 'prawn-table'
 gem 'jquery-rails'
 gem 'jwt'
 gem "rails-erd"
+gem "devise"
+gem "execute_sql"
 
 
 # Use Active Storage variant

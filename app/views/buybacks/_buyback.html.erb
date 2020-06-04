@@ -41,7 +41,7 @@
                     <h1><%= buyback.restricted %><%= buyback.source %> | <b><a href="/buybacks?search=<%= buyback.buyback_id %>" target="_self" ><%= buyback.buyback_id %></a>-1A-<%= buyback.price.gsub(".", "-").gsub("$", "") %>-Z-<%= ((buyback.price.gsub("$", "").to_f + 7) / @breakeven).to_i %></b></h1>
                 </p> 
                 <p class="no-bottom">
-                <h2><a href="/buybacks?search=<%= buyback.order_id %>" target="_self"><%= buyback.order_id %></a> | <%= buyback.o_created_at[0,5] %> | <%= buyback.updated_by %>
+                <h2><a href="/buybacks?search=<%= buyback.order_id %>" target="_self"><%= buyback.order_id %></a> | <%= buyback.o_created_at[0,5] %> | <%= current_user.first_name[0,1] %><%= current_user.last_name[0,1] %>
                 <% if buyback.notes.present? %>
                 | <%= buyback.notes %>
                 <% end %>

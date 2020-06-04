@@ -1,0 +1,30 @@
+<% if current_user.admin %>
+
+    
+    <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
+
+
+        <div id="label" class="container card p-0 label-font no-shadow label">
+            <center>
+                <h3>Manage Users</h3>
+            </center>
+                <table style="width:100%; height: 175px;">
+                <tr>
+                    <th class="text-left pr-2"></th>
+                    <th class="text-left">First</th>
+                    <th class="text-left">Last</th>
+                    <th class="text-left">Email</th>
+                    <th class="text-left">Power User</th>
+                    <th class="text-left">Admin</th>
+                    <th class="text-left pl-4">Custom</th>
+                    <th class="text-left">Active</th>
+
+                </tr>
+                    <%= render @users %>
+                </table>
+            
+        </div>
+        
+    </div>
+    
+<% end %>

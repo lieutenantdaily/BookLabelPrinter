@@ -1,41 +1,47 @@
-<% content_for :title, "Quick Links" %>
-<div class="container">
-    <br>
-    <br>
-    <h2>Metabase Dashboards</h2>
-    <div class="card card-body div-shadow label-font div-shadow label link-card">
-        <div class="link-center">
-            <a href="http://metabase.textbookmaniac.com/dashboard/11" target="_blank" class="btn btn-warning div-shadow link-button">Wholesale Check</a>
-            <a href="http://metabase.textbookmaniac.com/dashboard/10" target="_blank" class="btn btn-warning div-shadow link-button">Buyback Source Analytics</a>
+<% if current_user.nil? %>
+    <%= render 'layouts/unauthorized' %>      
+<% else %>
+    <% if current_user.active && (current_user.power_user || current_user.admin) %>
+        <% content_for :title, "Quick Links" %>
+        <div class="container">
+            <br>
+            <br>
+            <h2>Metabase Dashboards</h2>
+            <div class="card card-body div-shadow label-font div-shadow label link-card">
+                <div class="link-center">
+                    <a href="http://metabase.textbookmaniac.com/dashboard/11" target="_blank" class="btn btn-warning div-shadow link-button">Wholesale Check</a>
+                    <a href="http://metabase.textbookmaniac.com/dashboard/10" target="_blank" class="btn btn-warning div-shadow link-button">Buyback Source Analytics</a>
+
+                </div>
+            </div>
+            <br>
+            <br>
+            <h2>Valore Source Files</h2>
+            <div class="card card-body div-shadow label-font div-shadow label link-card">
+                <div class="link-center">
+                    <a href="http://metabase.textbookmaniac.com/public/question/c211c9da-be0b-4947-b37a-5a086abb5eb7.csv" target="_blank" class="btn btn-primary div-shadow link-button">All Nebraska Offers</a>
+                    <a href="http://metabase.textbookmaniac.com/public/question/543a1532-0ed1-411c-8075-6484acce0fd4.csv" target="_blank" class="btn btn-primary div-shadow link-button">All Amazon Offers</a>
+
+                </div>
+            </div>
+            <br>
+            <br>
+            <h2>BookByte Files</h2>
+            <div class="card card-body div-shadow label-font div-shadow label link-card">
+                <div class="link-center">
+                    <a href="http://metabase.textbookmaniac.com/public/question/3bff7d99-472d-4b5b-8f4d-56c0d5b61bc8.csv" target="_blank" class="btn btn-primary div-shadow link-button">Weekly Order Upload</a>
+                </div>
+            </div>
+
+            <br>
+            <br>
+            <h2>Buyback Reports</h2>
+            <div class="card card-body div-shadow label-font div-shadow label link-card">
+                <div class="link-center">
+                    <a href="http://metabase.textbookmaniac.com/question/66" target="_blank" class="btn btn-secondary div-shadow link-button">Buybacks by Date</a>
+                </div>
+            </div>
 
         </div>
-    </div>
-    <br>
-    <br>
-    <h2>Valore Source Files</h2>
-    <div class="card card-body div-shadow label-font div-shadow label link-card">
-        <div class="link-center">
-            <a href="http://metabase.textbookmaniac.com/public/question/c211c9da-be0b-4947-b37a-5a086abb5eb7.csv" target="_blank" class="btn btn-primary div-shadow link-button">All Nebraska Offers</a>
-            <a href="http://metabase.textbookmaniac.com/public/question/543a1532-0ed1-411c-8075-6484acce0fd4.csv" target="_blank" class="btn btn-primary div-shadow link-button">All Amazon Offers</a>
-
-        </div>
-    </div>
-    <br>
-    <br>
-    <h2>BookByte Files</h2>
-    <div class="card card-body div-shadow label-font div-shadow label link-card">
-        <div class="link-center">
-            <a href="http://metabase.textbookmaniac.com/public/question/3bff7d99-472d-4b5b-8f4d-56c0d5b61bc8.csv" target="_blank" class="btn btn-primary div-shadow link-button">Weekly Order Upload</a>
-        </div>
-    </div>
-
-    <br>
-    <br>
-    <h2>Buyback Reports</h2>
-    <div class="card card-body div-shadow label-font div-shadow label link-card">
-        <div class="link-center">
-            <a href="http://metabase.textbookmaniac.com/question/66" target="_blank" class="btn btn-secondary div-shadow link-button">Buybacks by Date</a>
-        </div>
-    </div>
-
-</div>
+    <% end %>
+<% end %>

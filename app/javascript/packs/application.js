@@ -172,7 +172,7 @@ if ((/filter=review/.test(url_o))) {
     $('#upload-show').click(function () {
         $('#uploader').fadeIn(300);
         $('#uploader').animate({
-            top: 0
+            top: -50
         }, {
             duration: 300,
             queue: false
@@ -184,7 +184,7 @@ if ((/filter=review/.test(url_o))) {
     $('#offers-upload-show').click(function () {
         $('#uploader').fadeIn(300);
         $('#uploader').animate({
-            top: 0
+            top: -50
         }, {
             duration: 300,
             queue: false

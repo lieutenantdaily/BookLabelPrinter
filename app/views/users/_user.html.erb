@@ -1,0 +1,100 @@
+<% if user.email != current_user.email %>
+    <tr>
+        <td style="vertical-align: top" class="text-left pr-2">
+            <%= form_tag({:controller=>"dashboard", :action=>"userPermissions"}, method: :get) do %>
+                <div style="display: none;">
+                    <select name="user">
+                            <option value="<%= user.email %>"><%= user.email %></option>
+                    </select>
+                </div>
+                
+                <%= button_tag type: 'submit', name: "user_action",value: "delete_user", class: "btn btn-danger div-shadow pt-0 pb-0 pl-1 pr-1", data: { confirm: "Are you sure? This will delete the user!" } do %>
+                    <i class="fas fa-trash"></i>
+                <% end %>
+                <div style="display: none;">
+                    <select name="delete_user">
+                    </select>
+                </div>
+            <% end %>
+        </td>
+
+        <td style="vertical-align: top" class="text-left"><%= user.first_name.truncate(50, omission: '...') %></td>
+        <td style="vertical-align: top" class="text-left"><%= user.last_name.truncate(50, omission: '...') %></td>
+        <td style="vertical-align: top" class="text-left"><%= user.email %></td>
+        <td style="vertical-align: top" class="text-left">
+            <%= form_tag({:controller=>"dashboard", :action=>"userPermissions"}, method: :get) do %>
+                <div style="display: none;">
+                    <select name="user">
+                            <option value="<%= user.email %>"><%= user.email %></option>
+                    </select>
+                </div>
+
+                <%= button_tag type: 'submit', name: "user_action",value: "power_user", class: "btn btn-dark div-shadow pt-0 pb-0 pl-1 pr-1" do %>
+                    <i class="fas fa-retweet"></i>
+                <% end %>
+                <%= user.power_user.to_s.gsub('false', 'No').gsub('true', 'Yes') %>
+                <div style="display: none;">
+                    <select name="power_user">
+                            <option value="<%= user.power_user %>"><%= user.power_user %></option>
+                    </select>
+                </div>
+            <% end %>
+        </td>
+        <td style="vertical-align: top" class="text-left">
+            <%= form_tag({:controller=>"dashboard", :action=>"userPermissions"}, method: :get) do %>
+                <div style="display: none;">
+                    <select name="user">
+                            <option value="<%= user.email %>"><%= user.email %></option>
+                    </select>
+                </div>
+
+                <%= button_tag type: 'submit', name: "user_action",value: "admin", class: "btn btn-dark div-shadow pt-0 pb-0 pl-1 pr-1" do %>
+                    <i class="fas fa-retweet"></i>
+                <% end %>
+                <%= user.admin.to_s.gsub('false', 'No').gsub('true', 'Yes') %>
+                <div style="display: none;">
+                    <select name="admin">
+                            <option value="<%= user.admin %>"><%= user.admin %></option>
+                    </select>
+                </div>
+            <% end %>
+        </td>
+        <td style="vertical-align: top" class="text-left pl-4">
+            <%= form_tag({:controller=>"dashboard", :action=>"userPermissions"}, method: :get) do %>
+                <div style="display: none;">
+                    <select name="user">
+                            <option value="<%= user.email %>"><%= user.email %></option>
+                    </select>
+                </div>
+
+                <span>
+                    <input class="btn btn-light div-shadow pt-0 pb-0 pl-1 pr-1" type="text" name="custom" value="<%= user.custom %>">
+                </span>
+
+                <%= button_tag type: 'submit', name: "user_action",value: "custom", class: "btn btn-dark div-shadow pt-0 pb-0 pl-1 pr-1" do %>
+                    <i class="fas fa-save"></i>
+                <% end %>
+            <% end %>
+        </td>
+        <td style="vertical-align: top" class="text-left">
+            <%= form_tag({:controller=>"dashboard", :action=>"userPermissions"}, method: :get) do %>
+                <div style="display: none;">
+                    <select name="user">
+                            <option value="<%= user.email %>"><%= user.email %></option>
+                    </select>
+                </div>
+
+                <%= button_tag type: 'submit', name: "user_action",value: "active", class: "btn btn-dark div-shadow pt-0 pb-0 pl-1 pr-1" do %>
+                    <i class="fas fa-retweet"></i>
+                <% end %>
+                <%= user.active.to_s.gsub('false', 'No').gsub('true', 'Yes') %>
+                <div style="display: none;">
+                    <select name="active">
+                            <option value="<%= user.active %>"><%= user.active %></option>
+                    </select>
+                </div>
+            <% end %>
+        </td>
+    </tr>
+<% end %>
+

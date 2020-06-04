@@ -1,134 +1,130 @@
-<%
-=begin%>
- <%= render 'offers/uploader' %> 
-<%
-=end%>
-<br>
-<% if notice %>
-    <p class="alert alert-success message-format"><%= notice %></p>
-<% end %>
-<% if alert %>
-    <p class="alert alert-danger message-format"><%= alert %></p>
-<% end %>
-<br>
-<center>
-    <h1><% content_for :title, "Valore File Generator" %>Valore File Generator</h1>
-</center>
-<% @offers[0,1].each do |offer|%>
-    <center>
-        Database last updated on <b><%= offer.created_at.strftime("%m/%d/%Y") %></b> at <%= offer.created_at.strftime("%I:%M %p") %>
-    </center>
-<% end %>
-
-<% if @offers.present? %>
-    <br>
-    <br>
-    <% if @offers_with_suggested.present? %>
-        <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
-            <div class="container card p-0 label-font no-shadow label">
-
-                <center>
-                    <h2><b>Step 5</b></h2>
-                    <p>Upload the following file to Valore:<p>
-                    <% if @offers_with_suggested.present? %>
-                        &nbsp;&nbsp;&nbsp;<a href="/offers.csv" target="_blank" class="btn btn-success div-shadow font-20">Valore Final File</a>
-                    <% end %>
-                </center> 
-
-            </div>
-        </div>
-        <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
-            <div id="label" class="container card p-0 label-font no-shadow label">
-                <table style="width:100%">
-                <tr>
-                    <th>ISBN</th>
-                    <th class="text-center">Quantity</th>
-                    <th class="text-right">Bid</th>
-                    <th class="text-right">TBM Amount</th>
-                    <th class="text-right">Suggested Bid</th>
-                    <th class="text-right">Difference</th>
-                    <th class="text-right">Sales Rank</th>
-                </tr>
-                    <%= render @offers[0,100] %>
-                </table>
-            </div>
-        </div>
-    <% else %>
-        <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
-            <div class="container card p-0 label-font no-shadow label">
-
-                <center>
-                    <h2><b>Step 2</b></h2>
-                    <p>Upload the following file to Valore:<p>
-                    <a href="/offers.csv2" target="_blank" class="btn btn-warning div-shadow font-20">Valore Check File</a>
-                    <br>
-                    <br>
-                    Quick link to:
-                    <br>
-                    <a href="https://source.valorebooks.com/" target="_blank" class="btn btn-primary div-shadow font-20">Valore Admin</a>
-                </center> 
-
-            </div>
-        </div>
-        <br>
-        <br>
-        <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
-            <div class="container card p-0 label-font no-shadow label">
-
-                <center>
-                    <h2><b>Step 3</b></h2>
-                    <p>Export the Valore want list with <b>Suggested Bids</b>.<p>
-                </center> 
-
-            </div>
-        </div>
-        <br>
-        <br>
-        <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
-            <div class="container card p-0 label-font no-shadow label">
-
-                <center>
-                    <h2><b>Step 4</b></h2>
-                    <p>Upload the <b>source-active-want-list</b> file that was just exported from Valore. This will take about 5 minutes.<p>
-                    <br>
-                    <%= form_for :offer, url: offers_path do |f| %>
-                        <div class="form-group uploader">
-                            <span class='d-none'>
-                                <%= f.select :destination, raw("<option>Valore Prices</option><option>TBM Prices</option>"), :required => 'required', class: '' %>
-                            </span>
-                            <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader', required: true %>
-                        </div>
-                        <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20", id: "submit-button" do %>
-                            <i class="fas fa-upload"></i> Upload
-                        <% end %>
-                    <% end %>
-                </center> 
-
-            </div>
-        </div>
-        <br>
-        <br>
-    <% end %>
+<% if current_user.nil? %>
+    <%= render 'layouts/unauthorized' %>      
 <% else %>
-    <br>
-    <br>
-    <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
-        <div class="container card p-0 label-font no-shadow label">
+    <% if current_user.active && (current_user.power_user || current_user.admin) %>
 
+        <br>
+
+        <center>
+            <h1><% content_for :title, "Valore File Generator" %>Valore File Generator</h1>
+        </center>
+        <% @offers[0,1].each do |offer|%>
             <center>
-                <h2><b>Step 1</b></h2>
-                <p>Import the current prices from TBM. If this fails, just reload this page and try again.<p>
-                <br>
-                <%= form_tag ({ :controller => 'offers', :action => 'import_url'}) do%>
-                    <%= submit_tag 'Import TBM Offers for Amazon', data: { confirm: "This will take about a minute to complete." }, class: "btn btn-warning div-shadow font-20" %>
-                <% end %>
-                <br>
-                <%= form_tag ({ :controller => 'offers', :action => 'import_url_neb'}) do%>
-                    <%= submit_tag 'Import TBM Offers for Nebraska', data: { confirm: "This will take about a minute to complete." }, class: "btn btn-danger div-shadow font-20" %>
-                <% end %>
-            </center> 
+                Database last updated on <b><%= offer.created_at.strftime("%m/%d/%Y") %></b> at <%= offer.created_at.strftime("%I:%M %p") %>
+            </center>
+        <% end %>
 
-        </div>
-    </div>
-    
+        <% if @offers.present? %>
+            <br>
+            <br>
+            <% if @offers_with_suggested.present? %>
+                <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
+                    <div class="container card p-0 label-font no-shadow label">
+
+                        <center>
+                            <h2><b>Step 5</b></h2>
+                            <p>Upload the following file to Valore:<p>
+                            <% if @offers_with_suggested.present? %>
+                                &nbsp;&nbsp;&nbsp;<a href="/offers.csv" target="_blank" class="btn btn-success div-shadow font-20">Valore Final File</a>
+                            <% end %>
+                        </center> 
+
+                    </div>
+                </div>
+                <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
+                    <div id="label" class="container card p-0 label-font no-shadow label">
+                        <table style="width:100%">
+                        <tr>
+                            <th>ISBN</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-right">Bid</th>
+                            <th class="text-right">TBM Amount</th>
+                            <th class="text-right">Suggested Bid</th>
+                            <th class="text-right">Difference</th>
+                            <th class="text-right">Sales Rank</th>
+                        </tr>
+                            <%= render @offers[0,100] %>
+                        </table>
+                    </div>
+                </div>
+            <% else %>
+                <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
+                    <div class="container card p-0 label-font no-shadow label">
+
+                        <center>
+                            <h2><b>Step 2</b></h2>
+                            <p>Upload the following file to Valore:<p>
+                            <a href="/offers.csv2" target="_blank" class="btn btn-warning div-shadow font-20">Valore Check File</a>
+                            <br>
+                            <br>
+                            Quick link to:
+                            <br>
+                            <a href="https://source.valorebooks.com/" target="_blank" class="btn btn-primary div-shadow font-20">Valore Admin</a>
+                        </center> 
+
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
+                    <div class="container card p-0 label-font no-shadow label">
+
+                        <center>
+                            <h2><b>Step 3</b></h2>
+                            <p>Export the Valore want list with <b>Suggested Bids</b>.<p>
+                        </center> 
+
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
+                    <div class="container card p-0 label-font no-shadow label">
+
+                        <center>
+                            <h2><b>Step 4</b></h2>
+                            <p>Upload the <b>source-active-want-list</b> file that was just exported from Valore. This will take about 5 minutes.<p>
+                            <br>
+                            <%= form_for :offer, url: offers_path do |f| %>
+                                <div class="form-group uploader">
+                                    <span class='d-none'>
+                                        <%= f.select :destination, raw("<option>Valore Prices</option><option>TBM Prices</option>"), :required => 'required', class: '' %>
+                                    </span>
+                                    <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader', required: true %>
+                                </div>
+                                <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20", id: "submit-button" do %>
+                                    <i class="fas fa-upload"></i> Upload
+                                <% end %>
+                            <% end %>
+                        </center> 
+
+                    </div>
+                </div>
+                <br>
+                <br>
+            <% end %>
+        <% else %>
+            <br>
+            <br>
+            <div class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
+                <div class="container card p-0 label-font no-shadow label">
+
+                    <center>
+                        <h2><b>Step 1</b></h2>
+                        <p>Import the current prices from TBM. If this fails, just reload this page and try again.<p>
+                        <br>
+                        <%= form_tag ({ :controller => 'offers', :action => 'import_url'}) do%>
+                            <%= submit_tag 'Import TBM Offers for Amazon', data: { confirm: "This will take about a minute to complete." }, class: "btn btn-warning div-shadow font-20" %>
+                        <% end %>
+                        <br>
+                        <%= form_tag ({ :controller => 'offers', :action => 'import_url_neb'}) do%>
+                            <%= submit_tag 'Import TBM Offers for Nebraska', data: { confirm: "This will take about a minute to complete." }, class: "btn btn-danger div-shadow font-20" %>
+                        <% end %>
+                    </center> 
+
+                </div>
+            </div>
+            
+        <% end %>
+    <% end %>
 <% end %>

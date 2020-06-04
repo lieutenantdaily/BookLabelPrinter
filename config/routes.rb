@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
-  root 'buybacks#index', as: 'home'
+  devise_for :users
+  root 'dashboard#index', as: 'home'
   post "buybacks/destroy_them_all" 
 
   post "offers/destroy_them_all" 
@@ -15,12 +16,18 @@ Rails.application.routes.draw do
   post "prices/import_url" 
   post "prices/import_url_rat" 
 
+  get '/userPermissions', to: 'dashboard#userPermissions', as: 'userPermissions'
+  # get '/userPermissionsDelete', to: 'dashboard#userPermissionsDelete', as: 'userPermissionsDelete'
+  # get '/userPermissionsMakeAdmin', to: 'dashboard#userPermissionsMakeAdmin', as: 'userPermissionsMakeAdmin'
 
   resources :orders
   resources :buybacks
   resources :offers
   resources :compare_files
   resources :prices
+  resources :dashboard
+
+
   
   get 'links' => 'pages#links', as: 'links'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

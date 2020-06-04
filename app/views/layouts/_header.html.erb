@@ -1,53 +1,98 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-dark nav-container">
-        <a href="#" class="navbar-brand">
+        <a href="/" class="navbar-brand">
             <div class="navbar-brand-inner"></div>
         </a>
+
+
+        
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav">
-                <%= link_to "Valore Processing", home_path, class: 'nav-item nav-link active' %>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle nav-item nav-link active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> 
-                    <span class="nav-label">File Generator</span></a>
-                    <ul class="dropdown-menu bg-dark">
-                        <center><%= link_to "Valore", offers_path, class: 'nav-item nav-link active' %></center>
-                        <center><%= link_to "Wholesale", compare_files_path, class: 'nav-item nav-link active' %></center>
-                    </ul>
-                </li>
-                <%= link_to "Price Compare", prices_path, class: 'nav-item nav-link active' %>
-                <%= link_to "Quick Links", links_path, class: 'nav-item nav-link active' %>
+                <% if current_user.nil? %>
+                    <li>
+                        <span class="nav-label text-light">Textbook Maniac Processing</span>
+                    </li>
+                <% else %>
+                    <% if current_user.active && (current_user.power_user || current_user.admin) %>
+                        <li>
+                            <a href="/dashboard" class="nav-item nav-link active text-light">Dashboard</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle nav-item nav-link active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> 
+                            <span class="nav-label">Processing</span></a>
+                            <ul class="dropdown-menu bg-dark">
+                                <center><%= link_to "Valore", buybacks_path, class: 'nav-item nav-link active' %></center>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle nav-item nav-link active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> 
+                            <span class="nav-label">File Generator</span></a>
+                            <ul class="dropdown-menu bg-dark">
+                                <center><%= link_to "Valore", offers_path, class: 'nav-item nav-link active' %></center>
+                                <center><%= link_to "Wholesale", compare_files_path, class: 'nav-item nav-link active' %></center>
+                                <center><%= link_to "Price Compare", prices_path, class: 'nav-item nav-link active' %></center>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle nav-item nav-link active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> 
+                            <span class="nav-label">Quick Links</span></a>
+                            <ul class="dropdown-menu bg-dark">
+                                <center><a href="https://buyback.textbookmaniac.com/admin" target="_blank" class="nav-item nav-link">Old Admin</a></center>
+                                <center><a href="http://admin.textbookmaniac.com" target="_blank" class="nav-item nav-link">New Admin</a></center>
+                                <center><a href="http://metabase.textbookmaniac.com/" target="_blank" class="nav-item nav-link">Metabase</a></center>
+                                <center><a href="http://camelcamelcamel.com/" target="_blank" class="nav-item nav-link">Camel</a></center>
+                            </ul>
+                        </li>
+                    <% else %> 
+                        <% if current_user.active.nil? || current_user.active == false %>
+                            <li>
+                                <span class="nav-label text-light">Awaiting Account Activation</span>
+                            </li>
+                        <% else %>
+                            <li>
+                                <span class="nav-label text-light"><b>Textbook Maniac |</b> <%= current_user.first_name %> <%= current_user.last_name %>'s Dashboard</span>
+                            </li>
+                        <% end %>
+                    <% end %>
+                <% end %>
                 
-                <a href="https://buyback.textbookmaniac.com/admin" target="_blank" class="nav-item nav-link">Old Admin</a>
-                <a href="http://admin.textbookmaniac.com" target="_blank" class="nav-item nav-link">New Admin</a>
-                <a href="http://metabase.textbookmaniac.com/" target="_blank" class="nav-item nav-link">Metabase</a>
-                <a href="http://camelcamelcamel.com/" target="_blank" class="nav-item nav-link">Camel</a>
             </div>
             <div class="navbar-nav ml-auto">
-                <% if controller_name == "buybacks" %>
-                    <div id="upload-show" class="nav-item btn btn-warning text-dark div-shadow">Upload Orders</div>
-                <% end %>
+                <p class="navbar-text float-right">
 
-                <% if controller_name == "offers" %>
-                    <%= form_tag ({ :controller => 'offers', :action => 'destroy_them_all'}) do%>
-                        <%= submit_tag 'Start New File', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-warning text-dark div-shadow" %>
-                    <% end %>
-                <% end %>
+                    <% if current_user.nil? %>
+                        
+                    <% else %>
+                        
+                        <% if current_user.active && (current_user.power_user || current_user.admin) %>
+                            <% if controller_name == "buybacks" %>
+                                <div id="upload-show" class="nav-item btn btn-warning text-dark div-shadow">Upload Orders</div>
+                            <% end %>
 
-                <% if controller_name == "compare_files" %>
-                    <%= form_tag ({ :controller => 'compare_files', :action => 'destroy_them_all'}) do%>
-                        <%= submit_tag 'Start New File', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-warning text-dark div-shadow" %>
-                    <% end %>
-                <% end %>
+                            <% if controller_name == "offers" %>
+                                <%= form_tag ({ :controller => 'offers', :action => 'destroy_them_all'}) do%>
+                                    <%= submit_tag 'Start New File', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-warning text-dark div-shadow" %>
+                                <% end %>
+                            <% end %>
 
-                <% if controller_name == "prices" %>
-                    <%= form_tag ({ :controller => 'prices', :action => 'destroy_them_all'}) do%>
-                        <%= submit_tag 'Start New File', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-warning text-dark div-shadow" %>
+                            <% if controller_name == "compare_files" %>
+                                <%= form_tag ({ :controller => 'compare_files', :action => 'destroy_them_all'}) do%>
+                                    <%= submit_tag 'Start New File', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-warning text-dark div-shadow" %>
+                                <% end %>
+                            <% end %>
+
+                            <% if controller_name == "prices" %>
+                                <%= form_tag ({ :controller => 'prices', :action => 'destroy_them_all'}) do%>
+                                    <%= submit_tag 'Start New File', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-warning text-dark div-shadow" %>
+                                <% end %>
+                            <% end %>
+                        <% end %>
                     <% end %>
-                <% end %>
-                
+                </p>    
             </div>
         </div>
+            
     </nav>

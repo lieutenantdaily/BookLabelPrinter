@@ -139,7 +139,7 @@ class BuybacksController < ApplicationController
   def create
     Buyback.import(params[:buyback][:file], params[:buyback][:destination], params[:buyback][:initials])
     flash[:notice] = "Buybacks uploaded successfully"
-    redirect_to home_path 
+    redirect_to buybacks_path 
   end
   
   private def buyback_params

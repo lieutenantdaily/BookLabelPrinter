@@ -12,11 +12,21 @@ class BuybacksController < ApplicationController
 
     if params[:search]
       @buybacks = Buyback.search(params[:search]).order("isbn ASC")
+      @buybacks_counter = Buyback.search(params[:search]).order("isbn ASC")
       @buybacks_keep = Buyback.search(params[:search]).where(status: ["Keep-Acceptable", "Keep-Good", "Keep-Very Good", "Keep-Like New", "Keep-New"]).order("isbn ASC")
       @buybacks_reject = Buyback.search(params[:search]).where(status: ["Reject-Red", "Reject-Yellow", "Reject-Blue", "Missing"]).order("isbn ASC")
       @search_params = params[:search]
+      @isbn_params = params[:isbn]
       session[:passed_variable] = @search_params
+      
       @breakeven = 0.85
+
+      if params[:isbn]
+        unless params[:isbn].empty?
+          @buybacks = Buyback.search(params[:search]).where(isbn: params[:isbn]).order("isbn ASC")
+          session[:passed_variable2] = @isbn_params
+        end
+      end
       
 
       
@@ -117,7 +127,7 @@ class BuybacksController < ApplicationController
           url = "/buybacks?search=" + session[:passed_variable] + "#" + @buyback_id
         end
       else
-        url = "/buybacks?search=" + session[:passed_variable] + "#" + @buyback_id
+        url = "/buybacks?search=" + session[:passed_variable] + "&isbn=" + session[:passed_variable2] + "#" + @buyback_id
       end
       
       if @status == "Review"

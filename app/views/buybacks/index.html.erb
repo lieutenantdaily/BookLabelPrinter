@@ -15,7 +15,9 @@
             <%= form_tag(buybacks_path, :method => "get", id: "search-form", class: 'w-50 m-10 inline-block input-shadow div-shadow border-none') do %>
                 <div class="d-flex flex-row appearance-none h-auto text-gray-700 input-shadow overflow-hidden border-none">
                     
-                    <%= text_field_tag :search, params[:search], placeholder: "Order, Box or Item Number", onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'inline-block appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20', id: "search-field" %>
+                    <%= text_field_tag :search, params[:search], placeholder: "Order, Box or Item Number", onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'inline-block appearance-none p-3 h-100 w-50 m-0 align-top text-center border-none font-20', id: "search-field" %>
+
+                    <%= text_field_tag :isbn, params[:isbn], placeholder: "(Optional) ISBN", onkeyup: 'this.value = this.value.toUpperCase();', class: 'inline-block appearance-none p-3 h-100 w-50 m-0 align-top text-center border-none font-20', id: "search-field" %>
 
                     <%= button_tag type: 'submit', class: "appearance-none min-w-s max-w-s border-none bg-primary text-white", id: "submit-button-search" do %>
                         <i class="fas fa-search m-0 p-3 max-w-s min-w-s text-center border-none font-20"></i>
@@ -59,10 +61,10 @@
                             </div>
                         <% else %>
                             <div class='card card-body m-3 text-dark div-shadow'>
-                                Total Items in Order: <b><%= @buybacks.count %></b>
+                                Total Items in Order: <b><%= @buybacks_counter.count %></b>
                             </div>
                             <div id="review" class='card card-body m-3 text-dark bg-warning div-shadow cursor-pointer'>
-                                Items to Review: <span id='items-left'><b><%= @buybacks.where(status: ["Review", "Review-Keep"]).count + @buybacks.where(status: ["Reject-Blue", "Reject-Yellow"]).where(notes: "").count %></b></span>
+                                Items to Review: <span id='items-left'><b><%= @buybacks_counter.where(status: ["Review", "Review-Keep"]).count + @buybacks_counter.where(status: ["Reject-Blue", "Reject-Yellow"]).where(notes: "").count %></b></span>
                             </div>
                         <% end %>
                         

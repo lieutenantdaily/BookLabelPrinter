@@ -17,6 +17,7 @@ class BuybacksController < ApplicationController
       @buybacks_reject = Buyback.search(params[:search]).where(status: ["Reject-Red", "Reject-Yellow", "Reject-Blue", "Missing"]).order("isbn ASC")
       @search_params = params[:search]
       @isbn_params = params[:isbn]
+      session[:passed_variable2] = ""
       session[:passed_variable] = @search_params
       
       @breakeven = 0.85
@@ -100,6 +101,11 @@ class BuybacksController < ApplicationController
     redirect_to home_path, notice: "Database has been reset!"
   end 
 
+  def destroy_this_order
+    Buyback.search(session[:passed_variable]).delete_all
+    redirect_to buybacks_path, notice: "Order deleted!"
+  end 
+
   def new
     @buyback = Buyback.new#(buyback_params)
   end
@@ -147,13 +153,14 @@ class BuybacksController < ApplicationController
   end
 
   def create
-    Buyback.import(params[:buyback][:file], params[:buyback][:destination], params[:buyback][:initials])
+    @current_user = current_user
+    Buyback.import(params[:buyback][:file], params[:buyback][:destination], params[:buyback][:initials], params[:buyback][:user_custom])
     flash[:notice] = "Buybacks uploaded successfully"
     redirect_to buybacks_path 
   end
   
   private def buyback_params
-    params.require(:buyback).permit(:file, :destination, :notes, :status, :initials) 
+    params.require(:buyback).permit(:file, :destination, :notes, :status, :initials, :user_custom) 
   end
 
 

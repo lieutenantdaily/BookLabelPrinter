@@ -1,35 +1,78 @@
 class Buyback < ApplicationRecord
     # Bulk upload 
-    def self.import(file, destination, initials)
+    def self.import(file, destination, initials, user_custom)
         require 'csv'
+        require 'net/http'
         # filename = File.expand_path(CSV.to_s)
         name = file.original_filename.gsub("valorebooks-shipment-details-","")[0,6]
-        d = destination.gsub("Nebraska", "NEB")
-        d = d.gsub("Amazon", "AMZ")
+        
+
+        d = destination.gsub("Valore", "AMZ")
         d = d.gsub("Other", "OTH")
         i = initials
         # Buyback.delete_all
-        CSV.foreach(file.path, headers: true) do |row|
-            buyback_hash = Buyback.new
-            buyback_hash.order_id = name
-            buyback_hash.source = "VAL-" + d
-            buyback_hash.status = "Review"
-            buyback_hash.updated_by = i
-            buyback_hash.o_created_at = row[0]
-            buyback_hash.buyback_id = row[1]
-            buyback_hash.isbn = row[2]
-            buyback_hash.title = row[3]
-            buyback_hash.title = buyback_hash.title.titleize if buyback_hash.title == buyback_hash.title.upcase
-            buyback_hash.price = row[5]
-            # buyback_hash.price = buyback_hash.price
-            buyback_hash.tracking_number = row[6]
-            buyback_hash.notes = ""
-         
+
+
+        if d != "OTH"
+            CSV.foreach(file.path, headers: true) do |row|
+                buyback_hash = Buyback.new
+                buyback_hash.order_id = name
+                buyback_hash.source = "VAL-" + d
+                buyback_hash.status = "Review"
+                buyback_hash.vendor = "Valore"
+                buyback_hash.updated_by = i
+                buyback_hash.o_created_at = row[0]
+                buyback_hash.buyback_id = row[1]
+                buyback_hash.isbn = row[2]
+                buyback_hash.title = row[3]
+                buyback_hash.title = buyback_hash.title.titleize if buyback_hash.title == buyback_hash.title.upcase
+                buyback_hash.price = row[5]
+                # buyback_hash.price = buyback_hash.price
+                buyback_hash.tracking_number = row[6]
+                buyback_hash.notes = ""
             
-            duplicate_check = Buyback.find_by(buyback_id: row[1])
-            if duplicate_check.blank?
-                buyback_hash.save 
+                
+                duplicate_check = Buyback.find_by(buyback_id: row[1])
+                if duplicate_check.blank?
+                    buyback_hash.save 
+                end
             end
+        else
+            counter = 10001
+            current_time = Time.now.to_s.gsub("-","").gsub(" ","").gsub(":","")[0,13]
+            CSV.foreach(file.path, headers: true) do |row|
+                qty = row[2].to_i
+
+                json_url = "http://buyback.textbookmaniac.com/search.json?token=6932c87a8cb08c47a7212e6910b7142238c8ec3e1150e51b73fda69580400bda&isbn=" + row[0]
+                resp = Net::HTTP.get_response(URI.parse(json_url))
+                data = resp.body
+                json_tbm = JSON.parse(data)
+                json_title = json_tbm["title"].gsub(",","")
+
+                qty.times do
+                    buyback_hash = Buyback.new
+                    buyback_hash.order_id = current_time
+                    buyback_hash.source = "OTH-AMZ"
+                    buyback_hash.status = "Review"
+                    buyback_hash.vendor = user_custom
+                    buyback_hash.o_created_at = Time.now
+                    buyback_hash.buyback_id = buyback_hash.order_id + "" + counter.to_s
+                    counter = counter + 1
+                    buyback_hash.isbn = row[0]
+                    buyback_hash.title = json_title
+                    buyback_hash.title = buyback_hash.title.titleize if buyback_hash.title == buyback_hash.title.upcase
+                    buyback_hash.price = row[1]
+                    # buyback_hash.price = buyback_hash.price
+                    buyback_hash.notes = ""
+                
+                    buyback_hash.save 
+
+                    # duplicate_check = Buyback.find_by(buyback_id: buyback_hash.buyback_id)
+                    # if duplicate_check.blank?
+                    #     buyback_hash.save 
+                    # end
+                end
+            end            
         end
     end
 

@@ -7,7 +7,13 @@
         <br>
 
         <center>
-            <h1><% content_for :title, "Valore Order Processing" %>Valore Order Processing</h1>
+            <% if @buybacks.present? %>
+                <% @buybacks[0,1].each do |buyback|%>
+                    <h1><% content_for :title, "Order Processing" %><%= buyback.vendor %> Order Processing</h1>
+                <% end %>
+            <% else %>
+                <h1><% content_for :title, "Order Processing" %>Order Processing</h1>
+            <% end %>
         </center>
         <br>
         <br>
@@ -79,9 +85,14 @@
                     </div>
                     <hr class='container'>
                     <div class='container card card-body mt-0 pb-0 pt-0 no-shadow no-border d-flex flex-row justify-content-center'>
-                        <a href="/buybacks.csv?search=<%= @order_id %>" target="_self" class='btn btn-primary div-shadow m-3'><b>Download Valore File</b></a>
+                        <a href="/buybacks.csv?search=<%= @order_id %>" target="_self" class='btn btn-primary div-shadow m-3'><b>Download Keep File</b></a>
                         <a href="/buybacks.csv2?search=<%= @order_id %>" target="_self" class='btn btn-secondary div-shadow m-3'><b>Download Returns</b></a>
                         <a href="/buybacks.csv3?search=<%= @order_id %>" target="_self" class='btn btn-light div-shadow m-3'><b>Download All</b></a>
+                        <% if current_user.admin %>
+                            <%= form_tag ({ :controller => 'buybacks', :action => 'destroy_this_order'}) do%>
+                                <%= submit_tag 'Delete Order', data: { confirm: "Are you sure you want to delete this order?" }, class: "btn btn-danger div-shadow m-3" %>
+                            <% end %>
+                        <% end %>
                     </div>
                 <% end %>
             <% end %>
@@ -105,16 +116,49 @@
                 <h2>Recent Orders</h2>
             </center>
 
-            <div class='container card card-body flex-row div-shadow mt-4 bg-light'>
+            <center>
+            <div class='container card card-body div-shadow m-4 bg-light'>
 
-            <% @all_orders[0,4].each do |a|%>
-                    <div class='card card-body m-3 text-dark div-shadow'>
-                        <center>Order ID: <a href="/buybacks?search=<%= a.order_id %>" target="_self"><b><%= a.order_id %></b></a></center>
-                        <center>Date: <b><%= a.created_at.strftime("%m/%d/%Y") %></b></center>
-                    </div>      
-                <% end %>
+                <div class='container card card-body flex-row bg-light border-0 mt-0 mb-0 pb-0'>
 
+                    <% @all_orders[0,4].each do |a|%>
+                        <div class='card card-body m-3 text-dark div-shadow'>
+                            <center>Order ID:</center>
+                            <center><a href="/buybacks?search=<%= a.order_id %>" target="_self"><b><%= a.order_id %></b></a></center>
+                            <center>Date: <b><%= a.created_at.strftime("%m/%d/%Y") %></b></center>
+                            <center>Vendor: <b><%= a.vendor %></b></center>
+                        </div>      
+                    <% end %>
+
+                </div>
+
+                <div class='container card card-body flex-row bg-light border-0 mt-0 mb-0 pt-0 pb-0'>
+
+                    <% @all_orders[5,4].each do |a|%>
+                        <div class='card card-body m-3 text-dark div-shadow'>
+                            <center>Order ID:</center>
+                            <center><a href="/buybacks?search=<%= a.order_id %>" target="_self"><b><%= a.order_id %></b></a></center>
+                            <center>Date: <b><%= a.created_at.strftime("%m/%d/%Y") %></b></center>
+                            <center>Vendor: <b><%= a.vendor %></b></center>
+                        </div>      
+                    <% end %>
+
+                </div>
+
+                <div class='container card card-body flex-row bg-light border-0 mt-0 mb-0 pt-0'>
+
+                    <% @all_orders[9,4].each do |a|%>
+                        <div class='card card-body m-3 text-dark div-shadow'>
+                            <center>Order ID:</center>
+                            <center><a href="/buybacks?search=<%= a.order_id %>" target="_self"><b><%= a.order_id %></b></a></center>
+                            <center>Date: <b><%= a.created_at.strftime("%m/%d/%Y") %></b></center>
+                            <center>Vendor: <b><%= a.vendor %></b></center>
+                        </div>      
+                    <% end %>
+
+                </div>
             </div>
+            </center>
 
         <% end %>
         <br>

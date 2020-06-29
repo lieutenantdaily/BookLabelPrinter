@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   root 'dashboard#index', as: 'home'
   post "buybacks/destroy_them_all" 
+  post "buybacks/destroy_this_order" 
 
   post "offers/destroy_them_all" 
   post "offers/import_url" 

@@ -1,0 +1,27 @@
+<div id="add-book-container" class="w-100 h-100 fixed-top flex-row add-bg" style="display:none;z-index:5002;padding:25%;padding-top:calc(35vh)">
+    <div id='' class='container bg-info card card-body  div-shadow mt-2 mb-5 label-container text-center' style="min-height:310px;max-height:310px;min-width:600px;max-width:600px;">
+        <%= form_for :buyback, url: buybacks_path do |f| %>
+            <h3>Add Book</h3>
+            <div class="field w-100">
+                <%= f.text_field :add_isbn, :required => true, placeholder: "ISBN", autofocus: true, class: 'appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1' %>
+            </div>
+            <br>
+            <div class="field w-100">
+                <%= f.text_field :add_price, :required => true, placeholder: "Price", autofocus: true, class: 'appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1' %>
+            </div>
+            <br>
+            <div class="field w-100">
+                <%= f.text_field :add_qty, :required => true, placeholder: "Qty", autofocus: true, class: 'appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1' %>
+            </div>
+            <br>
+            
+            <div class="actions">
+                <%= button_tag type: 'submit', class: "btn btn-success div-shadow font-20 mt-3" do %>
+                    <i class="fas fa-plus"></i> Add
+                <% end %>
+            </div>
+        <% end %>
+        <div class="btn btn-warning div-shadow position-absolute cursor-pointer" style="margin-left:540px;margin-top:-15px" id="add_close"><i class="fas fa-times"></i></div>
+    </div>
+    
+</div>

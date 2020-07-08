@@ -1,6 +1,8 @@
-<div id="uploader" class="card card-body div-shadow no-radius label upload-container">
+<div id="uploader" class="card card-body div-shadow no-radius label upload-container fixed-top bg-light mt-5">
     <div class="container">
         
+        <br>
+        <br>
         <br>
         <br>
         <br>
@@ -9,21 +11,46 @@
             <%= submit_tag 'Reset', data: { confirm: "Are you sure you want to reset the Orders database?" }, class: "d-none btn btn-danger div-shadow font-20 float-right" %>
         <% end %>
         
-        <a href="https://source.valorebooks.com/shipments/index" target="_blank" class="btn btn-primary div-shadow font-20">Download Valore Orders</a>
-        <br>
-        <br>
-        
         <%= form_for :buyback, url: buybacks_path do |f| %>
             <div class="form-group uploader">
-                <%= f.label :file, "Upload Orders For: " %>
-                <%= f.select :destination, raw("<option>Valore</option><option>Other</option>"), :required => 'required', class: '' %>
+                <% if @buybacks.present? %>
+                    <%= f.select :append, raw("<option>Create New Order</option><option>Append Current Order</option>"), :required => 'required', class: '' %>
+                    <br>   
+                    <br> 
+                <% else %>
+                    <div style="display:none">
+                        <%= f.select :append, raw("<option>Create New Order</option>"), :required => 'required', class: '' %>
+                    </div>
+                <% end %>
+                <div id="new-upload">             
+                    <%= f.label :file, "Upload Orders For: " %>
+                    <%= f.select :destination, raw("<option>Valore</option><option>Other</option>"), :required => 'required', class: '' %>
+                    <div id="vendor-select" style="width: 140%">
+                        <%= f.label :user_custom, "Vendor: " %>
+                        <%= f.text_field :user_custom, value: current_user.custom, :required => 'required', class: '' %>
+                        <%= render 'sample' %>
+                    </div>
+                    <div id="valore-link">
+                        <a href="https://source.valorebooks.com/shipments/index" target="_blank" class="btn btn-primary div-shadow font-20">Download Valore Orders</a>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <div id="sample" style="width: 140%">  
+                    <%= render 'sample' %>
+                    <% if @buybacks.present? %>
+                        <% @buybacks[0,1].each do |buyback|%>
+                            <div style="display:none">
+                                <%= f.text_field :append_vendor, value: buyback.vendor, :required => 'required', class: '' %>
+                                <%= f.text_field :append_order_id, value: buyback.order_id, :required => 'required', class: '' %>
+                                <%= f.text_field :append_source, value: buyback.source, :required => 'required', class: '' %>
+                            </div>
+                        <% end %>
+                    <% end %>
+                </div>
                 <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader', required: true %>
             </div>
-            <%
-=begin%>
- <%= f.text_field :initials, placeholder: "Initials", :minlength => 2, :maxlength => 2, onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'input-shadow init-input div-shadow font-20' %> 
-<%
-=end%>
+
             <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20", id: "submit-button" do %>
                 <i class="fas fa-upload"></i> Upload
             <% end %>
@@ -38,7 +65,7 @@
         <% end %>
         <br>
         <center>
-        <div class="btn btn-warning div-shadow" id="upload-hide">Close</div>
+            <div class="btn btn-warning div-shadow rounded-circle" id="upload-hide"><i class="fas fa-times"></i></div>
         </center>
 
     </div>

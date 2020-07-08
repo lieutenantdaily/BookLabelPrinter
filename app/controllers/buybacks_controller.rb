@@ -154,13 +154,13 @@ class BuybacksController < ApplicationController
 
   def create
     @current_user = current_user
-    Buyback.import(params[:buyback][:file], params[:buyback][:destination], params[:buyback][:initials], params[:buyback][:user_custom])
+    Buyback.import(params[:buyback][:file], params[:buyback][:destination], params[:buyback][:initials], params[:buyback][:user_custom], params[:buyback][:append], params[:buyback][:append_vendor], params[:buyback][:append_order_id], params[:buyback][:append_source])
     flash[:notice] = "Buybacks uploaded successfully"
     redirect_to buybacks_path 
   end
   
   private def buyback_params
-    params.require(:buyback).permit(:file, :destination, :notes, :status, :initials, :user_custom) 
+    params.require(:buyback).permit(:file, :destination, :notes, :status, :initials, :user_custom, :append, :append_order_id, :append_vendor, :append_source) 
   end
 
 

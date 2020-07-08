@@ -98,6 +98,14 @@ $('#review').click(function () {
     location.replace(url_filter_review);
 });
 
+$('#add_book').click(function () {
+    $('#add-book-container').fadeIn(300);
+});
+
+$('#add_close').click(function () {
+    $('#add-book-container').fadeOut(300);
+});
+
 
 
 
@@ -367,10 +375,15 @@ if ((/filter=review/.test(url_o))) {
     });
 
 
-//Price Compare *************************************************************
+//Fade In *************************************************************
 
     $('#other-message').fadeOut(0);
+    $('#vendor-select').fadeOut(0);
+    $('#new-upload').fadeIn(0);
+    $('#sample').fadeOut(0);
 
+
+    //Price Compare *************************************************************
     $("#price_destination").change(function() {
         if ($(this).val() == "Other") {
             $('#other-message').fadeIn(300);            
@@ -380,6 +393,32 @@ if ((/filter=review/.test(url_o))) {
         }
 
     });
+
+
+    //Buybacks *************************************************************
+    $("#buyback_destination").change(function() {
+        if ($(this).val() == "Other") {
+            $('#vendor-select').fadeIn(300);
+            $('#valore-link').fadeOut(0);             
+        } else {
+            $('#vendor-select').fadeOut(0); 
+            $('#valore-link').fadeIn(300);            
+        }
+
+    });
+
+    $("#buyback_append").change(function() {
+        if ($(this).val() == "Create New Order") {
+            $('#new-upload').fadeIn(300);
+            $('#sample').fadeOut(0);
+        } else {
+            $('#new-upload').fadeOut(0); 
+            $('#sample').fadeIn(300);
+        }
+
+    });
+
+    
 
 });
 //******************************************************************************

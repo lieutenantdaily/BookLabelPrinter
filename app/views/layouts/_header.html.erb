@@ -1,4 +1,5 @@
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark nav-container">
+    <div class="fixed-top pointer-no">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark nav-container div-shadow pointer-yes">
         <a href="/" class="navbar-brand">
             <div class="navbar-brand-inner"></div>
         </a>
@@ -17,9 +18,6 @@
                     </li>
                 <% else %>
                     <% if current_user.active && (current_user.power_user || current_user.admin) %>
-                        <li>
-                            <a href="/dashboard" class="nav-item nav-link active text-light">Dashboard</a>
-                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle nav-item nav-link active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> 
                             <span class="nav-label">Processing</span></a>
@@ -29,7 +27,7 @@
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle nav-item nav-link active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> 
-                            <span class="nav-label">File Generator</span></a>
+                            <span class="nav-label">Files</span></a>
                             <ul class="dropdown-menu bg-dark">
                                 <center><%= link_to "Valore", offers_path, class: 'nav-item nav-link active' %></center>
                                 <center><%= link_to "Wholesale", compare_files_path, class: 'nav-item nav-link active' %></center>
@@ -38,7 +36,7 @@
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle nav-item nav-link active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> 
-                            <span class="nav-label">Quick Links</span></a>
+                            <span class="nav-label">Links</span></a>
                             <ul class="dropdown-menu bg-dark">
                                 <center><a href="https://buyback.textbookmaniac.com/admin" target="_blank" class="nav-item nav-link">Old Admin</a></center>
                                 <center><a href="http://admin.textbookmaniac.com" target="_blank" class="nav-item nav-link">New Admin</a></center>
@@ -69,24 +67,30 @@
                         
                         <% if current_user.active && (current_user.power_user || current_user.admin) %>
                             <% if controller_name == "buybacks" %>
-                                <div id="upload-show" class="nav-item btn btn-warning text-dark div-shadow">Upload Orders</div>
+                                <div id="upload-show" class="nav-item btn btn-warning text-dark div-shadow"><i class="fas fa-upload"></i> Upload Orders</div>
                             <% end %>
 
                             <% if controller_name == "offers" %>
                                 <%= form_tag ({ :controller => 'offers', :action => 'destroy_them_all'}) do%>
-                                    <%= submit_tag 'Start New File', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-warning text-dark div-shadow" %>
+                                    <%= button_tag type: 'submit', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-warning text-dark div-shadow" do %>
+                                        <i class="fas fa-plus-square"></i> Start New File
+                                    <% end %>
                                 <% end %>
                             <% end %>
 
                             <% if controller_name == "compare_files" %>
                                 <%= form_tag ({ :controller => 'compare_files', :action => 'destroy_them_all'}) do%>
-                                    <%= submit_tag 'Start New File', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-warning text-dark div-shadow" %>
+                                    <%= button_tag type: 'submit', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-warning text-dark div-shadow" do %>
+                                        <i class="fas fa-plus-square"></i> Start New File
+                                    <% end %>
                                 <% end %>
                             <% end %>
 
                             <% if controller_name == "prices" %>
                                 <%= form_tag ({ :controller => 'prices', :action => 'destroy_them_all'}) do%>
-                                    <%= submit_tag 'Start New File', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-warning text-dark div-shadow" %>
+                                    <%= button_tag type: 'submit', data: { confirm: "Are you sure? This will reset the database!" }, class: "nav-item btn btn-warning text-dark div-shadow" do %>
+                                        <i class="fas fa-plus-square"></i> Start New File
+                                    <% end %>
                                 <% end %>
                             <% end %>
                         <% end %>
@@ -96,3 +100,47 @@
         </div>
             
     </nav>
+    <div class="flex-row">
+      <% if notice %>
+        <p class="alert-success navbar-text float-left position-absolute pl-3 w-100" style="z-index: -1">
+            <span class="btn pt-1 pb-1 no-shadow"><%= notice %></span>
+        </p>
+      <% end %>
+      <% if alert %>
+        <p class="alert-danger navbar-text float-left position-absolute pl-3 w-100" style="z-index: -1">
+            <span class="btn pt-1 pb-1 no-shadow"><%= alert %></span>
+        </p>
+      <% end %>
+
+      <p class="navbar-text float-right mr-3 pointer-yes">
+        <% if user_signed_in? %>
+            <%= link_to edit_user_registration_path do %>
+                <button class="btn btn-secondary div-shadow pt-1 pb-1">
+                    <b><%= current_user.first_name %> <%= current_user.last_name %></b>
+                </button>
+            <% end %>
+
+            <%= link_to destroy_user_session_path, method: :delete do %>
+              <button class="navbar-link btn btn-danger div-shadow ml-1 pt-1 pb-1 pl-2 pr-2 pointer-yes">
+                <i class="fas fa-sign-out-alt fa-fh"></i>
+              </button>
+            <% end %>
+        <% else %>
+            <%= link_to new_user_registration_path do %>
+              <button class="navbar-link btn btn-success div-shadow pt-1 pb-1 pointer-yes">
+                <i class="fas fa-user-plus fa-fh"></i> Request an Account
+              </button>
+            <% end %>
+
+            <%= link_to new_user_session_path do %>
+              <button class="navbar-link btn btn-primary div-shadow ml-2 pt-1 pb-1 pointer-yes">
+                <i class="fas fa-sign-in-alt fa-fh"></i> Login
+              </button>
+            <% end %>
+        <% end %>          
+      </p>
+      <br>
+      
+    </div>
+    </div>
+    <br>

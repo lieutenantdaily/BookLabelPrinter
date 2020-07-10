@@ -20,6 +20,7 @@ class BuybacksController < ApplicationController
       session[:passed_variable2] = ""
       session[:passed_variable] = @search_params
       
+      
       @breakeven = 0.85
 
       if params[:isbn]
@@ -120,17 +121,22 @@ class BuybacksController < ApplicationController
     @buyback_id = b.buyback_id
     @isbn = b.isbn
     @status = b.status
+    @search_isbn = ""
 
     @filtered_buybacks = Buyback.filtered_search(@order_id).where(isbn: [@isbn]).where.not(buyback_id: [@buyback_id]).where.not(status: ["Reject-Red"])
+
+    if $last_isbn == @isbn
+      @search_isbn = @isbn
+    end
     
     
 
     if @buyback.update_attributes(buyback_params)
       if session[:passed_variable] == @buyback_id
         if buyback_params[:status] == "Keep-Acceptable" || buyback_params[:status] == "Keep-Good" || buyback_params[:status] == "Keep-Very Good" || buyback_params[:status] == "Keep-Like New" || buyback_params[:status] == "Keep-New"
-          url = "/buybacks?search=" + session[:passed_variable] + "&script=PRINT-VX#" + @buyback_id
+          url = "/buybacks?search=" + session[:passed_variable] + "&tempparam1=" + @order_id + "&tempparam2=" + "" + "&script=PRINT-VX#" + @buyback_id
         else
-          url = "/buybacks?search=" + session[:passed_variable] + "#" + @buyback_id
+          url = "/buybacks?search=" + @order_id + "&isbn=" + "" + "#" + @buyback_id
         end
       else
         url = "/buybacks?search=" + session[:passed_variable] + "&isbn=" + session[:passed_variable2] + "#" + @buyback_id
@@ -146,7 +152,7 @@ class BuybacksController < ApplicationController
         end
       end
 
-      flash[:success] = "Task updated!"
+      flash[:success] = "Saved!"
       redirect_to url
     end
     

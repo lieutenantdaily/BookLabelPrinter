@@ -102,13 +102,13 @@
     </nav>
     <div class="flex-row">
       <% if notice %>
-        <p class="alert-success navbar-text float-left position-absolute pl-3 w-100" style="z-index: -1">
-            <span class="btn pt-1 pb-1 no-shadow"><%= notice %></span>
+        <p class="alert-fade alert-success navbar-text float-left position-absolute pl-3 w-100 text-center" style="z-index: -1">
+            <span class="inline-block btn pt-1 pb-1 no-shadow"><%= notice %></span>
         </p>
       <% end %>
       <% if alert %>
-        <p class="alert-danger navbar-text float-left position-absolute pl-3 w-100" style="z-index: -1">
-            <span class="btn pt-1 pb-1 no-shadow"><%= alert %></span>
+        <p class="alert-fade alert-danger navbar-text float-left position-absolute pl-3 w-100 text-center" style="z-index: -1">
+            <span class="inline-block btn pt-1 pb-1 no-shadow"><%= alert %></span>
         </p>
       <% end %>
 

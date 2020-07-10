@@ -28,10 +28,14 @@ $(document).on('turbolinks:load', function () {
     url = url.replace("filter=review&search", "search");
 
     var url_repl = url.replace("&script=PRINT-VX", "");
+    var url_repl = url_repl.replace("tempparam1", "search");
+    var url_repl = url_repl.replace("tempparam2", "isbn");
     var url_filter_keep = url.replace("search", "filter=keep&search");
     var url_filter_reject = url.replace("search", "filter=reject&search");
     var url_filter_missing = url.replace("search", "filter=missing&search");
     var url_filter_review = url.replace("search", "filter=review&search");
+
+    $('.alert-fade').delay(3500).fadeOut(300);
 
     function print_labels() {
         $('.label-edit').detach();

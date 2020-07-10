@@ -1,5 +1,5 @@
-<div id="add-book-container" class="w-100 h-100 fixed-top flex-row add-bg" style="display:none;z-index:5002;padding:25%;padding-top:calc(35vh)">
-    <div id='' class='container bg-info card card-body  div-shadow mt-2 mb-5 label-container text-center' style="min-height:310px;max-height:310px;min-width:600px;max-width:600px;">
+<div id="add-book-container" class="w-100 h-100 fixed-top flex-row add-bg" style="display:none;z-index:5002;padding:25%;padding-top:calc(25vh)">
+    <div id='' class='container bg-light card card-body  div-shadow mt-2 mb-5 label-container text-center' style="min-width:600px;max-width:600px;">
         <%= form_for :buyback, url: buybacks_path do |f| %>
             <h3>Add Book</h3>
             <div class="field w-100">
@@ -21,7 +21,7 @@
                 <% end %>
             </div>
         <% end %>
-        <div class="btn btn-warning div-shadow position-absolute cursor-pointer" style="margin-left:540px;margin-top:-15px" id="add_close"><i class="fas fa-times"></i></div>
+        <div class="btn btn-warning div-shadow position-absolute cursor-pointer rounded-circle" style="margin-left:540px;margin-top:-15px" id="add_close"><i class="fas fa-times"></i></div>
     </div>
     
 </div>

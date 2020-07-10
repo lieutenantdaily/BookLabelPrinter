@@ -1,11 +1,8 @@
-<div id="uploader" class="card card-body div-shadow no-radius label upload-container fixed-top bg-light mt-5">
+<div id="uploader" class="card card-body div-shadow no-radius label upload-container fixed-top bg-light mt-5" style="z-index:5010">
     <div class="container">
         
         <br>
-        <br>
-        <br>
-        <br>
-        <br>
+
 
         <%= form_tag ({ :controller => 'buybacks', :action => 'destroy_them_all'}) do%>
             <%= submit_tag 'Reset', data: { confirm: "Are you sure you want to reset the Orders database?" }, class: "d-none btn btn-danger div-shadow font-20 float-right" %>

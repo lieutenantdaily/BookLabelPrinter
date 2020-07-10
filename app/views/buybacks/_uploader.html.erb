@@ -12,6 +12,13 @@
             <div class="form-group uploader">
                 <% if @buybacks.present? %>
                     <%= f.select :append, raw("<option>Create New Order</option><option>Append Current Order</option>"), :required => 'required', class: '' %>
+                    <% @buybacks[0,1].each do |buyback|%>
+                        <div style="display:none">
+                            <%= f.text_field :append_vendor, value: buyback.vendor, :required => 'required', class: '' %>
+                            <%= f.text_field :append_order_id, value: buyback.order_id, :required => 'required', class: '' %>
+                            <%= f.text_field :append_source, value: buyback.source, :required => 'required', class: '' %>
+                        </div>
+                    <% end %>
                     <br>   
                     <br> 
                 <% else %>
@@ -35,15 +42,7 @@
                 </div>
                 <div id="sample" style="width: 140%">  
                     <%= render 'sample' %>
-                    <% if @buybacks.present? %>
-                        <% @buybacks[0,1].each do |buyback|%>
-                            <div style="display:none">
-                                <%= f.text_field :append_vendor, value: buyback.vendor, :required => 'required', class: '' %>
-                                <%= f.text_field :append_order_id, value: buyback.order_id, :required => 'required', class: '' %>
-                                <%= f.text_field :append_source, value: buyback.source, :required => 'required', class: '' %>
-                            </div>
-                        <% end %>
-                    <% end %>
+                    
                 </div>
                 <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader', required: true %>
             </div>

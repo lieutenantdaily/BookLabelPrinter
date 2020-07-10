@@ -160,13 +160,19 @@ class BuybacksController < ApplicationController
 
   def create
     @current_user = current_user
-    Buyback.import(params[:buyback][:file], params[:buyback][:destination], params[:buyback][:initials], params[:buyback][:user_custom], params[:buyback][:append], params[:buyback][:append_vendor], params[:buyback][:append_order_id], params[:buyback][:append_source])
-    flash[:notice] = "Buybacks uploaded successfully"
-    redirect_to buybacks_path 
+    Buyback.import(params[:buyback][:file], params[:buyback][:destination], params[:buyback][:initials], params[:buyback][:user_custom], params[:buyback][:append], params[:buyback][:append_vendor], params[:buyback][:append_order_id], params[:buyback][:append_source], params[:buyback][:add_isbn], params[:buyback][:add_price], params[:buyback][:add_qty], params[:buyback][:add_select])
+    
+    if params[:buyback][:append].to_s == "Append Current Order"
+      flash[:notice] = "Books added!"
+      redirect_to buybacks_path + "?search=" + params[:buyback][:append_order_id].to_s
+    else
+      flash[:notice] = "Order uploaded!"
+      redirect_to buybacks_path
+    end
   end
   
   private def buyback_params
-    params.require(:buyback).permit(:file, :destination, :notes, :status, :initials, :user_custom, :append, :append_order_id, :append_vendor, :append_source) 
+    params.require(:buyback).permit(:file, :destination, :notes, :status, :initials, :user_custom, :append, :append_order_id, :append_vendor, :append_source, :add_isbn, :add_price, :add_qty, :add_select) 
   end
 
 

@@ -1,17 +1,30 @@
 <div id="add-book-container" class="w-100 h-100 fixed-top flex-row add-bg" style="display:none;z-index:5002;padding:25%;padding-top:calc(25vh)">
     <div id='' class='container bg-light card card-body  div-shadow mt-2 mb-5 label-container text-center' style="min-width:600px;max-width:600px;">
         <%= form_for :buyback, url: buybacks_path do |f| %>
+            <% if @buybacks.present? %>
+                <% @buybacks[0,1].each do |buyback|%>
+                    <div style="display:none">
+                        <%= f.text_field :append_vendor, value: buyback.vendor, :required => 'required', class: '' %>
+                        <%= f.text_field :append_order_id, value: buyback.order_id, :required => 'required', class: '' %>
+                        <%= f.text_field :append_source, value: buyback.source, :required => 'required', class: '' %>
+                    </div>
+                <% end %>
+            <% end %>
+            <div style="display:none">
+                <%= f.select :append, raw("<option>Append Current Order</option>"), :required => 'required', class: '' %>
+                <%= f.select :add_select, raw("<option>1</option>"), :required => 'required', class: '' %>
+            </div>
             <h3>Add Book</h3>
             <div class="field w-100">
-                <%= f.text_field :add_isbn, :required => true, placeholder: "ISBN", autofocus: true, class: 'appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1' %>
+                <%= f.text_field :add_isbn, :maxlength => 13, :minlength => 10, :required => true, placeholder: "ISBN", autofocus: true, class: 'allownumericwithoutdecimal appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1' %>
             </div>
             <br>
             <div class="field w-100">
-                <%= f.text_field :add_price, :required => true, placeholder: "Price", autofocus: true, class: 'appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1' %>
+                <%= f.text_field :add_price, :maxlength => 6, :minlength => 1, :required => true, placeholder: "Price", autofocus: true, class: 'allownumericwithdecimal appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1' %>
             </div>
             <br>
             <div class="field w-100">
-                <%= f.text_field :add_qty, :required => true, placeholder: "Qty", autofocus: true, class: 'appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1' %>
+                <%= f.text_field :add_qty, :maxlength => 3, :minlength => 1, :required => true, placeholder: "Qty", autofocus: true, class: 'allownumericwithoutdecimal appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1' %>
             </div>
             <br>
             

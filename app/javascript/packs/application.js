@@ -37,6 +37,20 @@ $(document).on('turbolinks:load', function () {
 
     $('.alert-fade').delay(3500).fadeOut(300);
 
+    $(".allownumericwithdecimal").on("keypress keyup blur",function (event) {
+        $(this).val($(this).val().replace(/[^0-9\.]/g,''));
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
+
+    $(".allownumericwithoutdecimal").on("keypress keyup blur",function (event) {    
+        $(this).val($(this).val().replace(/[^\d].+/, ""));
+        if ((event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
+
     function print_labels() {
         $('.label-edit').detach();
         var doc = new jsPDF('l', 'mm', [28.575 * 2.3, 88.9 * 2.3]);

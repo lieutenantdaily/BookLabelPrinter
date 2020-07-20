@@ -1,0 +1,17 @@
+
+<nav class="sticky-top" style="z-index:5000; top:5px; pointer-events:none">
+    <center>
+        <%= form_tag(buybacks_path, :method => "get", id: "search-form", class: 'w-50 m-10 inline-block input-shadow div-shadow border-none', style: "pointer-events:auto;max-width:550px") do %>
+            <div class="d-flex flex-row appearance-none h-auto text-gray-700 input-shadow overflow-hidden border-none bg-white" style="max-height:55px;max-width:550px">
+                
+                <%= text_field_tag :search, params[:search], placeholder: "Order or Item ID", onkeyup: 'this.value = this.value.toUpperCase();', :required => 'required', class: 'inline-block appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20', id: "search-field", style: "max-height:55px" %>
+
+                
+                <%= button_tag type: 'submit', class: "appearance-none min-w-s max-w-s border-none bg-primary text-white", id: "submit-button-search" do %>
+                    <i class="fas fa-search m-0 p-3 max-w-s min-w-s text-center border-none font-20"></i>
+                <% end %>
+            </div>
+        <% end %>
+    </center>
+</nav>
+

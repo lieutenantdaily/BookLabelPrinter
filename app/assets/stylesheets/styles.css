@@ -278,3 +278,7 @@
     height:150px; /* fixed header height*/
     margin:-150px 0 0; /* negative fixed header height */
   }
+
+  .button-min {
+    min-width:150px;
+  }

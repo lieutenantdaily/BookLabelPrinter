@@ -9,6 +9,15 @@ class BuybacksController < ApplicationController
     # @all_orders = Buyback.select("DISTINCT ON (order_id) created_at, order_id").order('created_at DESC')
 
 
+    # vendor --------------------
+    @vendor_all_buybacks = Buyback.all.where(vendor: current_user.custom)
+
+    @vendor_all_orders = Buyback.where(vendor: current_user.custom).group(:order_id).order("created_at DESC")
+    # ---------------------------
+
+
+
+
 
     if params[:search]
       @buybacks = Buyback.search(params[:search]).order("isbn ASC")
@@ -29,6 +38,23 @@ class BuybacksController < ApplicationController
           session[:passed_variable2] = @isbn_params
         end
       end
+
+
+
+      # vendor --------------------
+      @vendor_buybacks = Buyback.where(vendor: current_user.custom).search(params[:search]).order("isbn ASC")
+      @vendor_buybacks_counter = Buyback.where(vendor: current_user.custom).search(params[:search]).order("isbn ASC")
+      @vendor_buybacks_keep = Buyback.where(vendor: current_user.custom).search(params[:search]).where(status: ["Keep-Acceptable", "Keep-Good", "Keep-Very Good", "Keep-Like New", "Keep-New"]).order("isbn ASC")
+      @vendor_buybacks_reject = Buyback.where(vendor: current_user.custom).search(params[:search]).where(status: ["Reject-Red", "Reject-Yellow", "Reject-Blue", "Missing"]).order("isbn ASC")
+
+      
+      if params[:isbn]
+        unless params[:isbn].empty?
+          @vendor_buybacks = Buyback.where(vendor: current_user.custom).search(params[:search]).where(isbn: params[:isbn]).order("isbn ASC")
+          session[:passed_variable2] = @isbn_params
+        end
+      end
+      # ---------------------------
       
 
       
@@ -42,7 +68,32 @@ class BuybacksController < ApplicationController
         @isbn = bb.isbn
       end
 
+
+      # vendor --------------------
+      if @vendor_buybacks.present?
+        vb = @vendor_buybacks
+
+        vb[0,1].each do |bb|
+          @vendor_order_id = bb.order_id
+          @vendor_box_id = bb.tracking_number
+          @vendor_isbn = bb.isbn
+        end
+      end
+      # ---------------------------
+
+
+
+
       @filtered_buybacks = Buyback.filtered_search(@order_id).where(isbn: [@isbn])
+
+
+
+
+      # vendor --------------------
+      if @vendor_buybacks.present?
+        @vendor_filtered_buybacks = Buyback.filtered_search(@vendor_order_id).where(isbn: [@vendor_isbn])
+      end
+      # ---------------------------
 
       
 
@@ -50,6 +101,15 @@ class BuybacksController < ApplicationController
       @filtered_by_box = Buyback.search(@box_id)
       @filtered_by_box_reviewed = @filtered_by_box.where(status: ["Review", "Review-Keep"])
       @filtered_by_box_reject_no_notes = @filtered_by_box.where(status: ["Reject-Blue", "Reject-Yellow"]).where(notes: "")
+
+      # vendor --------------------
+      if @vendor_buybacks.present?
+        @vendor_boxcount = Buyback.search(@vendor_order_id).group(:tracking_number).count
+        @vendor_filtered_by_box = Buyback.search(@vendor_box_id)
+        @vendor_filtered_by_box_reviewed = @vendor_filtered_by_box.where(status: ["Review", "Review-Keep"])
+        @vendor_filtered_by_box_reject_no_notes = @vendor_filtered_by_box.where(status: ["Reject-Blue", "Reject-Yellow"]).where(notes: "")
+      end
+      # ---------------------------
 
       if @buybacks.present?
         if session[:passed_variable] == @order_id
@@ -74,6 +134,32 @@ class BuybacksController < ApplicationController
           @sum_missing = @sum_missing.to_f.round(2)
         end
       end
+
+      # vendor --------------------
+      if @vendor_buybacks.present?
+        if session[:passed_variable] == @vendor_order_id
+          vendor_sum_total_sql = "SELECT SUM(CAST( REPLACE(price, '$', '') AS FLOAT)) AS 'total' FROM buybacks WHERE order_id = " + @order_id
+          vendor_sum_total_array = ActiveRecord::Base.connection.execute(vendor_sum_total_sql)
+          @vendor_sum_total = vendor_sum_total_array.to_s.gsub('[{"total"=>', '').gsub('}]', '')
+          @vendor_sum_total = @vendor_sum_total.to_f.round(2)
+
+          vendor_sum_reject_sql = "SELECT SUM(CAST( REPLACE(price, '$', '') AS FLOAT)) AS 'total' FROM buybacks WHERE status IN ('Reject-Red', 'Reject-Yellow', 'Reject-Blue') AND order_id = " + @vendor_order_id
+          vendor_sum_reject_array = ActiveRecord::Base.connection.execute(vendor_sum_reject_sql)
+          @vendor_sum_reject = vendor_sum_reject_array.to_s.gsub('[{"total"=>', '').gsub('}]', '')
+          @vendor_sum_reject = @vendor_sum_reject.to_f.round(2)
+
+          vendor_sum_keep_sql = "SELECT SUM(CAST( REPLACE(price, '$', '') AS FLOAT)) AS 'total' FROM buybacks WHERE status IN ('Keep-Acceptable', 'Keep-Good', 'Keep-Very Good', 'Keep-Like New', 'Keep-New') AND order_id = " + @vendor_order_id
+          vendor_sum_keep_array = ActiveRecord::Base.connection.execute(vendor_sum_keep_sql)
+          @vendor_sum_keep = vendor_sum_keep_array.to_s.gsub('[{"total"=>', '').gsub('}]', '')
+          @vendor_sum_keep = @vendor_sum_keep.to_f.round(2)
+
+          vendor_sum_missing_sql = "SELECT SUM(CAST( REPLACE(price, '$', '') AS FLOAT)) AS 'total' FROM buybacks WHERE status IN ('Missing') AND order_id = " + @vendor_order_id
+          vendor_sum_missing_array = ActiveRecord::Base.connection.execute(vendor_sum_missing_sql)
+          @vendor_sum_missing = vendor_sum_missing_array.to_s.gsub('[{"total"=>', '').gsub('}]', '')
+          @vendor_sum_missing = @vendor_sum_missing.to_f.round(2)
+        end
+      end
+      # ---------------------------
       
 
       # @sum_keep = @sum_total.where(status: ["Keep-Acceptable", "Keep-Good", "Keep-Very Good", "Keep-Like New", "Keep-New"])
@@ -123,7 +209,7 @@ class BuybacksController < ApplicationController
     @status = b.status
     @search_isbn = ""
 
-    @filtered_buybacks = Buyback.filtered_search(@order_id).where(isbn: [@isbn]).where.not(buyback_id: [@buyback_id]).where.not(status: ["Reject-Red"])
+    @filtered_buybacks = Buyback.filtered_search(@order_id).where(isbn: [@isbn]).where.not(buyback_id: [@buyback_id]).where.not(status: ["Reject-Red"]).where.not(status: ["Missing"])
 
     if $last_isbn == @isbn
       @search_isbn = @isbn
@@ -163,7 +249,7 @@ class BuybacksController < ApplicationController
     Buyback.import(params[:buyback][:file], params[:buyback][:destination], params[:buyback][:initials], params[:buyback][:user_custom], params[:buyback][:append], params[:buyback][:append_vendor], params[:buyback][:append_order_id], params[:buyback][:append_source], params[:buyback][:add_isbn], params[:buyback][:add_price], params[:buyback][:add_qty], params[:buyback][:add_select])
     
     if params[:buyback][:append].to_s == "Append Current Order"
-      flash[:notice] = "Books added!"
+      flash[:notice] = params[:buyback][:add_qty] + " copies of"
       redirect_to buybacks_path + "?search=" + params[:buyback][:append_order_id].to_s
     else
       flash[:notice] = "Order uploaded!"

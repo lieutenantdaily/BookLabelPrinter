@@ -31,7 +31,11 @@
                     <%= f.select :destination, raw("<option>Valore</option><option>Other</option>"), :required => 'required', class: '' %>
                     <div id="vendor-select" style="width: 140%">
                         <%= f.label :user_custom, "Vendor: " %>
-                        <%= f.text_field :user_custom, value: current_user.custom, :required => 'required', class: '' %>
+                        <% if current_user.custom.to_s !="" %>
+                            <%= f.text_field :user_custom, value: current_user.custom, :required => 'required', class: '' %>
+                        <% else %>
+                            <%= f.text_field :user_custom, value: 'General', :required => 'required', class: '' %>
+                        <% end %>
                         <%= render 'sample' %>
                     </div>
                     <div id="valore-link">

@@ -38,7 +38,7 @@ class Buyback < ApplicationRecord
                     buyback_hash.status = "Review"
                     buyback_hash.vendor = append_vendor
                     buyback_hash.o_created_at = Time.now.to_s.last(23)
-                    buyback_hash.buyback_id = append_order_id + current_time + "" + counter.to_s
+                    buyback_hash.buyback_id = append_order_id.to_i + current_time.to_i + counter.to_s.to_i
                     counter = counter + 1
                     buyback_hash.isbn = json_isbn
                     buyback_hash.title = json_title
@@ -69,7 +69,7 @@ class Buyback < ApplicationRecord
                         buyback_hash.status = "Review"
                         buyback_hash.vendor = append_vendor
                         buyback_hash.o_created_at = Time.now.to_s.last(23)
-                        buyback_hash.buyback_id = current_time + "" + counter.to_s
+                        buyback_hash.buyback_id = current_time.to_i + counter.to_s.to_i
                         counter = counter + 1
                         buyback_hash.isbn = json_isbn
                         buyback_hash.title = json_title
@@ -132,7 +132,7 @@ class Buyback < ApplicationRecord
                         buyback_hash.status = "Review"
                         buyback_hash.vendor = user_custom
                         buyback_hash.o_created_at = Time.now.to_s.last(23)
-                        buyback_hash.buyback_id = buyback_hash.order_id + "" + counter.to_s
+                        buyback_hash.buyback_id = buyback_hash.order_id.to_i + counter.to_s.to_i
                         counter = counter + 1
                         buyback_hash.isbn = json_isbn
                         buyback_hash.title = json_title

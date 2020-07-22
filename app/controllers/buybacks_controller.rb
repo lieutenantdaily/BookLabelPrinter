@@ -6,13 +6,15 @@ class BuybacksController < ApplicationController
     @all_buybacks = Buyback.all.order("created_at DESC")
 
     @all_orders = Buyback.group(:order_id).order("created_at DESC")
-    # @all_orders = Buyback.select("DISTINCT ON (order_id) created_at, order_id").order('created_at DESC')
-
+    
+    @summary_buybacks_counter = Buyback.all.order("isbn ASC")
 
     # vendor --------------------
     @vendor_all_buybacks = Buyback.all.where(vendor: current_user.custom)
 
     @vendor_all_orders = Buyback.where(vendor: current_user.custom).group(:order_id).order("created_at DESC")
+
+    @vendor_summary_buybacks_counter = Buyback.where(vendor: current_user.custom).order("isbn ASC")
     # ---------------------------
 
 
@@ -167,9 +169,9 @@ class BuybacksController < ApplicationController
       
       respond_to do |format|
         format.html
-          format.csv { send_data @buybacks_keep.to_csv, filename: "valore-keep-#{@order_id}-#{Date.today}.csv" }
-          format.csv2  { send_data @buybacks_reject.to_csv2, filename: "valore-returns-#{@order_id}-#{Date.today}.csv" }
-          format.csv3  { send_data @buybacks.to_csv3, filename: "valore-all-#{@order_id}-#{Date.today}.csv" }
+          format.csv { send_data @buybacks_keep.to_csv, filename: "keep-#{@order_id}-#{Date.today}.csv" }
+          format.csv2  { send_data @buybacks_reject.to_csv2, filename: "returns-#{@order_id}-#{Date.today}.csv" }
+          format.csv3  { send_data @buybacks.to_csv3, filename: "all-#{@order_id}-#{Date.today}.csv" }
       end
 
     else
@@ -249,7 +251,7 @@ class BuybacksController < ApplicationController
     Buyback.import(params[:buyback][:file], params[:buyback][:destination], params[:buyback][:initials], params[:buyback][:user_custom], params[:buyback][:append], params[:buyback][:append_vendor], params[:buyback][:append_order_id], params[:buyback][:append_source], params[:buyback][:add_isbn], params[:buyback][:add_price], params[:buyback][:add_qty], params[:buyback][:add_select])
     
     if params[:buyback][:append].to_s == "Append Current Order"
-      flash[:notice] = params[:buyback][:add_qty] + " copies of"
+      flash[:notice] = "Book(s) added"
       redirect_to buybacks_path + "?search=" + params[:buyback][:append_order_id].to_s
     else
       flash[:notice] = "Order uploaded!"

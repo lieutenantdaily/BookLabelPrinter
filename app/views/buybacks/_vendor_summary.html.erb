@@ -2,9 +2,7 @@
     <% if session[:passed_variable] == buyback.buyback_id %>
         <div id="print-check" style="margin-bottom: -35px; display:none">1</div>
     <% else %>
-        <center>
-            <button id="cmd" class="btn btn-dark div-shadow print-button font-50 rounded-circle position-fixed" style="height:86.5px; right:14px; bottom:5px; z-index:10"><i class="font-50 fas fa-print fa-fw"></i></button>
-        </center>
+        
     <% end %>
 <% end %>
 
@@ -15,24 +13,12 @@
                 <div class='card card-body m-3 text-dark div-shadow te'>
                     Order Number: <a href="/buybacks?search=<%= @vendor_order_id %>" target="_self"><b><%= @vendor_order_id %></b></a>
                 </div>
-                <% if @vendor_order_id != params[:search] %>
-                    <div class='card card-body m-3 text-dark div-shadow te'>
-                        Box Number: <a href="/buybacks?search=<%= @vendor_box_id %>" target="_self"><b><%= buyback.tracking_number %></b></a>
-                    </div>
-                    <div class='card card-body m-3 text-dark div-shadow te'>
-                        Total Items in Box: <b><%= @vendor_filtered_by_box.count %></b>
-                    </div>
-                    <div class='card card-body m-3 text-dark bg-warning div-shadow te'>
-                        Items to Review: <span id='items-left'><b><%= @vendor_filtered_by_box_reviewed.count + @vendor_filtered_by_box_reject_no_notes.count %></b></span>
-                    </div>
-                <% else %>
-                    <div class='card card-body m-3 text-dark div-shadow te'>
-                        Total Items in Order: <b><%= @vendor_buybacks_counter.count %></b>
-                    </div>
-                    <div id="review" class='card card-body m-3 text-dark bg-warning div-shadow cursor-pointer te'>
-                        Items to Review: <span id='items-left'><b><%= @vendor_buybacks_counter.where(status: ["Review", "Review-Keep"]).count + @vendor_buybacks_counter.where(status: ["Reject-Blue", "Reject-Yellow"]).where(notes: "").count %></b></span>
-                    </div>
-                <% end %>
+                <div class='card card-body m-3 text-dark div-shadow te'>
+                    Total Items in Order: <b><%= @vendor_buybacks_counter.count %></b>
+                </div>
+                <div id="review" class='card card-body m-3 text-dark bg-warning div-shadow cursor-pointer te'>
+                    Items to Process: <span id='items-left'><b><%= @vendor_buybacks_counter.where(status: ["Review", "Review-Keep"]).count + @vendor_buybacks_counter.where(status: ["Reject-Blue", "Reject-Yellow"]).where(notes: "").count %></b></span>
+                </div>
 
             
             </div>  
@@ -40,11 +26,10 @@
     <% end %>
     <% if @vendor_order_id == params[:search] %>
         <nav class='card card-body mt-0 mb-0 pb-0 pt-0 div-shadow bg-light d-flex flex-row justify-content-center sticky-top pointer-no rounded-0' style="top:63px;z-index:11;">
-            <div id="keep" class='btn btn-success div-shadow mt-2 mb-2 mr-3 ml-3 pt-1 pb-1 cursor-pointer pointer-yes'>Keep: <b>$<%= number_with_delimiter(@vendor_sum_keep, :delimiter => ',') %></b></div>
+            <div id="keep" class='btn btn-success div-shadow mt-2 mb-2 mr-3 ml-3 pt-1 pb-1 cursor-pointer pointer-yes'>Accepted: <b>$<%= number_with_delimiter(@vendor_sum_keep, :delimiter => ',') %></b></div>
             <div id="reject" class='btn btn-danger div-shadow mt-2 mb-2 mr-3 ml-3 pt-1 pb-1 cursor-pointer pointer-yes'>Rejected: <b>$<%= number_with_delimiter(@vendor_sum_reject, :delimiter => ',') %></b></div>
-            <div id="all" class='btn btn-secondary div-shadow mt-2 mb-2 mr-3 ml-3 pt-1 pb-1 cursor-pointer pointer-yes'>Total: <b>$<%= number_with_delimiter(@vendor_sum_total, :delimiter => ',') %></b></div>
             <div id="missing" class='btn btn-dark purple div-shadow mt-2 mb-2 mr-3 ml-3 pt-1 pb-1 cursor-pointer pointer-yes'>Missing: <b>$<%= number_with_delimiter(@vendor_sum_missing, :delimiter => ',') %></b></div>
-            <div id="add_book" class='btn btn-transparent no-shadow mt-2 mb-2 mr-3 ml-0 pt-1 pb-1 cursor-pointer pointer-yes'><i class="fas fa-plus-square"></i> Add Book</div>
+            <div id="all" class='btn btn-secondary div-shadow mt-2 mb-2 mr-3 ml-3 pt-1 pb-1 cursor-pointer pointer-yes'>Total: <b>$<%= number_with_delimiter(@vendor_sum_total, :delimiter => ',') %></b></div>
         </nav>
     <% end %>
     <% if @vendor_order_id == params[:search] %>
@@ -53,7 +38,7 @@
                 <button class="btn btn-success div-shadow rounded-circle mt-0 mb-0 mr-1" style="height:44px;">
                     <i class="fas fa-download fa-fw"></i>
                 </button>
-                <b> Keep</b>
+                <b> Accepted</b>
                 <br>
             </a>
             

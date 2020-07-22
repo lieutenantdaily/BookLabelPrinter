@@ -45,8 +45,8 @@
         <nav class='card card-body mt-0 mb-0 pb-0 pt-0 div-shadow bg-light d-flex flex-row justify-content-center sticky-top pointer-no rounded-0' style="top:63px;z-index:11;">
             <div id="keep" class='btn btn-success div-shadow mt-2 mb-2 mr-3 ml-3 pt-1 pb-1 cursor-pointer pointer-yes'>Keep: <b>$<%= number_with_delimiter(@sum_keep, :delimiter => ',') %></b></div>
             <div id="reject" class='btn btn-danger div-shadow mt-2 mb-2 mr-3 ml-3 pt-1 pb-1 cursor-pointer pointer-yes'>Rejected: <b>$<%= number_with_delimiter(@sum_reject, :delimiter => ',') %></b></div>
+            <div id="missing" class='btn btn-dark purple div-shadow mt-2 mb-2 mr-3 ml-3 pt-1 pb-1 cursor-pointer pointer-yes'>Missing: <b>$<%= number_with_delimiter(@sum_missing, :delimiter => ',') %></b></div>            
             <div id="all" class='btn btn-secondary div-shadow mt-2 mb-2 mr-3 ml-3 pt-1 pb-1 cursor-pointer pointer-yes'>Total: <b>$<%= number_with_delimiter(@sum_total, :delimiter => ',') %></b></div>
-            <div id="missing" class='btn btn-dark purple div-shadow mt-2 mb-2 mr-3 ml-3 pt-1 pb-1 cursor-pointer pointer-yes'>Missing: <b>$<%= number_with_delimiter(@sum_missing, :delimiter => ',') %></b></div>
             <div id="add_book" class='btn btn-transparent no-shadow mt-2 mb-2 mr-3 ml-0 pt-1 pb-1 cursor-pointer pointer-yes'><i class="fas fa-plus-square"></i> Add Book</div>
         </nav>
     <% end %>

@@ -136,6 +136,13 @@ if ((/filter=keep/.test(url_o))) {
             $(this).parent().parent().parent().parent().detach();
         }
     });
+    // vendor
+    $(".vendor-status").each(function() {
+        if ($(this).text() == "Accepted") {
+        } else {
+            $(this).parent().parent().detach();
+        }
+    });
 }
 if ((/filter=reject/.test(url_o))) {
     $("#cmd").fadeOut(0);
@@ -144,6 +151,13 @@ if ((/filter=reject/.test(url_o))) {
         if ($(this).val() == "Reject-Red" || $(this).val() == "Reject-Blue" || $(this).val() == "Reject-Yellow") {
         } else {
             $(this).parent().parent().parent().parent().detach();
+        }
+    });
+    // vendor
+    $(".vendor-status").each(function() {
+        if ($(this).text() == "Rejected") {
+        } else {
+            $(this).parent().parent().detach();
         }
     });
 }
@@ -156,6 +170,13 @@ if ((/filter=missing/.test(url_o))) {
             $(this).parent().parent().parent().parent().detach();
         }
     });
+    // vendor
+    $(".vendor-status").each(function() {
+        if ($(this).text() == "Missing") {
+        } else {
+            $(this).parent().parent().detach();
+        }
+    });
 }
 if ((/filter=review/.test(url_o))) {
     $("#cmd").fadeOut(0);
@@ -166,7 +187,18 @@ if ((/filter=review/.test(url_o))) {
             $(this).parent().parent().parent().parent().detach();
         }
     });
+    // vendor
+    $(".vendor-status").each(function() {
+        if ($(this).text() == "Processing") {
+        } else {
+            $(this).parent().parent().detach();
+        }
+    });
 }
+
+
+
+
 
 
 //generate PDF Label **********************************************************
@@ -389,6 +421,36 @@ if ((/filter=review/.test(url_o))) {
             } else {
                 $(".print-check-button").append(icons);
             }
+        }
+    });
+
+
+    // vendor
+    $(".vendor-status").each(function() {
+        if ($(this).text() == "Accepted") {
+            $(this).parent().parent().css("background", green);
+            $(this).parent().css({"color": "white", "font-weight": "bold"});
+            $(this).parent().siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+        }
+        if ($(this).text() == "Rejected") {
+            $(this).parent().parent().css("background", red);
+            $(this).parent().css({"color": "white", "font-weight": "bold"});
+            $(this).parent().siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+        }
+        if ($(this).text() == "Missing") {
+            $(this).parent().parent().css("background", purple);
+            $(this).parent().css({"color": "white", "font-weight": "bold"});
+            $(this).parent().siblings('.label-edit-label').css({"color": "white", "font-weight": "bold"});
+        }
+    });
+
+    $(".processing-complete").each(function() {
+        if ($(this).text() == "0 items to process") {
+            $(this).text("Complete");
+            $(this).parent().parent().css("background", green);
+            $(this).parent().css({"color": "white"});
+            $(this).parent().siblings('.label-edit-label').css({"color": "white"});
+            $(this).parent().siblings('.label-edit-label').children().css({"color": "white"});
         }
     });
 

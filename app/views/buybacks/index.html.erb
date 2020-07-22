@@ -43,8 +43,22 @@
             <% if @vendor_buybacks.present? %>
                 <%= render 'buybacks/vendor_summary' %>
                 <%= render 'buybacks/add_book' %>
+                <br>
+                <br>
                 <div id="content">
-                    <%= render @vendor_buybacks %>
+                    <div id="item" class="container card p-0 label-font div-shadow label overflow-hidden rounded">
+                        <table class="bg-light overflow-hidden rounded" style="width:100%">
+                            <tr class="bg-dark" style="margin-top:-30px; color:white">
+                                <th class="text-left"></th>
+                                <th class="text-left">Title</th>
+                                <th class="text-center">ISBN</th>
+                                <th class="text-center">Price</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Notes</th>
+                            </tr>
+                            <%= render @vendor_buybacks %>
+                        </table>
+                    </div>
                 </div>
                 <br>
                 <br>
@@ -57,4 +71,3 @@
         <% end %>
     <% end %>
 <% end %>
-

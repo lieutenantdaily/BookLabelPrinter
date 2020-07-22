@@ -1,5 +1,5 @@
 <center>
-    <p>There are no buybacks containing the term you entered.</p>
+    <p>There are no orders containing the term you entered.</p>
     <br>
     <br>
 </center>
@@ -7,52 +7,35 @@
 <center>
     <h2>Recent Orders</h2>
 </center>
-
-<center>
-<div class='container card card-body div-shadow m-4 bg-light'>
-
-    <div class='container card card-body flex-row bg-light border-0 mt-0 mb-0 pb-0'>
-
-        <% if @vendor_all_orders[0,4].present? %>
-            <% @vendor_all_orders[0,4].each do |a|%>
-                <div class='card card-body m-3 text-dark div-shadow'>
-                    <center>Order ID:</center>
-                    <center><a href="/buybacks?search=<%= a.order_id %>" target="_self"><b><%= a.order_id %></b></a></center>
-                    <center>Date: <b><%= a.created_at.strftime("%m/%d/%Y") %></b></center>
-                    <center>Vendor: <b><%= a.vendor %></b></center>
-                </div>      
+<br>
+<div id="content">
+    <div id="item" class="container card p-0 label-font div-shadow label overflow-hidden rounded">
+        <table class="bg-light overflow-hidden rounded" style="width:100%">
+            <tr class="bg-dark" style="margin-top:-30px; color:white">
+                <th class="text-center">Order ID</th>
+                <th class="text-center">Order Date</th>
+                <th class="text-center">Total Items</th>
+                <th class="text-center">Status</th>
+            </tr>
+            <% if @vendor_all_orders[0,100].present? %>
+                <% @vendor_all_orders[0,1000].each do |a|%>
+                    <tr class="">
+                            <td class="text-center p-2 label-edit-label"><a href="/buybacks?search=<%= a.order_id %>" target="_self"><b><%= a.order_id %></b></a></td>
+                            <td class="text-center p-2 label-edit-label">
+                                <b><%= a.created_at.strftime("%m/%d/%Y") %></b>
+                            </td>
+                            <td class="text-center p-2 label-edit-label">
+                                    <%= @vendor_summary_buybacks_counter.where(order_id: a.order_id).count %>
+                            </td>
+                            <td class="text-center p-2">
+                                <div class="processing-complete"><%= @vendor_summary_buybacks_counter.where(order_id: a.order_id).where(status: ["Review", "Review-Keep"]).count + @vendor_summary_buybacks_counter.where(order_id: a.order_id).where(status: ["Reject-Blue", "Reject-Yellow"]).where(notes: "").count %> items to process</div>
+                            </td>
+                    </tr>
+                <% end %>
             <% end %>
-        <% end %>
-
-    </div>
-
-    <div class='container card card-body flex-row bg-light border-0 mt-0 mb-0 pt-0 pb-0'>
-        <% if @vendor_all_orders[5,4].present? %>
-            <% @vendor_all_orders[5,4].each do |a|%>
-                <div class='card card-body m-3 text-dark div-shadow'>
-                    <center>Order ID:</center>
-                    <center><a href="/buybacks?search=<%= a.order_id %>" target="_self"><b><%= a.order_id %></b></a></center>
-                    <center>Date: <b><%= a.created_at.strftime("%m/%d/%Y") %></b></center>
-                    <center>Vendor: <b><%= a.vendor %></b></center>
-                </div>      
-            <% end %>
-        <% end %>
-
-    </div>
-
-    <div class='container card card-body flex-row bg-light border-0 mt-0 mb-0 pt-0'>
-
-        <% if @vendor_all_orders[9,4].present? %>
-            <% @vendor_all_orders[9,4].each do |a|%>
-                <div class='card card-body m-3 text-dark div-shadow'>
-                    <center>Order ID:</center>
-                    <center><a href="/buybacks?search=<%= a.order_id %>" target="_self"><b><%= a.order_id %></b></a></center>
-                    <center>Date: <b><%= a.created_at.strftime("%m/%d/%Y") %></b></center>
-                    <center>Vendor: <b><%= a.vendor %></b></center>
-                </div>      
-            <% end %>
-        <% end %>
-
+        </table>
     </div>
 </div>
-</center>
+        
+
+

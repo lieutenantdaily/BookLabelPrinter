@@ -50,14 +50,11 @@
                                 <span class="nav-label text-light">Awaiting Account Activation</span>
                             </li>
                         <% else %>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle nav-item nav-link active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> 
-                                    <span class="nav-label text-light"><b>Textbook Maniac |</b> Vendor Portal</span>
-                                </a>
-                                <ul class="dropdown-menu bg-dark">
-                                    <center><%= link_to "Dashboard", home_path, class: 'nav-item nav-link active' %></center>
-                                    <center><%= link_to "Orders", buybacks_path, class: 'nav-item nav-link active' %></center>
-                                </ul>
+                            <li class="">
+                                <center><%= link_to "Dashboard", home_path, class: 'nav-item nav-link active' %></center>
+                            </li>
+                            <li class="">
+                                <center><%= link_to "Orders", buybacks_path, class: 'nav-item nav-link active' %></center>
                             </li>
                         <% end %>
                     <% end %>

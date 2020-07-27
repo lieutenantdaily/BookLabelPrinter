@@ -51,10 +51,10 @@
                             </li>
                         <% else %>
                             <li class="">
-                                <center><%= link_to "Dashboard", home_path, class: 'nav-item nav-link active' %></center>
+                                <center><a href="<%= home_path %>" target="_self" class="nav-item nav-link <%= 'active' if current_page?(home_path) %>">Dashboard</a></center>
                             </li>
                             <li class="">
-                                <center><%= link_to "Orders", buybacks_path, class: 'nav-item nav-link active' %></center>
+                                <center><a href="<%= buybacks_path %>" target="_self" class="nav-item nav-link <%= 'active' if current_page?(buybacks_path) %>">Orders</a></center>
                             </li>
                         <% end %>
                     <% end %>
@@ -96,7 +96,17 @@
                                     <% end %>
                                 <% end %>
                             <% end %>
+                        <% else %> 
+                        <% if current_user.active.nil? || current_user.active == false %>
+                            
+                        <% else %>
+                            <div id="vendor-name" class="nav-item nav-link text-light">Vendor: <b><%= current_user.custom %></b></div>
+                
+                            <% if controller_name == "buybacks" %>
+                                <div id="upload-show" class="nav-item btn btn-warning text-dark div-shadow ml-4"><i class="fas fa-upload"></i> Upload Orders</div>
+                            <% end %>
                         <% end %>
+                    <% end %>
                     <% end %>
                 </p>    
             </div>

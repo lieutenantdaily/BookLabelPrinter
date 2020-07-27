@@ -4,20 +4,10 @@
 <% else %>
     <% if current_user.active && (current_user.power_user || current_user.admin) %>
         <%= render 'buybacks/uploader' %>
-        <br>
-        <center>
-            <% if @buybacks.present? %>
-                <% @buybacks[0,1].each do |buyback|%>
-                    <h1><% content_for :title, "Order Processing" %><%= buyback.vendor %> Order Processing</h1>
-                <% end %>
-            <% else %>
-                <h1><% content_for :title, "Order Processing" %>Order Processing</h1>
-            <% end %>
-        </center>
-        <br>
         <%= render 'buybacks/search' %>
         <br>
         <% if @buybacks.present? %>
+            <% content_for :title, "Order Summary" %>
             <%= render 'buybacks/summary' %>
             <%= render 'buybacks/add_book' %>
             <div id="content">
@@ -33,14 +23,11 @@
         <br>
     <% else %>
         <% if current_user.active && current_user.custom? %>
-            <br>
-            <center>
-                <h1><% content_for :title, "Orders" %><%= current_user.custom %>'s Orders</h1>
-            </center>
-            <br>
+            <%= render 'buybacks/vendor_uploader' %>
             <%= render 'buybacks/vendor_search' %>
             <br>
             <% if @vendor_buybacks.present? %>
+                <% content_for :title, "Order Summary" %>
                 <%= render 'buybacks/vendor_summary' %>
                 <%= render 'buybacks/add_book' %>
                 <br>

@@ -145,6 +145,9 @@
   }
 
   .uploader {
+  }
+
+  .uploader-file {
     width: 300px;
   }
 

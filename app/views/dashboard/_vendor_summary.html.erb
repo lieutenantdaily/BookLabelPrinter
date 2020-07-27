@@ -1,0 +1,100 @@
+<% if current_user.custom? %>
+    <div class='container d-flex justify-content-center mt-0 p-0'>
+        <div class='card card-body div-shadow bg-warning mr-2' style="width:33.33333%">
+
+            <center>
+                <h3>Orders Processing</h3>
+            
+            
+                <div class="container">
+
+                    
+                    <h1><%= @v_total_orders.count %></h1>
+
+                </div>
+            </center>
+        </div>
+
+        <div class='card card-body div-shadow bg-warning ml-2 mr-2' style="width:33.33333%">
+
+            <center>
+                <h3>Books Processing</h3>
+            
+            
+                <div class="container">
+
+                    
+                    <h1><%= number_with_delimiter(@v_total_processing.count, :delimiter => ',') %></h1>
+
+                </div>
+            </center>
+        </div>
+
+        <div class='card card-body div-shadow bg-warning ml-2' style="width:33.33333%">
+
+            <center>
+                <h3>Amount Processing</h3>
+            
+            
+                <div class="container">
+
+                    
+                    <h1>$<%= number_with_delimiter(number_with_precision(@v_total_value, precision: 2), :delimiter => ',') %></h1>
+
+                </div>
+            </center>
+        </div>
+    </div>
+
+    <div class='container d-flex justify-content-center mt-3 p-0'>
+        <div class='card card-body div-shadow bg-success text-white mr-2' style="width:33.33333%">
+
+            <center>
+                <h3>Orders Complete</h3>
+            
+            
+                <div class="container">
+
+                    
+                    <h1><%= @v_accepted_orders_a.count - @v_total_orders.count %></h1>
+
+                </div>
+            </center>
+        </div>
+
+
+
+        <div class='card card-body div-shadow bg-success text-white ml-2 mr-2' style="width:33.33333%">
+
+            <center>
+                <h3>Books Accepted</h3>
+            
+            
+                <div class="container">
+
+                    
+                    <h1><%= number_with_delimiter(@v_accepted_processing.count, :delimiter => ',') %></h1>
+
+                </div>
+            </center>
+        </div>
+
+        <div class='card card-body div-shadow bg-success text-white ml-2' style="width:33.33333%">
+
+            <center>
+                <h3>Amount Accepted</h3>
+            
+            
+                <div class="container">
+
+                    
+                    <h1>$<%= number_with_delimiter(number_with_precision(@v_accepted_value, precision: 2), :delimiter => ',') %></h1>
+
+                </div>
+            </center>
+        </div>
+    </div>
+
+
+    
+<% end %>

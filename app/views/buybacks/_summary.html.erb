@@ -10,7 +10,8 @@
 
 <% @buybacks[0,1].each do |buyback|%>
     <% if @order_id == params[:search] %>
-        <div class='card card-body flex-row div-shadow mt-4 bg-secondary d-flex align-content-start text-center flex-wrap rounded-0'>
+        <br>
+        <div class='card card-body flex-row div-shadow mt-2 bg-secondary d-flex align-content-start text-center flex-wrap rounded-0'>
             <div class='container card-body flex-row d-flex align-content-start text-center flex-wrap'>
                 <div class='card card-body m-3 text-dark div-shadow te'>
                     Order Number: <a href="/buybacks?search=<%= @order_id %>" target="_self"><b><%= @order_id %></b></a>

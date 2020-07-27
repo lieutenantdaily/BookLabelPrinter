@@ -29,7 +29,7 @@
                 <div id="new-upload">             
                     <%= f.label :file, "Upload Orders For: " %>
                     <%= f.select :destination, raw("<option>Valore</option><option>Other</option>"), :required => 'required', class: '' %>
-                    <div id="vendor-select" style="width: 140%">
+                    <div id="vendor-select">
                         <%= f.label :user_custom, "Vendor: " %>
                         <% if current_user.custom.to_s !="" %>
                             <%= f.text_field :user_custom, value: current_user.custom, :required => 'required', class: '' %>
@@ -44,11 +44,13 @@
                         <br>
                     </div>
                 </div>
-                <div id="sample" style="width: 140%">  
+                <div id="sample">  
                     <%= render 'sample' %>
                     
                 </div>
-                <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader', required: true %>
+                <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader-file', required: true %>
+                <p class="pt-3">Shipper: <%= f.select :shipper, raw("<option>USPS</option><option>FedEx</option><option>UPS</option><option>Other</option>"), class: '' %></p>
+                <p class="pt-1"><%= f.text_field :tracking_number, placeholder: "Tracking Number", class: '' %></p>
             </div>
 
             <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20", id: "submit-button" do %>
@@ -58,7 +60,7 @@
 
         <br>
 
-        <% @all_buybacks[0,1].each do |all_buyback|%>
+        <% @all_buybacks.order("created_at DESC")[0,1].each do |all_buyback|%>
             <center>
                 Database last updated on <b><%= all_buyback.created_at.strftime("%m/%d/%Y") %></b> at <%= all_buyback.created_at.strftime("%I:%M %p") %>
             </center>

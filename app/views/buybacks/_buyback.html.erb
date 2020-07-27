@@ -3,7 +3,7 @@
     <%= form_for :buyback, url: buyback_path(buyback), method: :patch do |f| %>    
         <tr class="">
             <td class="text-left">
-                <div class='card m-3 label-edit label-image div-shadow p-0' style='background-image: url("https://pictures.abebooks.com/isbn/<%= buyback.isbn %>-us.jpg"); background-size: cover; height:75px; width:55px'>
+                <div class='card m-3 label-edit label-image div-shadow p-0' style='background-image: url("https://pictures.abebooks.com/isbn/<%= buyback.isbn %>-us.jpg"); background-size: cover; height:75px; width:60px'>
                 </div>
             </td>
             <td class="text-left label-edit-label"><%= truncate(buyback.title, escape: false, :length => 44) %></td>

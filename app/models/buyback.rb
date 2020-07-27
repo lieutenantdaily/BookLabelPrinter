@@ -1,6 +1,6 @@
 class Buyback < ApplicationRecord
     # Bulk upload 
-    def self.import(file, destination, initials, user_custom, append, append_vendor, append_order_id, append_source, add_isbn, add_price, add_qty, add_select)
+    def self.import(file, destination, initials, user_custom, append, append_vendor, append_order_id, append_source, add_isbn, add_price, add_qty, add_select, shipper, tracking_number)
         require 'csv'
         require 'net/http'
         # filename = File.expand_path(CSV.to_s)
@@ -10,8 +10,6 @@ class Buyback < ApplicationRecord
             d = destination.gsub("Valore", "AMZ")
             d = d.gsub("Other", "OTH")
         end
-        
-
         
         i = initials
         # Buyback.delete_all
@@ -30,6 +28,12 @@ class Buyback < ApplicationRecord
                 json_tbm = JSON.parse(data)
                 json_title = json_tbm["title"].gsub(",","")
                 json_isbn = json_tbm["isbn13"]
+                json_prices = json_tbm["prices"][0]
+                if json_prices.nil?
+                    json_amount = "0"
+                else
+                    json_amount = json_prices.dig('amount').to_s
+                end
 
                 qty.times do
                     buyback_hash = Buyback.new
@@ -45,6 +49,8 @@ class Buyback < ApplicationRecord
                     buyback_hash.title = buyback_hash.title.titleize if buyback_hash.title == buyback_hash.title.upcase
                     buyback_hash.price = add_price
                     buyback_hash.notes = ""
+                    buyback_hash.tbm_amount = json_amount
+
                 
                     buyback_hash.save 
 
@@ -61,6 +67,12 @@ class Buyback < ApplicationRecord
                     json_tbm = JSON.parse(data)
                     json_title = json_tbm["title"].gsub(",","")
                     json_isbn = json_tbm["isbn13"]
+                    json_prices = json_tbm["prices"][0]
+                    if json_prices.nil?
+                        json_amount = "0"
+                    else
+                        json_amount = json_prices.dig('amount').to_s
+                    end
 
                     qty.times do
                         buyback_hash = Buyback.new
@@ -77,6 +89,14 @@ class Buyback < ApplicationRecord
                         buyback_hash.price = row[1]
                         # buyback_hash.price = buyback_hash.price
                         buyback_hash.notes = ""
+                        buyback_hash.tbm_amount = json_amount
+                        if tracking_number.nil?
+                            buyback_hash.tracking_number = row[4]
+                            buyback_hash.tracking_number = row[3]
+                        else
+                            buyback_hash.tracking_number = tracking_number
+                            buyback_hash.shipper = shipper
+                        end
                     
                         buyback_hash.save 
 
@@ -90,6 +110,20 @@ class Buyback < ApplicationRecord
         else
             if d != "OTH"
                 CSV.foreach(file.path, headers: true) do |row|
+                    json_url = "http://buyback.textbookmaniac.com/search.json?token=6932c87a8cb08c47a7212e6910b7142238c8ec3e1150e51b73fda69580400bda&isbn=" + row[2]
+                    resp = Net::HTTP.get_response(URI.parse(json_url))
+                    data = resp.body
+                    json_tbm = JSON.parse(data)
+                    # json_title = json_tbm["title"].gsub(",","")
+                    # json_isbn = json_tbm["isbn13"]
+                    json_prices = json_tbm["prices"][0]
+                    if json_prices.nil?
+                        json_amount = "0"
+                    else
+                        json_amount = json_prices.dig('amount').to_s
+                    end
+                    
+
                     buyback_hash = Buyback.new
                     buyback_hash.order_id = name
                     buyback_hash.source = "VAL-" + d
@@ -103,8 +137,15 @@ class Buyback < ApplicationRecord
                     buyback_hash.title = buyback_hash.title.titleize if buyback_hash.title == buyback_hash.title.upcase
                     buyback_hash.price = row[5]
                     # buyback_hash.price = buyback_hash.price
-                    buyback_hash.tracking_number = row[6]
+                    if tracking_number.nil?
+                        buyback_hash.tracking_number = row[6]
+                    else
+                        buyback_hash.tracking_number = tracking_number
+                        buyback_hash.shipper = shipper
+                    end
                     buyback_hash.notes = ""
+                    buyback_hash.tbm_price = json_amount
+                    
                 
                     
                     duplicate_check = Buyback.find_by(buyback_id: row[1])
@@ -124,6 +165,12 @@ class Buyback < ApplicationRecord
                     json_tbm = JSON.parse(data)
                     json_title = json_tbm["title"].gsub(",","")
                     json_isbn = json_tbm["isbn13"]
+                    json_prices = json_tbm["prices"][0]
+                    if json_prices.nil?
+                        json_amount = "0"
+                    else
+                        json_amount = json_prices.dig('amount').to_s
+                    end
 
                     qty.times do
                         buyback_hash = Buyback.new
@@ -140,6 +187,14 @@ class Buyback < ApplicationRecord
                         buyback_hash.price = row[1]
                         # buyback_hash.price = buyback_hash.price
                         buyback_hash.notes = ""
+                        buyback_hash.tbm_amount = json_amount
+                        if tracking_number.nil?
+                            buyback_hash.tracking_number = row[4]
+                            buyback_hash.tracking_number = row[3]
+                        else
+                            buyback_hash.tracking_number = tracking_number
+                            buyback_hash.shipper = shipper
+                        end
                     
                         buyback_hash.save 
 

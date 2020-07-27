@@ -5,7 +5,7 @@
 </center>
 
 <center>
-    <h2>Recent Orders</h2>
+    <h1><% content_for :title, "Recent Orders" %>Recent Orders</h1>
 </center>
 <br>
 <div id="content">
@@ -14,15 +14,23 @@
             <tr class="bg-dark" style="margin-top:-30px; color:white">
                 <th class="text-center">Order ID</th>
                 <th class="text-center">Order Date</th>
+                <th class="text-center">Last Updated</th>                
                 <th class="text-center">Total Items</th>
                 <th class="text-center">Status</th>
             </tr>
-            <% if @vendor_all_orders[0,100].present? %>
-                <% @vendor_all_orders[0,1000].each do |a|%>
+            <% if @vendor_all_orders.present? %>
+                <% @vendor_all_orders.each do |a|%>
                     <tr class="">
                             <td class="text-center p-2 label-edit-label"><a href="/buybacks?search=<%= a.order_id %>" target="_self"><b><%= a.order_id %></b></a></td>
                             <td class="text-center p-2 label-edit-label">
-                                <b><%= a.created_at.strftime("%m/%d/%Y") %></b>
+                                <% @vendor_all_buybacks.where(order_id: a.order_id).order("created_at ASC")[0,1].each do |b|%>
+                                    <b><%= b.created_at.strftime("%m/%d/%Y") %></b>
+                                <% end %>
+                            </td>
+                            <td class="text-center p-2 label-edit-label">
+                                <% @vendor_all_buybacks.where(order_id: a.order_id).order("updated_at DESC")[0,1].each do |b|%>
+                                    <b><%= b.updated_at.strftime("%m/%d/%Y") %></b>
+                                <% end %>
                             </td>
                             <td class="text-center p-2 label-edit-label">
                                     <%= @vendor_summary_buybacks_counter.where(order_id: a.order_id).count %>

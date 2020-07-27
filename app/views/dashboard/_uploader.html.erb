@@ -11,51 +11,7 @@
         <div class="container">
 
             
-            <%= form_for :buyback, url: buybacks_path do |f| %>
-
-                <div class="form-group uploader" style="display: none">
-                    <%= f.label :file, "Upload Orders For: " %>
-                    <%= f.select :destination, raw("<option>Other</option><option>Nebraska</option><option>Amazon</option>"), :required => 'required', class: '' %>
-                    <%= f.select :user_custom, raw("<option>" + current_user.custom + "</option>"), :required => 'required', class: '' %>
-                </div>
-
-                <div class="form-group uploader">
-                    <%= f.file_field :file, class: 'form-control-file btn btn-warning div-shadow uploader', required: true %>
-                </div>
-
-                <%= button_tag type: 'submit', class: "btn btn-secondary div-shadow font-20", id: "submit-button" do %>
-                    <i class="fas fa-upload"></i> Upload
-                <% end %>
-
-                <br>
-                <br>
-
-                <div class='container card card-body mb-3 div-shadow label-container bg-light'>
-                    <h3>Sample Format:</h3>
-                    <i>*Use .CSV and please inclued a header.</i>
-                    <hr>
-                    <div id="label" class="container card p-0 label-font no-shadow label">
-                        <table style="width:100%">
-                        <tr>
-                            <th class="text-left">ISBN</th>
-                            <th class="text-right">Price</th>
-                            <th class="text-right">Quantity</th>
-                        </tr>
-                        
-                        <tr>
-                            <td class="text-left">9784561236541</td>
-                            <td class="text-right">$4.67</td>
-                            <td class="text-right">2</td>
-                        </tr>
-
-                        </table>
-                    </div>
-                </div>
-
-
-                
-
-            <% end %>
+            <%= render 'buybacks/other_upload_form' %>
 
         </div>
     </div>

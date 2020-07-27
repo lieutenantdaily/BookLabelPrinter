@@ -3,21 +3,19 @@ class BuybacksController < ApplicationController
   # validates_length_of :search, minimum: 5, maximum: 45, allow_blank: true
 
   def index
-    @all_buybacks = Buyback.all.order("created_at DESC")
+    @all_buybacks = Buyback.all.where.not(vendor: "xxxxxxxxxxx")
 
-    @all_orders = Buyback.group(:order_id).order("created_at DESC")
+    @all_orders = @all_buybacks.order("created_at DESC").select("DISTINCT(order_id)")
     
     @summary_buybacks_counter = Buyback.all.order("isbn ASC")
 
     # vendor --------------------
     @vendor_all_buybacks = Buyback.all.where(vendor: current_user.custom)
 
-    @vendor_all_orders = Buyback.where(vendor: current_user.custom).group(:order_id).order("created_at DESC")
+    @vendor_all_orders = @vendor_all_buybacks.order("created_at DESC").select("DISTINCT(order_id)")
 
     @vendor_summary_buybacks_counter = Buyback.where(vendor: current_user.custom).order("isbn ASC")
     # ---------------------------
-
-
 
 
 
@@ -248,7 +246,7 @@ class BuybacksController < ApplicationController
 
   def create
     @current_user = current_user
-    Buyback.import(params[:buyback][:file], params[:buyback][:destination], params[:buyback][:initials], params[:buyback][:user_custom], params[:buyback][:append], params[:buyback][:append_vendor], params[:buyback][:append_order_id], params[:buyback][:append_source], params[:buyback][:add_isbn], params[:buyback][:add_price], params[:buyback][:add_qty], params[:buyback][:add_select])
+    Buyback.import(params[:buyback][:file], params[:buyback][:destination], params[:buyback][:initials], params[:buyback][:user_custom], params[:buyback][:append], params[:buyback][:append_vendor], params[:buyback][:append_order_id], params[:buyback][:append_source], params[:buyback][:add_isbn], params[:buyback][:add_price], params[:buyback][:add_qty], params[:buyback][:add_select], params[:buyback][:shipper], params[:buyback][:tracking_number])
     
     if params[:buyback][:append].to_s == "Append Current Order"
       flash[:notice] = "Book(s) added"
@@ -260,7 +258,7 @@ class BuybacksController < ApplicationController
   end
   
   private def buyback_params
-    params.require(:buyback).permit(:file, :destination, :notes, :status, :initials, :user_custom, :append, :append_order_id, :append_vendor, :append_source, :add_isbn, :add_price, :add_qty, :add_select) 
+    params.require(:buyback).permit(:file, :destination, :notes, :status, :initials, :user_custom, :append, :append_order_id, :append_vendor, :append_source, :add_isbn, :add_price, :add_qty, :add_select, :shipper, :tracking_number) 
   end
 
 

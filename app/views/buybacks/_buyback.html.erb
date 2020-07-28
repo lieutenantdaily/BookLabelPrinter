@@ -5,6 +5,7 @@
             <td class="text-left">
                 <div class='card m-3 label-edit label-image div-shadow p-0' style='background-image: url("https://pictures.abebooks.com/isbn/<%= buyback.isbn %>-us.jpg"); background-size: cover; height:75px; width:60px'>
                 </div>
+                
             </td>
             <td class="text-left label-edit-label"><%= truncate(buyback.title, escape: false, :length => 44) %></td>
             <td class="text-center label-edit-label"><%= buyback.isbn %></td>
@@ -20,9 +21,30 @@
         <div id='' class='container card card-body d-flex flex-row mt-3 mb-5 div-shadow label-container'>
             <div id="<%= buyback.buyback_id %>" class=" bg-transparent w-0 h-0 position-absolute pointer-no" style="margin-top:-170px;z-index:-1;"></div>
             <div class='d-flex align-items-end flex-column card card-body label-image-container mr-4 label-edit p-0 no-border no-shadow'>
-                <div class='card w-100 m-0 label-edit label-image div-shadow p-0' style='background-image: url("https://pictures.abebooks.com/isbn/<%= buyback.isbn %>-us.jpg");'>
-
+                <div class='card w-100 m-0 label-edit label-image div-shadow p-0 overflow-hidden' style='background-image: url("https://pictures.abebooks.com/isbn/<%= buyback.isbn %>-us.jpg");'>
+                    <a href="https://buyback.textbookmaniac.com/search?isbn=<%= buyback.isbn %>" target="_blank"> 
+                        <div class="position-absolute text-shadow text-white text-center w-100 absolute-center div-shadow" style="bottom:0px; background: rgba(44, 44, 44, 0.7)"><b>$<%= number_with_precision(buyback.tbm_price.to_f, precision: 2) %></b></div>
+                    </a>
                 </div>
+                <% if buyback.shipper.nil? || buyback.shipper == "" %>
+
+                <% else %>
+                    <% if buyback.shipper.include? "USPS" %>
+                        <a href="https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=<%= buyback.tracking_number %>" target="_blank"> 
+                            <div class="position-absolute text-white text-center w-100 absolute-center rounded div-shadow bg-dark" style="bottom:0px"><b>Track</b></div>
+                        </a>
+                    <% end %>
+                    <% if buyback.shipper.include? "FedEx" %>
+                        <a href="https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=<%= buyback.tracking_number %>" target="_blank"> 
+                            <div class="position-absolute text-white text-center w-100 absolute-center rounded div-shadow bg-dark" style="bottom:0px"><b>Track</b></div>
+                        </a>
+                    <% end %>
+                    <% if buyback.shipper.include? "UPS" %>
+                        <a href="https://www.ups.com/WebTracking/processInputRequest?tracknum=<%= buyback.tracking_number %>&requester=ST/trackdetails" target="_blank"> 
+                            <div class="position-absolute text-white text-center w-100 absolute-center rounded div-shadow bg-dark" style="bottom:0px"><b>Track</b></div>
+                        </a>
+                    <% end %>
+                <% end %>
                 <div class='w-100 m-0 label-edit label-check p-0 align-items-center complete'>
                     <div class='w-100 text-center icon-wrap'>
                         <i class="fas fa-check-circle text-shadow"></i>

@@ -49,7 +49,7 @@ class Buyback < ApplicationRecord
                     buyback_hash.title = buyback_hash.title.titleize if buyback_hash.title == buyback_hash.title.upcase
                     buyback_hash.price = add_price
                     buyback_hash.notes = ""
-                    buyback_hash.tbm_amount = json_amount
+                    buyback_hash.tbm_price = json_amount
 
                 
                     buyback_hash.save 
@@ -89,8 +89,8 @@ class Buyback < ApplicationRecord
                         buyback_hash.price = row[1]
                         # buyback_hash.price = buyback_hash.price
                         buyback_hash.notes = ""
-                        buyback_hash.tbm_amount = json_amount
-                        if tracking_number.nil?
+                        buyback_hash.tbm_price = json_amount
+                        if tracking_number.nil? || tracking_number == ""
                             buyback_hash.tracking_number = row[4]
                             buyback_hash.tracking_number = row[3]
                         else
@@ -137,8 +137,9 @@ class Buyback < ApplicationRecord
                     buyback_hash.title = buyback_hash.title.titleize if buyback_hash.title == buyback_hash.title.upcase
                     buyback_hash.price = row[5]
                     # buyback_hash.price = buyback_hash.price
-                    if tracking_number.nil?
-                        buyback_hash.tracking_number = row[6]
+                    if tracking_number.nil? || tracking_number == ""
+                        buyback_hash.tracking_number = ""
+                        buyback_hash.shipper = ""
                     else
                         buyback_hash.tracking_number = tracking_number
                         buyback_hash.shipper = shipper
@@ -187,8 +188,8 @@ class Buyback < ApplicationRecord
                         buyback_hash.price = row[1]
                         # buyback_hash.price = buyback_hash.price
                         buyback_hash.notes = ""
-                        buyback_hash.tbm_amount = json_amount
-                        if tracking_number.nil?
+                        buyback_hash.tbm_price = json_amount
+                        if tracking_number.nil? || tracking_number == ""
                             buyback_hash.tracking_number = row[4]
                             buyback_hash.tracking_number = row[3]
                         else

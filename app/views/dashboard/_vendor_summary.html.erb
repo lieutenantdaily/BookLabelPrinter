@@ -1,4 +1,4 @@
-<% if current_user.custom? %>
+<% if current_user.custom? && current_user.active? %>
     <div class='container d-flex justify-content-center mt-0 p-0'>
         <div class='card card-body div-shadow bg-warning mr-2' style="width:33.33333%">
 
@@ -97,4 +97,12 @@
 
 
     
+<% else %>
+
+    <% if current_user.custom? %>
+        <div class='container d-flex justify-content-center mt-0 p-0'>
+            This account is not currently active.
+        </div>
+    <% end %>
+
 <% end %>

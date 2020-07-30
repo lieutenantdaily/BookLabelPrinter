@@ -10,6 +10,7 @@
             <% content_for :title, "Order Summary" %>
             <%= render 'buybacks/summary' %>
             <%= render 'buybacks/add_book' %>
+            <%= render 'buybacks/add_tracking' %>
             <div id="content">
                 <%= render @buybacks %>
             </div>
@@ -30,6 +31,7 @@
                 <% content_for :title, "Order Summary" %>
                 <%= render 'buybacks/vendor_summary' %>
                 <%= render 'buybacks/add_book' %>
+                <%= render 'buybacks/add_tracking' %>
                 <br>
                 <br>
                 <div id="content">

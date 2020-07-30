@@ -27,21 +27,28 @@
                     </a>
                 </div>
                 <% if buyback.shipper.nil? || buyback.shipper == "" %>
-
+                    <a href="no_shipping" target="_blank" data-toggle="tooltip" title="Tracking Not Provided"> 
+                        <div class="position-absolute text-white text-center w-100 absolute-center rounded div-shadow bg-dark pt-1 pb-1" style="bottom:0px"><i class="fas fa-shipping-fast mr-2"></i><b>Track</b></div>
+                    </a>
                 <% else %>
-                    <% if buyback.shipper.include? "USPS" %>
-                        <a href="https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=<%= buyback.tracking_number %>" target="_blank"> 
-                            <div class="position-absolute text-white text-center w-100 absolute-center rounded div-shadow bg-dark" style="bottom:0px"><b>Track</b></div>
+                    <% if buyback.shipper == "USPS" || buyback.shipper == "usps" %>
+                        <a href="https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=<%= buyback.tracking_number2 %>" target="_blank"> 
+                            <div class="position-absolute text-white text-center w-100 absolute-center rounded div-shadow bg-dark pt-1 pb-1" style="bottom:0px"><i class="fab fa-usps mr-2"></i><b>Track</b></div>
                         </a>
                     <% end %>
-                    <% if buyback.shipper.include? "FedEx" %>
-                        <a href="https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=<%= buyback.tracking_number %>" target="_blank"> 
-                            <div class="position-absolute text-white text-center w-100 absolute-center rounded div-shadow bg-dark" style="bottom:0px"><b>Track</b></div>
+                    <% if buyback.shipper == "FedEx" || buyback.shipper == "fedex" || buyback.shipper == "fed ex" || buyback.shipper == "Fed Ex"%>
+                        <a href="https://www.fedex.com/apps/fedextrack/?tracknumbers=<%= buyback.tracking_number2 %>" target="_blank"> 
+                            <div class="position-absolute text-white text-center w-100 absolute-center rounded div-shadow bg-dark pt-1 pb-1" style="bottom:0px"><i class="fab fa-fedex mr-2"></i><b>Track</b></div>
                         </a>
                     <% end %>
-                    <% if buyback.shipper.include? "UPS" %>
-                        <a href="https://www.ups.com/WebTracking/processInputRequest?tracknum=<%= buyback.tracking_number %>&requester=ST/trackdetails" target="_blank"> 
-                            <div class="position-absolute text-white text-center w-100 absolute-center rounded div-shadow bg-dark" style="bottom:0px"><b>Track</b></div>
+                    <% if buyback.shipper == "UPS" || buyback.shipper == "ups"%>
+                        <a href="https://www.ups.com/WebTracking/processInputRequest?tracknum=<%= buyback.tracking_number2 %>&requester=ST/trackdetails" target="_blank"> 
+                            <div class="position-absolute text-white text-center w-100 absolute-center rounded div-shadow bg-dark pt-1 pb-1" style="bottom:0px"><i class="fab fa-ups mr-2"></i><b>Track</b></div>
+                        </a>
+                    <% end %>
+                    <% if buyback.shipper == "other" || buyback.shipper == "Other"%>
+                        <a href="other_shipping?tracking=<%= buyback.tracking_number2 %>" target="_blank"> 
+                            <div class="position-absolute text-white text-center w-100 absolute-center rounded div-shadow bg-dark pt-1 pb-1" style="bottom:0px"><i class="fas fa-shipping-fast mr-2"></i><b>Track</b></div>
                         </a>
                     <% end %>
                 <% end %>

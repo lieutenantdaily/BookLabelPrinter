@@ -32,6 +32,7 @@
             <div id="missing" class='btn btn-dark purple div-shadow mt-2 mb-2 mr-3 ml-3 pt-1 pb-1 cursor-pointer pointer-yes'>Missing: <b>$<%= number_with_delimiter(@vendor_sum_missing, :delimiter => ',') %></b></div>
             <div id="all" class='btn btn-secondary div-shadow mt-2 mb-2 mr-3 ml-3 pt-1 pb-1 cursor-pointer pointer-yes'>Total: <b>$<%= number_with_delimiter(@vendor_sum_total, :delimiter => ',') %></b></div>
         </nav>
+        <%= render 'tracking' %>
     <% end %>
     <% if @vendor_order_id == params[:search] %>
         <div class='container card card-body mt-0 pb-0 pt-0 no-shadow no-border d-flex flex-row justify-content-center position-fixed bg-light div-shadow w-100 rounded-0' style="bottom:0; z-index:9; max-width: 200%">

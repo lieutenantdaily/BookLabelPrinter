@@ -15,6 +15,7 @@ class BuybacksController < ApplicationController
     @vendor_all_orders = @vendor_all_buybacks.order("created_at DESC").select("DISTINCT(order_id)")
 
     @vendor_summary_buybacks_counter = Buyback.where(vendor: current_user.custom).order("isbn ASC")
+
     # ---------------------------
 
 
@@ -24,6 +25,7 @@ class BuybacksController < ApplicationController
       @buybacks_counter = Buyback.search(params[:search]).order("isbn ASC")
       @buybacks_keep = Buyback.search(params[:search]).where(status: ["Keep-Acceptable", "Keep-Good", "Keep-Very Good", "Keep-Like New", "Keep-New"]).order("isbn ASC")
       @buybacks_reject = Buyback.search(params[:search]).where(status: ["Reject-Red", "Reject-Yellow", "Reject-Blue", "Missing"]).order("isbn ASC")
+      @buybacks_tracking = Buyback.search(params[:search]).order("created_at DESC").select("tracking_number2, shipper").group("tracking_number2")
       @search_params = params[:search]
       @isbn_params = params[:isbn]
       session[:passed_variable2] = ""
@@ -242,6 +244,20 @@ class BuybacksController < ApplicationController
       redirect_to url
     end
     
+  end
+
+  def addTracking
+    addTracking = params[:tracking_number2].to_s
+    addShipper = params[:shipper].to_s
+    addTrackingOrderID = params[:addTrackingOrderID].to_s
+
+    sql = "update buybacks set shipper = '" + addShipper + "' where order_id = '" + addTrackingOrderID + "';"
+    records_array = ActiveRecord::Base.connection.execute(sql)
+
+    sql = "update buybacks set tracking_number2 = '" + addTracking + "' where order_id = '" + addTrackingOrderID + "';"
+    records_array = ActiveRecord::Base.connection.execute(sql)
+
+    redirect_to request.referrer
   end
 
   def create

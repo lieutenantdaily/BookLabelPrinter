@@ -40,6 +40,7 @@
 
             
             </div>  
+            
         </div>
     <% end %>
     <% if @order_id == params[:search] %>
@@ -50,6 +51,7 @@
             <div id="all" class='btn btn-secondary div-shadow mt-2 mb-2 mr-3 ml-3 pt-1 pb-1 cursor-pointer pointer-yes'>Total: <b>$<%= number_with_delimiter(@sum_total, :delimiter => ',') %></b></div>
             <div id="add_book" class='btn btn-transparent no-shadow mt-2 mb-2 mr-3 ml-0 pt-1 pb-1 cursor-pointer pointer-yes'><i class="fas fa-plus-square"></i> Add Book</div>
         </nav>
+        <%= render 'tracking' %>
     <% end %>
     <% if @order_id == params[:search] %>
         

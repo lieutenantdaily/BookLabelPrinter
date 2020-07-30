@@ -120,8 +120,16 @@ $('#add_book').click(function () {
     $('#add-book-container').fadeIn(300);
 });
 
+$('#add_tracking').click(function () {
+    $('#add-tracking-container').fadeIn(300);
+});
+
 $('#add_close').click(function () {
     $('#add-book-container').fadeOut(300);
+});
+
+$('#tracking_close').click(function () {
+    $('#add-tracking-container').fadeOut(300);
 });
 
 

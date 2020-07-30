@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   post "prices/import_url_rat" 
 
   get '/userPermissions', to: 'dashboard#userPermissions', as: 'userPermissions'
+  get '/addTracking', to: 'buybacks#addTracking', as: 'addTracking'
   # get '/userPermissionsDelete', to: 'dashboard#userPermissionsDelete', as: 'userPermissionsDelete'
   # get '/userPermissionsMakeAdmin', to: 'dashboard#userPermissionsMakeAdmin', as: 'userPermissionsMakeAdmin'
 
@@ -31,5 +32,7 @@ Rails.application.routes.draw do
 
   
   get 'links' => 'pages#links', as: 'links'
+  get 'no_shipping' => 'pages#no_shipping', as: 'no_shipping'
+  get 'other_shipping' => 'pages#other_shipping', as: 'other_shipping'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

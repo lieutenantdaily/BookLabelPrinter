@@ -1,0 +1,40 @@
+<div class="text-center mt-4">
+    <span><b>Tracking: </b></span>
+    <% @buybacks_tracking.each do |tracking_number|%>
+        <% if tracking_number.tracking_number2.nil? || tracking_number.tracking_number2 == "" %>
+            <span class='div-shadow display-inline text-white text-center rounded-50 line-height-1 pt-2 pb-2 pr-3 pl-3 bg-dark m-2'>
+                Not Provided
+            </span>
+            <span class="btn btn-transparent cursor-pointer pointer-yes" id="add_tracking"><p style="margin-top:-2px;margin-left:-9px"><i class="fas fa-plus-square"></i> Add Tracking</p></span>
+        <% else %>
+            <% if tracking_number.shipper == "USPS" || tracking_number.shipper == "usps" %>
+                <a href="https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=<%= tracking_number.tracking_number2 %>" target="_blank"> 
+                    <span class='div-shadow display-inline text-white rounded-50 line-height-1 pt-2 pb-2 pr-3 pl-3 bg-dark m-2'>
+                        <i class="fab fa-usps mr-2"></i><b><%= tracking_number.tracking_number2 %></b>
+                    </span>
+                </a>
+            <% end %>
+            <% if tracking_number.shipper == "FedEx" || tracking_number.shipper == "fedex" || tracking_number.shipper == "fed ex" || tracking_number.shipper == "Fed Ex"%>
+                <a href="https://www.fedex.com/apps/fedextrack/?tracknumbers=<%= tracking_number.tracking_number2 %>" target="_blank"> 
+                    <span class='div-shadow display-inline text-white rounded-50 line-height-1 pt-2 pb-2 pr-3 pl-3 bg-dark m-2'>
+                        <i class="fab fa-fedex mr-2"></i><b><%= tracking_number.tracking_number2 %></b>
+                    </span>
+                </a>
+            <% end %>
+            <% if tracking_number.shipper == "UPS" || tracking_number.shipper == "ups"%>
+                <a href="https://www.ups.com/WebTracking/processInputRequest?tracknum=<%= tracking_number.tracking_number2 %>&requester=ST/trackdetails" target="_blank"> 
+                    <span class='div-shadow display-inline text-white rounded-50 line-height-1 pt-2 pb-2 pr-3 pl-3 bg-dark m-2'>
+                        <i class="fab fa-ups mr-2"></i><b><%= tracking_number.tracking_number2 %></b>
+                    </span>
+                </a>
+            <% end %>
+            <% if tracking_number.shipper == "other" || tracking_number.shipper == "Other"%>
+                <a href="other_shipping?tracking=<%= tracking_number.tracking_number2 %>" target="_blank"> 
+                    <span class='div-shadow display-inline text-white rounded-50 line-height-1 pt-2 pb-2 pr-3 pl-3 bg-dark m-2'>
+                        <i class="fas fa-shipping-fast mr-2"></i><b><%= tracking_number.tracking_number2 %></b>
+                    </span>
+                </a>
+            <% end %>
+        <% end %>
+    <% end %>
+</div>

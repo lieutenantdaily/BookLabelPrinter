@@ -91,10 +91,10 @@ class Buyback < ApplicationRecord
                         buyback_hash.notes = ""
                         buyback_hash.tbm_price = json_amount
                         if tracking_number.nil? || tracking_number == ""
-                            buyback_hash.tracking_number = row[4]
-                            buyback_hash.tracking_number = row[3]
+                            buyback_hash.tracking_number2 = row[4]
+                            buyback_hash.shipper = row[3]
                         else
-                            buyback_hash.tracking_number = tracking_number
+                            buyback_hash.tracking_number2 = tracking_number
                             buyback_hash.shipper = shipper
                         end
                     
@@ -136,12 +136,13 @@ class Buyback < ApplicationRecord
                     buyback_hash.title = row[3]
                     buyback_hash.title = buyback_hash.title.titleize if buyback_hash.title == buyback_hash.title.upcase
                     buyback_hash.price = row[5]
+                    buyback_hash.tracking_number = row[6]
                     # buyback_hash.price = buyback_hash.price
                     if tracking_number.nil? || tracking_number == ""
-                        buyback_hash.tracking_number = ""
+                        buyback_hash.tracking_number2 = ""
                         buyback_hash.shipper = ""
                     else
-                        buyback_hash.tracking_number = tracking_number
+                        buyback_hash.tracking_number2 = tracking_number
                         buyback_hash.shipper = shipper
                     end
                     buyback_hash.notes = ""
@@ -190,10 +191,10 @@ class Buyback < ApplicationRecord
                         buyback_hash.notes = ""
                         buyback_hash.tbm_price = json_amount
                         if tracking_number.nil? || tracking_number == ""
-                            buyback_hash.tracking_number = row[4]
-                            buyback_hash.tracking_number = row[3]
+                            buyback_hash.tracking_number2 = row[4]
+                            buyback_hash.shipper = row[3]
                         else
-                            buyback_hash.tracking_number = tracking_number
+                            buyback_hash.tracking_number2 = tracking_number
                             buyback_hash.shipper = shipper
                         end
                     

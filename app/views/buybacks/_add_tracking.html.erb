@@ -1,0 +1,34 @@
+<div id="add-tracking-container" class="w-100 h-100 fixed-top flex-row add-bg" style="display:none;z-index:5002;padding:25%;padding-top:calc(25vh)">
+    <div id='' class='container bg-light card card-body  div-shadow mt-2 mb-5 label-container text-center' style="min-width:600px;max-width:600px;">
+        <%= form_tag({:controller=>"buybacks", :action=>"addTracking"}, method: :get) do %>
+            <% @buybacks[0,1].each do |buyback|%>
+                <div style="display: none;">
+                    <select name="addTrackingOrderID">
+                            <option value="<%= buyback.order_id %>"><%= buyback.order_id %></option>
+                    </select>
+                </div>
+            <% end %>
+            <h3>Add Tracking</h3>
+            <div class="field w-100 mt-4">
+                Shipper: 
+                <select name="shipper">
+                        <option value="USPS">USPS</option>
+                        <option value="FedEx">FedEx</option>
+                        <option value="UPS">UPS</option>
+                        <option value="Other">Other</option>
+                </select>
+            </div>
+            <br>
+            <div class="field w-100">
+                <input class="appearance-none p-3 h-100 w-100 m-0 align-top text-center border-none font-20 input-shadow overflow-hidden border-none div-shadow mt-1" type="text" name="tracking_number2" placeholder="Tracking Number">
+            </div>
+            <br>
+            <div class="actions">
+                <%= button_tag type: 'submit', class: "btn btn-success div-shadow font-20 mt-3" do %>
+                    <i class="fas fa-plus"></i> Add
+                <% end %>
+            </div>
+        <% end %>
+        <div class="btn btn-warning div-shadow position-absolute cursor-pointer rounded-circle" style="margin-left:540px;margin-top:-15px" id="tracking_close"><i class="fas fa-times"></i></div>
+    </div>
+</div>

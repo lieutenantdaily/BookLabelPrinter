@@ -10,7 +10,7 @@ class DashboardController < ApplicationController
         total_processing_array = ActiveRecord::Base.connection.execute(total_processing_sql)
         @total_processing = total_processing_array
 
-        total_value_sql = "SELECT sum(CAST(REPLACE(price, '$'','') AS float)) AS 'price' FROM buybacks WHERE status LIKE '%Review%'"
+        total_value_sql = "SELECT sum(CAST(REPLACE(price, '$','') AS float)) AS 'price' FROM buybacks WHERE status LIKE '%Review%'"
         total_value_array = ActiveRecord::Base.connection.execute(total_value_sql)
         @total_value = total_value_array
         @total_value = @total_value.to_s.gsub('[{"price"=>', '').gsub('}]', '')
@@ -29,7 +29,7 @@ class DashboardController < ApplicationController
         accepted_processing_array = ActiveRecord::Base.connection.execute(accepted_processing_sql)
         @accepted_processing = accepted_processing_array
 
-        accepted_value_sql = "SELECT sum(CAST(REPLACE(price, '$'','') AS float)) AS 'price' FROM buybacks WHERE status LIKE '%Keep%' AND status NOT LIKE '%Review%'"
+        accepted_value_sql = "SELECT sum(CAST(REPLACE(price, '$','') AS float)) AS 'price' FROM buybacks WHERE status LIKE '%Keep%' AND status NOT LIKE '%Review%'"
         accepted_value_array = ActiveRecord::Base.connection.execute(accepted_value_sql)
         @accepted_value = accepted_value_array
         @accepted_value = @accepted_value.to_s.gsub('[{"price"=>', '').gsub('}]', '')
@@ -47,7 +47,7 @@ class DashboardController < ApplicationController
         v_total_processing_array = ActiveRecord::Base.connection.execute(v_total_processing_sql)
         @v_total_processing = v_total_processing_array
 
-        v_total_value_sql = "SELECT sum(CAST(REPLACE(price, '$'','') AS float)) AS 'price' FROM buybacks WHERE status LIKE '%Review%' AND vendor = '" + current_user.custom + "'"
+        v_total_value_sql = "SELECT sum(CAST(REPLACE(price, '$','') AS float)) AS 'price' FROM buybacks WHERE status LIKE '%Review%' AND vendor = '" + current_user.custom + "'"
         v_total_value_array = ActiveRecord::Base.connection.execute(v_total_value_sql)
         @v_total_value = v_total_value_array
         @v_total_value = @v_total_value.to_s.gsub('[{"price"=>', '').gsub('}]', '')
@@ -66,7 +66,7 @@ class DashboardController < ApplicationController
         v_accepted_processing_array = ActiveRecord::Base.connection.execute(v_accepted_processing_sql)
         @v_accepted_processing = accepted_processing_array
 
-        v_accepted_value_sql = "SELECT sum(CAST(REPLACE(price, '$'','') AS float)) AS 'price' FROM buybacks WHERE status LIKE '%Keep%' AND vendor = '" + current_user.custom + "'"
+        v_accepted_value_sql = "SELECT sum(CAST(REPLACE(price, '$','') AS float)) AS 'price' FROM buybacks WHERE status LIKE '%Keep%' AND vendor = '" + current_user.custom + "'"
         v_accepted_value_array = ActiveRecord::Base.connection.execute(v_accepted_value_sql)
         @v_accepted_value = v_accepted_value_array
         @v_accepted_value = @v_accepted_value.to_s.gsub('[{"price"=>', '').gsub('}]', '')

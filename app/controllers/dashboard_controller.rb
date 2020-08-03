@@ -29,7 +29,7 @@ class DashboardController < ApplicationController
         accepted_processing_array = ActiveRecord::Base.connection.execute(accepted_processing_sql)
         @accepted_processing = accepted_processing_array
 
-        accepted_value_sql = "SELECT sum(price) AS 'price' FROM buybacks WHERE status LIKE '%Keep%'"
+        accepted_value_sql = "SELECT sum(price) AS 'price' FROM buybacks WHERE status LIKE '%Review%'"
         accepted_value_array = ActiveRecord::Base.connection.execute(accepted_value_sql)
         @accepted_value = accepted_value_array.to_s
         @accepted_value = @accepted_value.to_s.gsub('[{"price"=>', '').gsub('}]', '')

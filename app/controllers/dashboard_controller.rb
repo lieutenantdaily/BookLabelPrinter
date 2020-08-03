@@ -6,27 +6,15 @@ class DashboardController < ApplicationController
         total_orders_array = ActiveRecord::Base.connection.execute(total_orders_sql)
         @total_orders = total_orders_array
 
-        if @total_orders.nil?
-            @total_orders = 0
-        end
-
         total_processing_sql = "SELECT buyback_id AS 'buyback_id' FROM buybacks WHERE status LIKE '%Review%'"
         total_processing_array = ActiveRecord::Base.connection.execute(total_processing_sql)
         @total_processing = total_processing_array
-
-        if @total_processing.nil?
-            @total_processing = 0
-        end
 
         total_value_sql = "SELECT sum(price) AS 'price' FROM buybacks WHERE status LIKE '%Review%'"
         total_value_array = ActiveRecord::Base.connection.execute(total_value_sql)
         @total_value = total_value_array
         @total_value = @total_value.to_s.gsub('[{"price"=>', '').gsub('}]', '')
         @total_value = @total_value.to_f.round(2)
-
-        if @total_value.nil?
-            @total_value = 0
-        end
 
 
         accepted_orders_a_sql = "SELECT DISTINCT(order_id) FROM buybacks"
@@ -41,18 +29,14 @@ class DashboardController < ApplicationController
         accepted_processing_array = ActiveRecord::Base.connection.execute(accepted_processing_sql)
         @accepted_processing = accepted_processing_array
 
-        if @accepted_processing.nil?
-            @accepted_processing = 0
-        end
-
         accepted_value_sql = "SELECT sum(price) AS 'price' FROM buybacks WHERE status LIKE '%Keep%' AND status NOT LIKE '%Review%'"
         accepted_value_array = ActiveRecord::Base.connection.execute(accepted_value_sql)
         @accepted_value = accepted_value_array
         @accepted_value = @accepted_value.to_s.gsub('[{"price"=>', '').gsub('}]', '')
-        @accepted_value = @accepted_value.to_f.round(2)
-
         if @accepted_value.nil?
             @accepted_value = 0
+        else
+            @accepted_value = @accepted_value.to_f.round(2)
         end
 
 

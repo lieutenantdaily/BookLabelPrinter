@@ -38,6 +38,7 @@ class DashboardController < ApplicationController
         else
             @accepted_value = @accepted_value.to_f.round(2)
         end
+        @accepted_value = 0
 
 
 

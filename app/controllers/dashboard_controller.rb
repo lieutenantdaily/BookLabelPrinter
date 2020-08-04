@@ -68,9 +68,9 @@ class DashboardController < ApplicationController
             @v_accepted_orders_a = 0
         end
 
-        v_accepted_processing_sql = "SELECT buyback_id AS 'buyback_id' FROM buybacks WHERE status LIKE '%Keep%' AND vendor = '" + @user_custom + "'"
+        v_accepted_processing_sql = "SELECT buyback_id AS 'buyback_id' FROM buybacks WHERE vendor = '" + @user_custom + "' AND status LIKE '%Keep%'"
         v_accepted_processing_array = ActiveRecord::Base.connection.execute(v_accepted_processing_sql)
-        @v_accepted_processing = accepted_processing_array
+        @v_accepted_processing = v_accepted_processing_array
 
         v_accepted_value_sql = "SELECT sum(CAST(REPLACE(price, '$','') AS float)) AS 'price' FROM buybacks WHERE status LIKE '%Keep%' AND vendor = '" + @user_custom + "'"
         v_accepted_value_array = ActiveRecord::Base.connection.execute(v_accepted_value_sql)

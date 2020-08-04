@@ -68,10 +68,10 @@
                 </div>
 
                 <span>
-                    <input class="btn btn-light div-shadow pt-0 pb-0 pl-1 pr-1" type="text" name="custom" value="<%= user.custom %>">
+                    <input class="btn btn-light div-shadow pt-0 pb-0 pl-1 pr-1" style="-webkit-user-select: all;-moz-user-select: all;-ms-user-select: all;user-select: all;" type="text" name="custom" value="<%= user.custom %>">
                 </span>
 
-                <%= button_tag type: 'submit', name: "user_action",value: "custom", class: "btn btn-dark div-shadow pt-0 pb-0 pl-1 pr-1" do %>
+                <%= button_tag type: 'submit', name: "user_action",value: "custom", class: "btn btn-dark div-shadow pt-0 pb-0 pl-1 pr-1", style: "-webkit-appearance: none;" do %>
                     <i class="fas fa-save"></i>
                 <% end %>
             <% end %>

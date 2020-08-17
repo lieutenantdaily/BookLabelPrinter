@@ -1,0 +1,62 @@
+
+<% if current_user.nil? %>
+    <%= render 'layouts/unauthorized' %>      
+<% else %>
+    <% if current_user.active && (current_user.power_user || current_user.admin) %>
+        <%= render 'buybacks/uploader' %>
+        <%= render 'buybacks/search' %>
+        <br>
+        <% if @buybacks.present? %>
+            <% content_for :title, "Order Summary" %>
+            <%= render 'buybacks/summary' %>
+            <%= render 'buybacks/add_book' %>
+            <%= render 'buybacks/add_tracking' %>
+            <div id="content">
+                <%= render @buybacks %>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div id="editor"></div>
+        <% else %>
+            <%= render 'buybacks/order_list' %>
+        <% end %>
+        <br>
+    <% else %>
+        <% if current_user.active && current_user.custom? %>
+            <%= render 'buybacks/vendor_uploader' %>
+            <%= render 'buybacks/vendor_search' %>
+            <br>
+            <% if @vendor_buybacks.present? %>
+                <% content_for :title, "Order Summary" %>
+                <%= render 'buybacks/vendor_summary' %>
+                <%= render 'buybacks/add_book' %>
+                <%= render 'buybacks/add_tracking' %>
+                <br>
+                <br>
+                <div id="content">
+                    <div id="item" class="container card p-0 label-font div-shadow label overflow-hidden rounded">
+                        <table class="bg-light overflow-hidden rounded" style="width:100%">
+                            <tr class="bg-dark" style="margin-top:-30px; color:white">
+                                <th class="text-left"></th>
+                                <th class="text-left">Title</th>
+                                <th class="text-center">ISBN</th>
+                                <th class="text-center">Price</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Notes</th>
+                            </tr>
+                            <%= render @vendor_buybacks %>
+                        </table>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <div id="editor"></div>
+            <% else %>
+                <%= render 'buybacks/vendor_order_list' %>
+            <% end %>
+            <br>
+        <% end %>
+    <% end %>
+<% end %>

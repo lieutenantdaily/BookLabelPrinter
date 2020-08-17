@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :compare_files
   resources :prices
   resources :dashboard
+  resources :items
 
 
   

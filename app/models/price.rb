@@ -83,27 +83,65 @@ class Price < ApplicationRecord
         if d == "Textbook Recycling"
             ActiveRecord::Base.transaction do
                 CSV.foreach(file.path, headers: true) do |row|
-                    duplicate_check = Price.find_by(isbn: row[1])
+                    price_hash = Price.new
+                    price_hash.isbn = row[0].first(13)
+                    price_hash.source = "Far Corner"
+                    price_hash.rank = ""               
                     
-                    if duplicate_check.blank?
-                        
+                    
+                    json_url = "http://buyback.textbookmaniac.com/search.json?token=6932c87a8cb08c47a7212e6910b7142238c8ec3e1150e51b73fda69580400bda&isbn=" + price_hash.isbn
+                    resp = Net::HTTP.get_response(URI.parse(json_url))
+                    data = resp.body
+                    json_tbm = JSON.parse(data)
+                    if json_tbm.nil?
+                        json_title = ""
+                        json_isbn = ""
+                        json_prices = ""
+                        json_amount = ""
+                        json_quantity = ""
                     else
-                        title = row[0]
-                        vendor_qty = row[3]
-                        qty_difference = duplicate_check.buy_qty.to_f - vendor_qty.to_f
-
-                        if qty_difference.to_f <= 0
-                            final_qty = duplicate_check.buy_qty
+                        json_title = json_tbm["title"]
+                        if json_title.nil?
+                            json_title = ""
+                        else   
+                            json_title = json_title.gsub(",","")
+                        end    
+                        json_isbn = json_tbm["isbn13"]
+                        if json_tbm["prices"].nil?
+                            json_amount = "0"
+                            json_quantity = "0"
                         else
-                            final_qty = vendor_qty
+                            json_prices = json_tbm["prices"][0]
+                            if json_prices.nil?
+                                json_amount = "0"
+                                json_quantity = "0"
+                            else
+                                json_amount = json_prices.dig('amount').to_s
+                                json_quantity = json_prices.dig('quantity').to_s
+                            end
+                            
                         end
 
-                        total_float = final_qty.to_f * duplicate_check.amount.to_f
-                        total = total_float.to_f
-
-
-                        duplicate_check.update(title: title, vendor_qty: vendor_qty, qty_difference: qty_difference, final_qty: final_qty, total: total)
                     end
+
+                    price_hash.amount = json_amount
+                    price_hash.buy_qty = json_quantity
+                    price_hash.title = json_title
+                    price_hash.vendor_qty = row[1]
+                    price_hash.qty_difference = price_hash.buy_qty.to_f - price_hash.vendor_qty.to_f
+
+                    if price_hash.qty_difference.to_f <= 0
+                        price_hash.final_qty = price_hash.buy_qty
+                    else
+                        price_hash.final_qty = price_hash.vendor_qty
+                    end
+
+                    total_float = price_hash.final_qty.to_f * price_hash.amount.to_f
+                    price_hash.total = total_float.to_f
+
+                    # if price_hash.total.to_f > 0
+                        price_hash.save 
+                    # end
 
                 end
             end

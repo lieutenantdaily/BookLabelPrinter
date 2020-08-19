@@ -12,6 +12,7 @@ class PricesController < ApplicationController
         @counter = Price.all.count
         @counter2 = @prices_with_diff.all.count
         @counter3 = @prices_with_no_source.all.count
+        @count_blank = @counter - @counter2
     end
 
     def import_url

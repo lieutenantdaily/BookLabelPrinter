@@ -1,7 +1,7 @@
 <tr>
-    <td class="text-left"><%= price.isbn.truncate(50, omission: '...') %></td>
-    <td class="text-left"><%= number_with_delimiter(price.rank.to_i, :delimiter => ',') %></td>
-    <td class="text-right">$<%= number_with_precision(price.amount.to_f, precision: 2)  %></td>
-    <td class="text-right"><%= price.final_qty %></td>
-    <td class="text-right">$<%= number_with_precision(price.total.to_f, precision: 2)  %></td>
+    <td class="text-center"><%= price.isbn.truncate(50, omission: '...') %></td>
+    <td class="text-center"><%= price.title.truncate(40, omission: '...') %></td>
+    <td class="text-center">$<%= number_with_precision(price.amount.to_f, precision: 2)  %></td>
+    <td class="text-center"><%= price.final_qty %></td>
+    <td class="text-center">$<%= number_with_precision(price.total.to_f, precision: 2)  %></td>
 </tr>

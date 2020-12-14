@@ -3,7 +3,7 @@ class Price < ApplicationRecord
     def self.import_url()
         require 'csv'
         require 'open-uri'
-        csv_path = open('http://metabase.textbookmaniac.com/public/question/2c21d7d9-4d91-484d-b901-ed33f369c720.csv', :read_timeout => 300)
+        csv_path = open('http://metabase.textbookmaniac.com/public/question/2c21d7d9-4d91-484d-b901-ed33f369c720.csv', :read_timeout => 900)
         # name = file.original_filename.gsub("valorebooks-shipment-details-","")[0,6]
         Price.delete_all
         ActiveRecord::Base.transaction do
@@ -17,51 +17,53 @@ class Price < ApplicationRecord
 
                 rank = price_hash.rank.to_f
                 
-                if rank >= 1000000
-                    qty = 0
-                end
+                # if rank >= 1000000
+                #     qty = 0
+                # end
 
-                if rank < 1000000 && rank >= 700000
-                    qty = 1
-                end
+                # if rank < 1000000 && rank >= 700000
+                #     qty = 1
+                # end
                 
-                if rank < 700000 && rank >= 600000
-                    qty = 2
-                end
+                # if rank < 700000 && rank >= 600000
+                #     qty = 2
+                # end
                 
-                if rank < 600000 && rank >= 500000
-                    qty = 3
-                end
+                # if rank < 600000 && rank >= 500000
+                #     qty = 3
+                # end
                 
-                if rank < 500000 && rank >= 400000
-                    qty = 4
-                end
+                # if rank < 500000 && rank >= 400000
+                #     qty = 4
+                # end
                 
-                if rank < 400000 && rank >= 300000
-                    qty = 5
-                end
+                # if rank < 400000 && rank >= 300000
+                #     qty = 5
+                # end
                 
-                if rank < 300000 && rank >= 200000
-                    qty = 6
-                end
+                # if rank < 300000 && rank >= 200000
+                #     qty = 6
+                # end
 
-                if rank < 200000 && rank >= 150000
-                    qty = 7
-                end
+                # if rank < 200000 && rank >= 150000
+                #     qty = 7
+                # end
 
-                if rank < 150000 && rank >= 100000
-                    qty = 8
-                end
+                # if rank < 150000 && rank >= 100000
+                #     qty = 8
+                # end
 
-                if rank < 100000 && rank >= 50000
-                    qty = 9
-                end
+                # if rank < 100000 && rank >= 50000
+                #     qty = 9
+                # end
 
-                if rank < 50000
-                    qty = 10
-                end
+                # if rank < 50000
+                #     qty = 10
+                # end
                 
-                price_hash.buy_qty = qty.to_s
+                # price_hash.buy_qty = qty.to_s
+
+                price_hash.buy_qty = row[4]
                 
                 price_hash.save 
                 # duplicate_check = Price.find_by(isbn: row[0])

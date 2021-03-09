@@ -23,7 +23,9 @@
             <div class='d-flex align-items-end flex-column card card-body label-image-container mr-4 label-edit p-0 no-border no-shadow'>
                 <div class='card w-100 m-0 label-edit label-image div-shadow p-0 overflow-hidden' style='background-image: url("https://pictures.abebooks.com/isbn/<%= buyback.isbn %>-us.jpg");'>
                     <a href="https://buyback.textbookmaniac.com/search?isbn=<%= buyback.isbn %>" target="_blank"> 
-                        <div class="position-absolute text-shadow text-white text-center w-100 absolute-center div-shadow" style="bottom:0px; background: rgba(44, 44, 44, 0.7)"><b>$<%= number_with_precision(buyback.tbm_price.to_f, precision: 2) %></b></div>
+                        <div class="position-absolute text-shadow text-white text-center w-100 absolute-center div-shadow" style="bottom:0px; background: rgba(44, 44, 44, 0.7)">
+                            <b>$<%= number_with_precision(buyback.tbm_price.to_f, precision: 2) %></b>
+                        </div>
                     </a>
                 </div>
                 <% if buyback.shipper.nil? || buyback.shipper == "" %>

@@ -86,7 +86,7 @@
                             <p>Upload the <b>source-active-want-list</b> file that was just exported from Valore. This will take about 5 minutes.<p>
                             <br>
                             <%= form_for :offer, url: offers_path do |f| %>
-                                <div class="form-group uploader">
+                                <div class="form-group uploader" style="max-width: 30%">
                                     <span class='d-none'>
                                         <%= f.select :destination, raw("<option>Valore Prices</option><option>TBM Prices</option>"), :required => 'required', class: '' %>
                                     </span>

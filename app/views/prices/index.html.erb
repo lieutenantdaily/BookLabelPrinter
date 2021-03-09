@@ -5,7 +5,7 @@
         <br>
 
         <center>
-            <h1><% content_for :title, "Price Generator" %>Price Generator</h1>
+            <h1><% content_for :title, "Bid Generator" %>Bid Generator</h1>
         </center>
         <% @prices[0,1].each do |price|%>
             <center>
@@ -120,10 +120,10 @@
 
                         <center>
                             <h2><b>Step 2</b></h2>
-                            <p>Upload the current <b>SellerEngine Inventory File</b>. This will take about 5 minutes.<p>
+                            <p>Upload the current an inventory file. Depending on the size of the file, this might take a few minutes.<p>
                             <br>
                             <%= form_for :price, url: prices_path do |f| %>
-                                <div class="form-group uploader">
+                                <div class="form-group uploader" style="max-width: 30%">
                                     <p>Where is this file coming from?<p>
                                     <span class=''>
                                         <%= f.select :destination, raw("<option>Textbook Recycling</option><option>Other</option>"), :required => 'required', class: '' %>
